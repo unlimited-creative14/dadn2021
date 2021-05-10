@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group
+        android:id="@+id/adminNavGroup"
+        android:checkableBehavior="single">
+        <item android:id="@+id/lbAdmin" />
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Them nguoi dung" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Quan ly bac si, y ta" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Quan ly benh nhan" />
+        <item
+            android:id="@+id/nav_updateHealthRule"
+            android:icon="@drawable/ic_baseline_update_24"
+            android:title="Cap nhat quy tac y te" />
+    </group>
+    <group
+        android:id="@+id/accountNavGroup"
+        android:checkableBehavior="none">
+        <item android:id="@+id/lbAccount" />
+        <item android:title="Thong tin tai khoan" />
+        <item android:title="Cai dat tai khoan" />
+        <item android:title="Dang xuat" />
+    </group>
+</menu>
