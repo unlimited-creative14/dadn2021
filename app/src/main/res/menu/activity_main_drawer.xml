@@ -6,7 +6,8 @@
     <group
         android:id="@+id/adminNavGroup"
         android:checkableBehavior="single">
-        <item android:id="@+id/lbAdmin" />
+        <item android:id="@+id/lbAdmin"
+            tools:ignore="MenuTitle" />
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_camera"
@@ -27,7 +28,8 @@
     <group
         android:id="@+id/accountNavGroup"
         android:checkableBehavior="none">
-        <item android:id="@+id/lbAccount" />
+        <item android:id="@+id/lbAccount"
+            tools:ignore="MenuTitle" />
         <item android:title="Thong tin tai khoan" />
         <item android:title="Cai dat tai khoan" />
         <item android:title="Dang xuat" />
