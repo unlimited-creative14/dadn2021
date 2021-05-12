@@ -31,6 +31,8 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     MQTTService mqttService;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    private int counter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +58,13 @@ public class MainActivity extends AppCompatActivity {
         mqttService = new MQTTService(this);
         mqttService.setCallback(new MqttCallbackExtended() {
             @Override
-            public void connectComplete(boolean reconnect, String
-                    serverURI) {
+            public void connectComplete(boolean reconnect, String serverURI) {
+                SendRequestTimer();
             }
 
             @Override
             public void connectionLost(Throwable cause) {
-
+                System.out.println(cause.toString());
             }
 
 
@@ -73,12 +76,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void messageArrived(String topic, MqttMessage
                     message) throws Exception {
-
-//
-//                String data_to_microbit = message.toString();
-//                port.write(data_to_microbit.getBytes(), 1000);
+                Log.d("mqtt",message.toString());
             }
-
         });
     }
 
@@ -91,22 +90,35 @@ public class MainActivity extends AppCompatActivity {
         msg.setPayload(b);
         Log.d("ABC", "Publish:" + msg);
         try {
-            mqttService.mqttAndroidClient.publish("[Your subscriptiontopic]", msg);
+            mqttService.mqttAndroidClient.publish("malongnhan/feeds/server", msg);
         } catch (MqttException e) {
 
         }
-        GraphView graph = (GraphView) findViewById(R.id.graph);
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-                new DataPoint(0, 1),
-                new DataPoint(1, 5),
-                new DataPoint(2, 3),
-                new DataPoint(3, 2),
-                new DataPoint(4, 6)
-        });
-        graph.addSeries(series);
+    }
+
+    void SendRequestTimer() {
+        Timer aTimer = new Timer();
+        TimerTask aTask = new TimerTask() {
+            @Override
+            public void run() {
+                counter++;
+                sendDataMQTT("this will be json");
+            }
+        };
+
+        aTimer.schedule(aTask, 1000, 30000);
     }
 
 
+//    GraphView graph = (GraphView) findViewById(R.id.graph);
+//    LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
+//            new DataPoint(0, 1),
+//            new DataPoint(1, 5),
+//            new DataPoint(2, 3),
+//            new DataPoint(3, 2),
+//            new DataPoint(4, 6)
+//    });
+//        graph.addSeries(series);
 
     void preCreate() {
         setSupportActionBar(binding.appBarMain.toolbar);
