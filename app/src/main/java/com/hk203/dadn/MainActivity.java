@@ -28,6 +28,9 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import com.hk203.dadn.databinding.ActivityMainBinding;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -49,6 +52,15 @@ public class MainActivity extends AppCompatActivity {
 
 		preCreate();
 		addGroupNameDrawer(binding.navView);
+		GraphView graph = (GraphView) findViewById(R.id.graph);
+		LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
+				new DataPoint(0, 1),
+				new DataPoint(1, 5),
+				new DataPoint(2, 3),
+				new DataPoint(3, 2),
+				new DataPoint(4, 6)
+		});
+		graph.addSeries(series);
 	}
 	void preCreate()
 	{
