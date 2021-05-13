@@ -33,4 +33,8 @@
     <string name="szBN2">Bệnh nhân 2</string>
     <string name="szBN3">Bệnh nhân 3</string>
     <string name="szDanhSachBenhNhan">Danh sách bệnh nhân</string>
+    <string name="szBS3">Bác sỹ 3</string>
+    <string name="szBacSiDieuTri">Bác sĩ điều trị</string>
+    <string name="szBS2">Bác Sỹ 2</string>
+    <string name="szBS1">Bác sỹ 1</string>
 </resources>
