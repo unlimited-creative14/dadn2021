@@ -16,4 +16,10 @@
     <string name="LeaderName">Le Huu Vo Long</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="szLoaiTaiKhoan">Loại Tài Khoản</string>
+    <string name="szTenDangNhap">Tên đăng nhập</string>
+    <string name="szMatKhau">Mật khẩu</string>
+    <string name="szTaoTaiKhoan">Tạo tài khoản</string>
+    <string name="szHuy">Hủy</string>
+    <string name="szThem">Thêm</string>
 </resources>
