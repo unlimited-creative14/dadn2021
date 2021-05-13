@@ -29,4 +29,8 @@
     <string name="szTen">Tên</string>
     <string name="szPhong">Phòng</string>
     <string name="szXacNhan">Xác Nhận</string>
+    <string name="szBN1">Bệnh nhân 1</string>
+    <string name="szBN2">Bệnh nhân 2</string>
+    <string name="szBN3">Bệnh nhân 3</string>
+    <string name="szDanhSachBenhNhan">Danh sách bệnh nhân</string>
 </resources>
