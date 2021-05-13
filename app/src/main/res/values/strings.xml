@@ -37,4 +37,8 @@
     <string name="szBacSiDieuTri">Bác sĩ điều trị</string>
     <string name="szBS2">Bác Sỹ 2</string>
     <string name="szBS1">Bác sỹ 1</string>
+    <string name="szBS4">Bác Sỹ 4</string>
+    <string name="szBS5">Bác sỹ 5</string>
+    <string name="szBS6">Bác sỹ 6</string>
+    <string name="szThemBacSiDieuTri">Thêm bác sĩ điều trị</string>
 </resources>
