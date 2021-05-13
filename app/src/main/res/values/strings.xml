@@ -22,4 +22,11 @@
     <string name="szTaoTaiKhoan">Tạo tài khoản</string>
     <string name="szHuy">Hủy</string>
     <string name="szThem">Thêm</string>
+    <string name="szThongTinNguoiDung">Thông tin người dùng</string>
+    <string name="szHo">Họ</string>
+    <string name="szCMND">Số CMND</string>
+    <string name="szEmail">Email</string>
+    <string name="szTen">Tên</string>
+    <string name="szPhong">Phòng</string>
+    <string name="szXacNhan">Xác Nhận</string>
 </resources>
