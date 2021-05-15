@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
+<!--    TODO: Fix check box here-->
     <RelativeLayout
         android:id="@+id/image_btn"
         android:layout_width="wrap_content"

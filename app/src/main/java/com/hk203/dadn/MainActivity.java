@@ -20,27 +20,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.hk203.dadn.databinding.ActivityMainBinding;
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
-
-import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
-import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
-
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
     String username;
-    MQTTService mqttService;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-    private int counter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,71 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         preCreate();
         addGroupNameDrawer(binding.navView);
-
-        mqttService = new MQTTService(this);
-        mqttService.setCallback(new MqttCallbackExtended() {
-            @Override
-            public void connectComplete(boolean reconnect, String serverURI) {
-                SendRequestTimer();
-            }
-
-            @Override
-            public void connectionLost(Throwable cause) {
-                System.out.println(cause.toString());
-            }
-
-
-            @Override
-            public void deliveryComplete(IMqttDeliveryToken token) {
-
-            }
-
-            @Override
-            public void messageArrived(String topic, MqttMessage
-                    message) throws Exception {
-                Log.d("mqtt",message.toString());
-            }
-        });
     }
-
-    private void sendDataMQTT(String data) {
-        MqttMessage msg = new MqttMessage();
-        msg.setId(1234);
-        msg.setQos(0);
-        msg.setRetained(true);
-        byte[] b = data.getBytes(StandardCharsets.UTF_8);
-        msg.setPayload(b);
-        Log.d("ABC", "Publish:" + msg);
-        try {
-            mqttService.mqttAndroidClient.publish("malongnhan/feeds/server", msg);
-        } catch (MqttException e) {
-
-        }
-    }
-
-    void SendRequestTimer() {
-        Timer aTimer = new Timer();
-        TimerTask aTask = new TimerTask() {
-            @Override
-            public void run() {
-                counter++;
-                sendDataMQTT("this will be json");
-            }
-        };
-
-        aTimer.schedule(aTask, 1000, 30000);
-    }
-
-
-//    GraphView graph = (GraphView) findViewById(R.id.graph);
-//    LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-//            new DataPoint(0, 1),
-//            new DataPoint(1, 5),
-//            new DataPoint(2, 3),
-//            new DataPoint(3, 2),
-//            new DataPoint(4, 6)
-//    });
-//        graph.addSeries(series);
 
     void preCreate() {
         setSupportActionBar(binding.appBarMain.toolbar);

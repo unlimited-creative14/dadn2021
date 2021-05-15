@@ -28,4 +28,17 @@
         android:name="com.hk203.dadn.ui.updatehealthrule.UpdateHealthRuleFragment"
         android:label="Cap nhat quy tac y te"
         tools:layout="@layout/fragment_update_health_rule" />
+    <fragment
+        android:id="@+id/nav_add_account"
+        android:name="com.hk203.dadn.ui.adduser.AddAccountFragment"
+        android:label="Them tai khoan">
+        <action
+            android:id="@+id/action_nav_add_account_to_nav_add_account_step2"
+            app:destination="@id/nav_add_account_step2" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_add_account_step2"
+        android:name="com.hk203.dadn.ui.adduser.AddAccountFragment"
+        android:label="Them tai khoan"
+        tools:layout="@layout/fragment_add_account_info_step2" />
 </navigation>
