@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <AutoCompleteTextView
-            android:id="@+id/autoCompleteTextView"
+            android:id="@+id/et_userType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/szLoaiTaiKhoan" />
@@ -25,7 +25,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/name"
+        android:id="@+id/box_userName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -36,13 +36,14 @@
         app:layout_constraintTop_toBottomOf="@+id/account_type">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_userName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/szTenDangNhap" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/cmnd"
+        android:id="@+id/box_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -50,9 +51,10 @@
         android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name">
+        app:layout_constraintTop_toBottomOf="@+id/box_userName">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/szMatKhau" />
@@ -60,7 +62,7 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="344dp"
+        android:layout_width="0dp"
         android:layout_height="61dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"

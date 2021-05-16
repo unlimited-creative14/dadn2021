@@ -21,46 +21,53 @@ public class MQTTService {
     final String subscriptionTopic = "malongnhan/feeds/server";
 
 
-    final String username = "malongnhan";
-    final String password = "aio_oRCT69g6V2ainDyuWPQP6QORyiwG";
+    public static final String default_username = "malongnhan";
+    public static final String default_io_key = "aio_oRCT69g6V2ainDyuWPQP6QORyiwG";
+    public static final MqttCallbackExtended default_callback = new MqttCallbackExtended() {
+        @Override
+        public void connectComplete(boolean b, String s) {
+            Log.w("mqtt", s);
+        }
+
+        @Override
+        public void connectionLost(Throwable throwable) {
+        }
+
+        @Override
+        public void messageArrived(String topic, MqttMessage message) throws Exception {
+            Log.w("Mqtt", message.toString());
+        }
+
+        @Override
+        public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
+
+        }
+    };
+
 
     public MqttAndroidClient mqttAndroidClient;
 
-    public MQTTService(Context context) {
+    public MQTTService(Context context, String username, String io_key, MqttCallbackExtended callback)
+    {
         mqttAndroidClient = new MqttAndroidClient(context, serverUri, clientId);
-        mqttAndroidClient.setCallback(new MqttCallbackExtended() {
-            @Override
-            public void connectComplete(boolean b, String s) {
-                Log.w("mqtt", s);
-            }
+        mqttAndroidClient.setCallback(callback);
+        connect(username, io_key);
+    }
 
-            @Override
-            public void connectionLost(Throwable throwable) {
-            }
-
-            @Override
-            public void messageArrived(String topic, MqttMessage message) throws Exception {
-                Log.w("Mqtt", message.toString());
-            }
-
-            @Override
-            public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
-
-            }
-        });
-        connect();
+    public MQTTService(Context context) {
+        this(context, default_username, default_io_key, default_callback);
     }
 
     public void setCallback(MqttCallbackExtended callback) {
         mqttAndroidClient.setCallback(callback);
     }
 
-    private void connect() {
+    private void connect(String username, String io_key) {
         MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
         mqttConnectOptions.setAutomaticReconnect(true);
         mqttConnectOptions.setCleanSession(false);
         mqttConnectOptions.setUserName(username);
-        mqttConnectOptions.setPassword(password.toCharArray());
+        mqttConnectOptions.setPassword(io_key.toCharArray());
 
         try {
 
