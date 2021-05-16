@@ -28,4 +28,22 @@
         android:name="com.hk203.dadn.ui.updatehealthrule.UpdateHealthRuleFragment"
         android:label="Cap nhat quy tac y te"
         tools:layout="@layout/fragment_update_health_rule" />
+
+    <fragment
+        android:id="@+id/nav_patient_list"
+        android:name="com.hk203.dadn.ui.patientlist.PatientListFragment"
+        android:label="Danh sach benh nhan"
+        tools:layout="@layout/fragment_patient_list">
+        <action
+            android:id="@+id/action_nav_patient_list_to_nav_patient_info"
+            app:destination="@id/nav_patient_info"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_patient_info"
+        android:name="com.hk203.dadn.ui.patient_info.PatientInfoFragment"
+        android:label="Thong tin benh nhan"
+        tools:layout="@layout/fragment_patient_info"/>
+
+
 </navigation>

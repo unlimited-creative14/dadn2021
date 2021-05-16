@@ -41,4 +41,28 @@
     <string name="szBS5">Bác sỹ 5</string>
     <string name="szBS6">Bác sỹ 6</string>
     <string name="szThemBacSiDieuTri">Thêm bác sĩ điều trị</string>
+
+    <string-array name="patient_statuses">
+        <item>All</item>
+        <item>Recovery</item>
+        <item>Incubation</item>
+        <item>Emergency</item>
+        <item>Febrile</item>
+    </string-array>
+
+    <string-array name="patient_list">
+        <item>Nguyen Van A</item>
+        <item>Nguyen Van B</item>
+    </string-array>
+
+    <string-array name="treatment_list">
+        <item>Treatment 1</item>
+        <item>Treatment 2</item>
+    </string-array>
+
+    <string-array name="patient_info">
+        <item>Nguyen Van A</item>
+        <item>18 years old</item>
+    </string-array>
+
 </resources>
