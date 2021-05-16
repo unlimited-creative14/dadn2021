@@ -29,7 +29,11 @@
             android:id="@+id/nav_updateHealthRule"
             android:icon="@drawable/ic_baseline_update_24"
             android:title="Cap nhat quy tac y te" />
+        <item
+            android:id="@+id/nav_patient_list"
+            android:title="Danh sach benh nhan"/>
     </group>
+
     <group
         android:id="@+id/accountNavGroup"
         android:checkableBehavior="none">

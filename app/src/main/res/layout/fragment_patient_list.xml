@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.patientlist.PatientListFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="24dp"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="24dp"/>
+
+        <TextView
+            android:id="@+id/tv_patients"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="@+id/gl_left"
+            app:layout_constraintEnd_toStartOf="@+id/gl_right"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="Your patient list"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:gravity="center_horizontal"
+            android:padding="16dp"
+            />
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="70dp"
+            app:layout_constraintStart_toStartOf="@+id/gl_left"
+            app:layout_constraintEnd_toStartOf="@+id/gl_right"
+            app:layout_constraintTop_toBottomOf="@+id/tv_patients"
+            android:inputType="textEmailAddress"
+            android:hint="Search by Name ..."
+            android:padding="16dp"
+            />
+
+        <Button
+            android:id="@+id/btn_search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@android:drawable/ic_menu_search"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toEndOf="@+id/et_search"
+            app:layout_constraintEnd_toStartOf="@+id/gl_right"
+            app:layout_constraintTop_toBottomOf="@+id/tv_patients"/>
+
+        <Spinner
+            android:id="@+id/spn_status_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/gl_right"
+            app:layout_constraintStart_toStartOf="@+id/gl_left"
+            app:layout_constraintTop_toBottomOf="@+id/et_search"
+            android:entries="@array/patient_statuses"/>
+
+        <ListView
+            android:id="@+id/lv_patients"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            app:layout_constraintStart_toStartOf="@+id/gl_left"
+            app:layout_constraintEnd_toStartOf="@+id/gl_right"
+            app:layout_constraintTop_toBottomOf="@+id/spn_status_filter"
+            android:entries="@array/patient_list"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
