@@ -2,6 +2,7 @@ package com.hk203.dadn;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -41,6 +42,7 @@ public class StartupActivity extends AppCompatActivity {
                 android.content.Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.putExtra("username", et_username.getText().toString());
                 startActivity(intent);
+                finish();
             }
         });
     }

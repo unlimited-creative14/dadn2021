@@ -4,6 +4,14 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.navigation.ActionOnlyNavDirections;
+import androidx.navigation.ActivityNavigator;
+import androidx.navigation.NavBackStackEntry;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.FragmentNavigator;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -97,13 +105,8 @@ public class AddAccountFragment extends Fragment {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("account", newAcc);
 
-                    FragmentManager fragmentManager = getParentFragmentManager();
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.nav_host_fragment_content_main, AddAccountInfoStep2Fragment.class, bundle)
-                            .setReorderingAllowed(true)
-                            .addToBackStack(null) // name can be null
-                            .commit();
-
+                    NavController controller = Navigation.findNavController(getActivity(), R.id.nav_host_fragment_content_main);
+                    controller.navigate(R.id.action_nav_add_account_to_nav_add_account_step2, bundle);
                 }
             });
     }

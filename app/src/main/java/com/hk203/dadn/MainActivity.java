@@ -29,6 +29,19 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
 
     @Override
+    public void onBackPressed()
+    {
+        FragmentManager fm = getSupportFragmentManager();
+        if (fm.getBackStackEntryCount() > 0) {
+            Log.i("MainActivity", "popping backstack");
+            fm.popBackStack();
+        } else {
+            Log.i("MainActivity", "nothing on backstack, calling super");
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -43,17 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-//    GraphView graph = (GraphView) findViewById(R.id.graph);
-//    LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-//            new DataPoint(0, 1),
-//            new DataPoint(1, 5),
-//            new DataPoint(2, 3),
-//            new DataPoint(3, 2),
-//            new DataPoint(4, 6)
-//    });
-//        graph.addSeries(series);
-
     void preCreate() {
         setSupportActionBar(binding.appBarMain.toolbar);
         DrawerLayout drawer = binding.drawerLayout;
@@ -61,8 +63,10 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery,
-                R.id.nav_slideshow, R.id.nav_updateHealthRule
+                R.id.nav_add_account,
+                R.id.nav_home,
+                R.id.nav_updateHealthRule,
+                R.id.nav_adafruit_demo
         ).setDrawerLayout(drawer).build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
