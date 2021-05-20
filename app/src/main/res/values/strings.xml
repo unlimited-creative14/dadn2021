@@ -45,6 +45,7 @@
     <string name="tbbn2">Thông báo về bệnh nhân 2</string>
     <string name="tbbn3">Thông báo về bệnh nhân 3</string>
     <string name="tbbn4">Thông báo về bệnh nhân 4</string>
+    <string name="TB">Thông báo về tình hình bệnh nhân</string>
 
     <string-array name="patient_statuses">
         <item>All</item>
