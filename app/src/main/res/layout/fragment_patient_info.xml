@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.patient_info.PatientInfoFragment">
+    tools:context=".ui.patient_info.PatientInfoFragment"
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,6 +55,11 @@
             android:layout_height="wrap_content"
             android:entries="@array/treatment_list"
             />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lc_temp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
 

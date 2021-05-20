@@ -15,14 +15,11 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 public class MQTTService {
     final String serverUri = "tcp://io.adafruit.com:1883";
-
-
     final String clientId = "myID";
     final String subscriptionTopic = "malongnhan/feeds/server";
-
-
     public static final String default_username = "malongnhan";
     public static final String default_io_key = "aio_oRCT69g6V2ainDyuWPQP6QORyiwG";
+
     public static final MqttCallbackExtended default_callback = new MqttCallbackExtended() {
         @Override
         public void connectComplete(boolean b, String s) {
@@ -43,7 +40,6 @@ public class MQTTService {
 
         }
     };
-
 
     public MqttAndroidClient mqttAndroidClient;
 

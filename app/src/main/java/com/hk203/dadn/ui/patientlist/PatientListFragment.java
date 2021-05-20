@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,12 +43,8 @@ public class PatientListFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getActivity(),binding.lvPatients.getItemAtPosition(position).toString()
                         + " selected",Toast.LENGTH_SHORT).show();
-                FragmentManager fm = getParentFragmentManager();
-                fm.beginTransaction()
-                        .add(R.id.nav_host_fragment_content_main,PatientInfoFragment.class,null)
-                        .setReorderingAllowed(true)
-                        .addToBackStack(null)
-                        .commit();
+                NavController controller = Navigation.findNavController(getActivity(), R.id.nav_host_fragment_content_main);
+                controller.navigate(R.id.action_nav_patient_list_to_nav_patient_info);
             }
         });
     }
