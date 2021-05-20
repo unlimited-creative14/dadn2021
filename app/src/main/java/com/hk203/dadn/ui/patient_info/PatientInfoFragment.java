@@ -34,9 +34,9 @@ public class PatientInfoFragment extends Fragment {
         MqttCallbackExtended cb = new MqttCallbackExtended() {
             @Override
             public void connectComplete(boolean reconnect, String serverURI) {
-                //ToDO:
+                // ToDO:
                 try {
-                    svc.sendData("Hello, i am Long");
+                    svc.sendData("Test");
                 } catch (MqttException e) {
                     e.printStackTrace();
                 }
@@ -62,7 +62,7 @@ public class PatientInfoFragment extends Fragment {
                 getActivity(),
                 "hoangkim",
                 "aio_wxbW0127KrpCclPXXdw3811V8hNG",
-                "hoangkim/feeds/test1",
+                "hoangkim/feeds/demo",
                 cb
         );
 
