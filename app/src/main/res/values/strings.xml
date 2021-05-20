@@ -21,4 +21,53 @@
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="szLoaiTaiKhoan">Loại Tài Khoản</string>
+    <string name="szTenDangNhap">Tên đăng nhập</string>
+    <string name="szMatKhau">Mật khẩu</string>
+    <string name="szTaoTaiKhoan">Tạo tài khoản</string>
+    <string name="szHuy">Hủy</string>
+    <string name="szThem">Thêm</string>
+    <string name="szThongTinNguoiDung">Thông tin người dùng</string>
+    <string name="szHo">Họ</string>
+    <string name="szCMND">Số CMND</string>
+    <string name="szEmail">Email</string>
+    <string name="szTen">Tên</string>
+    <string name="szPhong">Phòng</string>
+    <string name="szXacNhan">Xác Nhận</string>
+    <string name="szBN1">Bệnh nhân 1</string>
+    <string name="szBN2">Bệnh nhân 2</string>
+    <string name="szBN3">Bệnh nhân 3</string>
+    <string name="szDanhSachBenhNhan">Danh sách bệnh nhân</string>
+    <string name="szBS3">Bác sỹ 3</string>
+    <string name="szBacSiDieuTri">Bác sĩ điều trị</string>
+    <string name="szBS2">Bác Sỹ 2</string>
+    <string name="szBS1">Bác sỹ 1</string>
+    <string name="szBS4">Bác Sỹ 4</string>
+    <string name="szBS5">Bác sỹ 5</string>
+    <string name="szBS6">Bác sỹ 6</string>
+    <string name="szThemBacSiDieuTri">Thêm bác sĩ điều trị</string>
+
+    <string-array name="patient_statuses">
+        <item>All</item>
+        <item>Recovery</item>
+        <item>Incubation</item>
+        <item>Emergency</item>
+        <item>Febrile</item>
+    </string-array>
+
+    <string-array name="patient_list">
+        <item>Nguyen Van A</item>
+        <item>Nguyen Van B</item>
+    </string-array>
+
+    <string-array name="treatment_list">
+        <item>Treatment 1</item>
+        <item>Treatment 2</item>
+    </string-array>
+
+    <string-array name="patient_info">
+        <item>Nguyen Van A</item>
+        <item>18 years old</item>
+    </string-array>
+
 </resources>

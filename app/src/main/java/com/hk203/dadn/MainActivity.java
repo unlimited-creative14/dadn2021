@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -20,27 +21,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.hk203.dadn.databinding.ActivityMainBinding;
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
-
-import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
-import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
-
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
     String username;
-    MQTTService mqttService;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-    private int counter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         preCreate();
         addGroupNameDrawer(binding.navView);
 
+<<<<<<< HEAD
         mqttService = new MQTTService(this);
         mqttService.setCallback(new MqttCallbackExtended() {
             @Override
@@ -107,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
         };
 
         aTimer.schedule(aTask, 1000, 10000);
+=======
+>>>>>>> b3588b8738dd27812b279c6db4875c0eae71602e
     }
 
 
@@ -171,4 +160,5 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
 }

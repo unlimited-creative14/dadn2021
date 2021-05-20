@@ -28,7 +28,7 @@ public class StartupActivity extends AppCompatActivity {
     void registerLoginCallback()
     {
 
-        Button loginBtn = binding.buttonLogin;
+        Button loginBtn = binding.btnLogin;
         loginBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -36,8 +36,8 @@ public class StartupActivity extends AppCompatActivity {
 
                 // TODO: Do some login stuff here before start main activity
 
-                EditText et_username = binding.edittextUsername;
-                EditText et_password = binding.edittextPassword;
+                EditText et_username = binding.etUsername;
+                EditText et_password = binding.etPassword;
                 android.content.Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.putExtra("username", et_username.getText().toString());
                 startActivity(intent);

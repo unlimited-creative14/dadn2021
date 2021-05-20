@@ -91,6 +91,7 @@
                         android:id="@+id/et_tempFrom"
                         android:layout_width="30dp"
                         android:layout_weight="0.6"
+                        android:inputType="numberDecimal"
                         android:layout_height="wrap_content"
                         android:background="@android:drawable/edit_text"/>
                 </LinearLayout>
@@ -111,6 +112,7 @@
                         android:id="@+id/et_tempTo"
                         android:layout_width="30dp"
                         android:layout_weight="0.6"
+                        android:inputType="numberDecimal"
                         android:layout_height="wrap_content"
                         android:background="@android:drawable/edit_text"/>
                 </LinearLayout>
@@ -170,6 +172,7 @@
                         android:layout_width="30dp"
                         android:layout_weight="0.6"
                         android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
                         android:background="@android:drawable/edit_text"/>
                 </LinearLayout>
                 <LinearLayout
@@ -190,6 +193,7 @@
                         android:layout_width="30dp"
                         android:layout_weight="0.6"
                         android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
                         android:background="@android:drawable/edit_text"/>
                 </LinearLayout>
                 <Spinner
@@ -226,8 +230,6 @@
                 android:layout_weight="0.3"
                 android:layout_margin="10dp"
                 android:text="Cap nhat"/>
-
-
         </LinearLayout>
 
 
