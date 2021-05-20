@@ -15,6 +15,7 @@ import android.widget.ScrollView;
 import android.widget.SimpleAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialDialogs;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -76,11 +77,18 @@ public class AdafruitListMessageFragment extends Fragment {
         binding.fabSendMqttmessage.setOnClickListener(this::fabSendMessage);
         return binding.getRoot();
     }
-
+    boolean connected = false;
     void fabSendMessage(View v)
     {
-        SendMQTTMessageDialogFragment df = SendMQTTMessageDialogFragment.newInstance(svc);
-        df.show(getParentFragmentManager(), "dft");
+        if(!connected)
+        {
+            Toast.makeText(getContext(), "Not connected!", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            SendMQTTMessageDialogFragment df = SendMQTTMessageDialogFragment.newInstance(svc);
+            df.show(getParentFragmentManager(), "dft");
+        }
     }
 
     void createList(View view)
@@ -88,7 +96,7 @@ public class AdafruitListMessageFragment extends Fragment {
         svc.setCallback(new MqttCallbackExtended() {
             @Override
             public void connectComplete(boolean reconnect, String serverURI) {
-
+                connected = true;
             }
 
             @Override
