@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        aTimer.schedule(aTask, 1000, 30000);
+        aTimer.schedule(aTask, 1000, 10000);
     }
 
 

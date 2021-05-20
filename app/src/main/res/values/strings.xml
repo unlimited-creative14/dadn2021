@@ -14,6 +14,11 @@
     <string name="menu_lbadmin">Admin Panel</string>
     <string name="menu_lbaccount">My account</string>
     <string name="LeaderName">Le Huu Vo Long</string>
+    <string-array name="account_type">
+        <item>Quản lý</item>
+        <item>Bác sỹ</item>
+        <item>Y tá</item>
+    </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
