@@ -41,6 +41,10 @@
     <string name="szBS5">Bác sỹ 5</string>
     <string name="szBS6">Bác sỹ 6</string>
     <string name="szThemBacSiDieuTri">Thêm bác sĩ điều trị</string>
+    <string name="tbbn1">Thông báo về bệnh nhân 1</string>
+    <string name="tbbn2">Thông báo về bệnh nhân 2</string>
+    <string name="tbbn3">Thông báo về bệnh nhân 3</string>
+    <string name="tbbn4">Thông báo về bệnh nhân 4</string>
 
     <string-array name="patient_statuses">
         <item>All</item>
