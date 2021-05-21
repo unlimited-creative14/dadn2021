@@ -25,21 +25,6 @@
             android:orientation="vertical"
             app:layout_constraintGuide_end="24dp"/>
 
-        <TextView
-            android:id="@+id/tv_patients"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:layout_constraintStart_toStartOf="@+id/gl_left"
-            app:layout_constraintEnd_toStartOf="@+id/gl_right"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="Your patient list"
-            android:textSize="20dp"
-            android:textAlignment="center"
-            android:gravity="center_horizontal"
-            android:padding="16dp"
-            />
-
         <EditText
             android:id="@+id/et_search"
             android:layout_width="0dp"
