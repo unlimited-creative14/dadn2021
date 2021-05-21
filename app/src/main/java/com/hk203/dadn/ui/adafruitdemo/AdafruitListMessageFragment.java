@@ -19,14 +19,20 @@ import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialDialogs;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.GsonBuilder;
 import com.hk203.dadn.MQTTService;
 import com.hk203.dadn.R;
 import com.hk203.dadn.databinding.FragmentAdafruitListMessageBinding;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -91,25 +97,78 @@ public class AdafruitListMessageFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        try {
+            svc.mqttAndroidClient.disconnect();
+        } catch (Exception e) {
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        svc.mqttAndroidClient.unregisterResources();
+    }
+
     void createList(View view)
     {
         svc.setCallback(new MqttCallbackExtended() {
             @Override
             public void connectComplete(boolean reconnect, String serverURI) {
                 connected = true;
+                Toast.makeText(getContext(), "Connected!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void connectionLost(Throwable cause) {
-
+                connected = false;
+                Toast.makeText(
+                        getContext(),
+                        "Disconnected! " + ((cause == null) ? "null" : cause.getMessage()) ,
+                        Toast.LENGTH_SHORT
+                ).show();
             }
 
             @Override
             public void messageArrived(String topic, MqttMessage message) throws Exception {
-                TextView tv = (TextView) getLayoutInflater().inflate(R.layout.single_text_view, null);
-                tv.setText(message.toString());
+                String test = message.toString();
+                boolean isJson = true;
+                JSONObject obj = null;
+                try {
+                    obj = new JSONObject(test);
+                } catch (JSONException ex) {
+                    // edited, to include @Arthur's comment
+                    // e.g. in case JSONArray is valid as well...
+                    try {
+                        new JSONArray(test);
+                    } catch (JSONException ex1) {
+                        isJson = false;
+                    }
+                }
 
-                binding.messageContainer.addView(tv);
+                if (isJson)
+                {
+                    LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(R.layout.multext_title_text_view, null);
+                    ((TextView)layout.findViewById(R.id.title_text_view)).setText("JSON");
+                    Iterator<String> keys = obj.keys();
+                    while (keys.hasNext())
+                    {
+                        String key = keys.next();
+                        if (true) {
+                            TextView tv = (TextView) getLayoutInflater().inflate(R.layout.single_text_view, null);
+                            tv.setText(key + ":" + obj.get(key).toString());
+                            tv.setPadding(60, 0,0,0);
+                            layout.addView(tv);
+                        }
+                    }
+                    binding.messageContainer.addView(layout);
+                }
+                else
+                {
+                    TextView tv = (TextView) getLayoutInflater().inflate(R.layout.single_text_view, null);
+                    tv.setText(message.toString());
+
+                    binding.messageContainer.addView(tv);
+                }
                 binding.scrollView.fullScroll(ScrollView.FOCUS_DOWN);
             }
 

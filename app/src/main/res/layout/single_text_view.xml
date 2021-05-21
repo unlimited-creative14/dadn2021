@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     tools:text="Placeholder"
-    android:padding="10sp"
+    android:paddingLeft="5sp"
     android:textSize="25sp">
 
 </TextView>

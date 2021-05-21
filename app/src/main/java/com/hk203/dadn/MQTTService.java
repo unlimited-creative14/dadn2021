@@ -10,6 +10,7 @@ import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
+import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
@@ -19,7 +20,6 @@ import java.lang.reflect.Array;
 public class MQTTService {
     public static final String serverUri = "tcp://io.adafruit.com:1883";
 
-    final String clientId = "myID";
     public static final String default_subscriptionTopic = "malongnhan/feeds/server";
     public static final String default_username = "malongnhan";
     public static final String default_io_key = "aio_oRCT69g6V2ainDyuWPQP6QORyiwG";
@@ -49,7 +49,8 @@ public class MQTTService {
 
     public MQTTService(Context context, String username, String io_key, String topic, MqttCallbackExtended callback)
     {
-        mqttAndroidClient = new MqttAndroidClient(context, serverUri, clientId);
+        mqttAndroidClient = new MqttAndroidClient(context, serverUri, MqttClient.generateClientId());
+
 
         mqttAndroidClient.setCallback(callback);
         connect(username, io_key);

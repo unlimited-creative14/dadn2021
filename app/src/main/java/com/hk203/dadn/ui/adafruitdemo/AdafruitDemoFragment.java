@@ -52,7 +52,7 @@ public class AdafruitDemoFragment extends Fragment {
 
         binding.etServerUrl.setText(MQTTService.serverUri);
         binding.etAdaUsername.setText("pipe1404");
-        binding.etAdaIoKey.setText("aio_DGIo36iGTXTjsxBDscCAJxHLCgme");
+        binding.etAdaIoKey.setText("aio_vSSW67Hkla1acSRfrqbIXTGWHpy1");
         binding.etAdaTopic.setText("pipe1404/feeds/led-zz");
     }
     void onBtnStartClicked(View v)
