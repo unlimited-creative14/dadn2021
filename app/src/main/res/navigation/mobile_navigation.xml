@@ -12,18 +12,6 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.hk203.dadn.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
-
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.hk203.dadn.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
-
-    <fragment
         android:id="@+id/nav_updateHealthRule"
         android:name="com.hk203.dadn.ui.updatehealthrule.UpdateHealthRuleFragment"
         android:label="Cap nhat quy tac y te"
@@ -50,16 +38,37 @@
     <fragment
         android:id="@+id/nav_add_account"
         android:name="com.hk203.dadn.ui.adduser.AddAccountFragment"
-        android:label="Them tai khoan">
+        android:label="Them tai khoan"
+        tools:layout="@layout/fragment_add_account">
         <action
             android:id="@+id/action_nav_add_account_to_nav_add_account_step2"
-            app:destination="@id/nav_add_account_step2" />
+            app:destination="@id/nav_add_account_step2"/>
     </fragment>
-    
+
     <fragment
         android:id="@+id/nav_add_account_step2"
-        android:name="com.hk203.dadn.ui.adduser.AddAccountFragment"
-        android:label="Them tai khoan"
-        tools:layout="@layout/fragment_add_account_info_step2" />
-
+        android:name="com.hk203.dadn.ui.adduser.AddAccountInfoStep2Fragment"
+        android:label="Them tai khoan">
+        <argument
+            android:name="account"
+            app:argType="com.hk203.dadn.ui.adduser.Account" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_adafruit_demo"
+        android:name="com.hk203.dadn.ui.adafruitdemo.AdafruitDemoFragment"
+        tools:layout="@layout/fragment_adafruit_demo"
+        android:label="Adafruit Demo"
+        >
+        <action
+            android:id="@+id/action_nav_adafruit_demo_to_nav_adafruit_list_message"
+            app:destination="@id/nav_adafruit_list_message" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_adafruit_list_message"
+        android:name="com.hk203.dadn.ui.adafruitdemo.AdafruitListMessageFragment"
+        >
+        <argument
+            android:name="bundle"
+            app:argType="android.os.Bundle"/>
+    </fragment>
 </navigation>

@@ -3,6 +3,8 @@ package com.hk203.dadn.ui.adduser;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import com.google.gson.GsonBuilder;
+import com.hk203.dadn.R;
 import com.hk203.dadn.databinding.FragmentAddAccountInfoStep2Binding;
 
 /**
@@ -68,9 +71,11 @@ public class AddAccountInfoStep2Fragment extends Fragment {
     void registerBackCallback()
     {
         Button btnBack = binding.btnBack;
-        btnBack.setOnClickListener(v ->{
-            getParentFragmentManager().popBackStack();
+        btnBack.setOnClickListener(v -> {
+            NavController controller = Navigation.findNavController(getActivity(), R.id.nav_host_fragment_content_main);
+            controller.navigateUp();
         });
+
     }
 
     void registerSubmitCallback()

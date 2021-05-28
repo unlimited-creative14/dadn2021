@@ -2,6 +2,7 @@ package com.hk203.dadn;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.DisconnectedBufferOptions;
@@ -9,52 +10,73 @@ import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
+import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import java.lang.reflect.Array;
+
 public class MQTTService {
-    private String serverUri = "tcp://io.adafruit.com:1883";
-    private String clientId = "myID";
-    private String subscriptionTopic = "kimnguyenlong/feeds/temp";
-    private String username = "kimnguyenlong";
-    private String io_key = "aio_mpYq21jymEgrHUlt5MLMNtZaCLnQ";
-    private MqttAndroidClient mqttAndroidClient;
+    public static final String serverUri = "tcp://io.adafruit.com:1883";
 
-    public MQTTService(Context context)
+    public static final String default_subscriptionTopic = "malongnhan/feeds/server";
+    public static final String default_username = "malongnhan";
+    public static final String default_io_key = "aio_oRCT69g6V2ainDyuWPQP6QORyiwG";
+    public static final MqttCallbackExtended default_callback = new MqttCallbackExtended() {
+        @Override
+        public void connectComplete(boolean b, String s) {
+            Log.w("mqtt", s);
+        }
+
+        @Override
+        public void connectionLost(Throwable throwable) {
+        }
+
+        @Override
+        public void messageArrived(String topic, MqttMessage message) throws Exception {
+            Log.w("Mqtt", message.toString());
+        }
+
+        @Override
+        public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
+
+        }
+    };
+
+    String subscriptionTopic;
+    public MqttAndroidClient mqttAndroidClient;
+
+    public MQTTService(Context context, String username, String io_key, String topic, MqttCallbackExtended callback)
     {
-        mqttAndroidClient = new MqttAndroidClient(context, serverUri, clientId);
-        /*mqttAndroidClient.setCallback(new MqttCallbackExtended() {
-            @Override
-            public void connectComplete(boolean reconnect, String serverURI) {
-                Log.w("Mqtt","connect complete");
-            }
+        mqttAndroidClient = new MqttAndroidClient(context, serverUri, MqttClient.generateClientId());
 
-            @Override
-            public void connectionLost(Throwable cause) {
-                Log.w("Mqtt","connect lost");
-                try{
-                    mqttAndroidClient.unsubscribe(subscriptionTopic);
-                } catch (MqttException e) {
-                    e.printStackTrace();
-                }
-            }
 
-            @Override
-            public void messageArrived(String topic, MqttMessage message) throws Exception {
-                Log.w("Mqtt",message.toString());
-            }
-
-            @Override
-            public void deliveryComplete(IMqttDeliveryToken token) {
-
-            }
-        });*/
+        mqttAndroidClient.setCallback(callback);
         connect(username, io_key);
+
+        subscriptionTopic = topic;
     }
 
-    public void setCallBack(MqttCallbackExtended newCallBack){
-        mqttAndroidClient.setCallback(newCallBack);
+    public MQTTService(Context context) {
+        this(context, default_username, default_io_key, default_subscriptionTopic ,default_callback);
+    }
+
+    public void setCallback(MqttCallbackExtended callback) {
+        mqttAndroidClient.setCallback(callback);
+    }
+
+    public void sendData(CharSequence data) throws MqttException {
+        MqttMessage msg = new MqttMessage();
+        msg.setPayload(data.toString().getBytes());
+        try {
+            mqttAndroidClient.publish(subscriptionTopic, msg);
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+
     }
 
     private void connect(String username, String io_key) {

@@ -35,7 +35,7 @@ public class PatientInfoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
+    MQTTService svc;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ public class PatientInfoFragment extends Fragment {
         lc_temp.setData(lineData);
 
         MQTTService mqttService = new MQTTService(getContext());
-        mqttService.setCallBack(new MqttCallbackExtended() {
+        mqttService.setCallback(new MqttCallbackExtended() {
             @Override
             public void connectComplete(boolean reconnect, String serverURI) {
                 Log.w("Mqtt","connect complete");
