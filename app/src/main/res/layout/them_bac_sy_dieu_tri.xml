@@ -21,97 +21,11 @@
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
             android:drawableRight="@drawable/medical_doctor"
-            android:background="@drawable/bg_login"
-            android:text="Bác Sỹ 2"
+            android:text="Bác Sỹ x"
             android:textAlignment="center"
             android:textColor="@android:color/black" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/image_btn2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:background="@drawable/bg_btn"
-        app:layout_constraintTop_toBottomOf="@+id/image_btn"
-        tools:layout_editor_absoluteX="-27dp">
 
-        <CheckBox
-            android:id="@+id/doctor2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:drawableRight="@drawable/medical_doctor"
-            android:background="@drawable/bg_login"
-            android:text="Bác sỹ 2"
-            android:textAlignment="center"
-            android:textColor="@android:color/black" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/image_btn3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:background="@drawable/bg_btn"
-        app:layout_constraintTop_toBottomOf="@+id/image_btn2"
-        tools:layout_editor_absoluteX="-27dp">
-
-        <CheckBox
-            android:id="@+id/doctor3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:background="@drawable/bg_login"
-            android:drawableRight="@drawable/medical_doctor"
-            android:text="Bác sỹ 3"
-            android:textAlignment="center"
-            android:textColor="@android:color/black" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/image_btn4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-
-        android:background="@drawable/bg_btn"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_btn2"
-        app:layout_constraintVertical_bias="0.944"
-        tools:layout_editor_absoluteX="32dp">
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="28dp"
-            android:drawableLeft="@drawable/add_link"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:text="Xác nhận"
-            android:textAlignment="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:drawableLeft="@drawable/add_link"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginBottom="28dp"
-            android:text="Hủy"
-            android:textAlignment="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

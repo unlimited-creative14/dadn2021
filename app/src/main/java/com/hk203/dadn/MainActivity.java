@@ -7,11 +7,14 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -54,61 +57,6 @@ public class MainActivity extends AppCompatActivity {
         preCreate();
         addGroupNameDrawer(binding.navView);
 
-<<<<<<< HEAD
-        mqttService = new MQTTService(this);
-        mqttService.setCallback(new MqttCallbackExtended() {
-            @Override
-            public void connectComplete(boolean reconnect, String serverURI) {
-                SendRequestTimer();
-            }
-
-            @Override
-            public void connectionLost(Throwable cause) {
-                System.out.println(cause.toString());
-            }
-
-
-            @Override
-            public void deliveryComplete(IMqttDeliveryToken token) {
-
-            }
-
-            @Override
-            public void messageArrived(String topic, MqttMessage
-                    message) throws Exception {
-                Log.d("mqtt",message.toString());
-            }
-        });
-    }
-
-    private void sendDataMQTT(String data) {
-        MqttMessage msg = new MqttMessage();
-        msg.setId(1234);
-        msg.setQos(0);
-        msg.setRetained(true);
-        byte[] b = data.getBytes(StandardCharsets.UTF_8);
-        msg.setPayload(b);
-        Log.d("ABC", "Publish:" + msg);
-        try {
-            mqttService.mqttAndroidClient.publish("malongnhan/feeds/server", msg);
-        } catch (MqttException e) {
-
-        }
-    }
-
-    void SendRequestTimer() {
-        Timer aTimer = new Timer();
-        TimerTask aTask = new TimerTask() {
-            @Override
-            public void run() {
-                counter++;
-                sendDataMQTT("this will be json");
-            }
-        };
-
-        aTimer.schedule(aTask, 1000, 10000);
-=======
->>>>>>> b3588b8738dd27812b279c6db4875c0eae71602e
     }
 
     void preCreate() {
