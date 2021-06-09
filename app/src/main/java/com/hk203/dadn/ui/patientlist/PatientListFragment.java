@@ -41,10 +41,16 @@ public class PatientListFragment extends Fragment {
         binding.lvPatients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity(),binding.lvPatients.getItemAtPosition(position).toString()
-                        + " selected",Toast.LENGTH_SHORT).show();
-                NavController controller = Navigation.findNavController(getActivity(), R.id.nav_host_fragment_content_main);
-                controller.navigate(R.id.action_nav_patient_list_to_nav_patient_info);
+                Toast.makeText(
+                        getActivity(),binding.lvPatients.getItemAtPosition(position).toString()
+                        + " selected",Toast.LENGTH_SHORT
+                ).show();
+                NavController controller = Navigation.findNavController(
+                        getActivity(), R.id.nav_host_fragment_content_main
+                );
+                Bundle bundle = new Bundle();
+                bundle.putString("msg","ccccccc");
+                controller.navigate(R.id.action_nav_patient_list_to_nav_patient_info,bundle);
             }
         });
     }

@@ -40,7 +40,9 @@ public class StartupActivity extends AppCompatActivity {
                 EditText et_username = binding.etUsername;
                 EditText et_password = binding.etPassword;
                 android.content.Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("username", et_username.getText().toString());
+                intent.putExtra("user",new User(
+                        et_username.getText().toString(),et_password.getText().toString(),UserRole.MedicalStaff
+                ));
                 startActivity(intent);
                 finish();
             }

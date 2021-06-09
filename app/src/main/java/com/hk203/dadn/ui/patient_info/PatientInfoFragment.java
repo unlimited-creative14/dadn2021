@@ -34,6 +34,7 @@ public class PatientInfoFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("Msg",getArguments().getString("msg"));
     }
     MQTTService svc;
     @Override

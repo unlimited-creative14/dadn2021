@@ -27,7 +27,7 @@ import com.hk203.dadn.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    String username;
+    User user;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
 
@@ -48,18 +48,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        username = getIntent().getStringExtra("username");
-        Toast.makeText(this, "Hello " + username, Toast.LENGTH_LONG).show();
+        user = (User)getIntent().getSerializableExtra("user");
+        Toast.makeText(this, "Hello " + user.getUsername(), Toast.LENGTH_LONG).show();
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        preCreate();
+        preCreate(user.getRole());
         addGroupNameDrawer(binding.navView);
 
     }
 
-    void preCreate() {
+    void preCreate(UserRole role) {
         setSupportActionBar(binding.appBarMain.toolbar);
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
@@ -71,6 +71,12 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_updateHealthRule,
                 R.id.nav_adafruit_demo
         ).setDrawerLayout(drawer).build();
+        if (role == UserRole.Admin) {
+            navigationView.getMenu().setGroupVisible(R.id.medical_staffNavGroup, false);
+        }
+        else{
+            navigationView.getMenu().setGroupVisible(R.id.adminNavGroup, false);
+        }
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -87,6 +93,14 @@ public class MainActivity extends AppCompatActivity {
         tv.setTextSize(20);
         tv.setTypeface(null, Typeface.BOLD);
         adminLabel.setActionView(tv);
+
+        MenuItem msLabel = drawerMenu.findItem(R.id.lbMedicalStaff);
+        TextView tv2 = new TextView(getApplicationContext());
+        tv2.setText(getString(R.string.menu_lbmediccal_staff));
+        tv2.setTextColor(Color.BLACK);
+        tv2.setTextSize(20);
+        tv2.setTypeface(null, Typeface.BOLD);
+        msLabel.setActionView(tv2);
 
         MenuItem accountLabel = drawerMenu.findItem(R.id.lbAccount);
         TextView tv1 = new TextView(getApplicationContext());

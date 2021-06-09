@@ -6,7 +6,8 @@
     <group
         android:id="@+id/adminNavGroup"
         android:checkableBehavior="single">
-        <item android:id="@+id/lbAdmin"
+        <item
+            android:id="@+id/lbAdmin"
             tools:ignore="MenuTitle" />
         <item
             android:id="@+id/nav_add_account"
@@ -20,18 +21,29 @@
             android:id="@+id/nav_updateHealthRule"
             android:icon="@drawable/ic_baseline_update_24"
             android:title="Cap nhat quy tac y te" />
-        <item
-            android:id="@+id/nav_patient_list"
-            android:title="Danh sach benh nhan"/>
+
         <item
             android:id="@+id/nav_adafruit_demo"
-            android:title="AdafruitDemo"/>
+            android:title="AdafruitDemo" />
     </group>
+
+    <group
+        android:id="@+id/medical_staffNavGroup"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/lbMedicalStaff"
+            tools:ignore="MenuTitle" />
+        <item
+            android:id="@+id/nav_patient_list"
+            android:title="Danh sach benh nhan" />
+    </group>
+
 
     <group
         android:id="@+id/accountNavGroup"
         android:checkableBehavior="none">
-        <item android:id="@+id/lbAccount"
+        <item
+            android:id="@+id/lbAccount"
             tools:ignore="MenuTitle" />
         <item android:title="Thong tin tai khoan" />
         <item android:title="Cai dat tai khoan" />
