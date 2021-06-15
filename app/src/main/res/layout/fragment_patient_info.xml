@@ -1,53 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.patient_info.PatientInfoFragment"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".ui.patient_info.PatientInfoFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
 
-        <ListView
-            android:id="@+id/lv_patient_info"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/patient_info"
-            />
+            android:orientation="vertical">
 
-        <TextView
-            android:text="Status"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Full name:"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_full_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="3dp"
+                    android:text="Nguyen Van Cap"
+                    android:textSize="17dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Room:"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_room"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="3dp"
+                    android:text="111"
+                    android:textSize="17dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+            android:orientation="horizontal">
 
-        <Spinner
-            android:id="@+id/spn_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/patient_statuses"
-            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Status:"
+                android:textSize="17dp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:text="Treatments history"
+            <TextView
+                android:id="@+id/tv_status"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="3dp"
+                android:text="Recovery"
+                android:textColor="@color/green"
+                android:textSize="17dp" />
+
+
+            <TextView
+                android:id="@+id/tv_trm"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="70dp"
+                android:text="Treatments history"
+                android:textSize="17dp"
+                android:textStyle="bold"/>
+
+            <ImageView
+                android:id="@+id/im_add"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_add_treatment"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="10dp">
 
-        <ListView
-            android:id="@+id/lv_treatments"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/treatment_list"
-            />
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/lc_temp"
+                android:layout_width="match_parent"
+                android:layout_height="400dp" />
 
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/lc_temp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Temperature(oC) chart"
+                android:textSize="15dp"
+                android:textStyle="bold|italic"
+                android:textAlignment="center"/>
+        </LinearLayout>
 
     </LinearLayout>
 

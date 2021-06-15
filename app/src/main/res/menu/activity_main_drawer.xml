@@ -36,6 +36,9 @@
         <item
             android:id="@+id/nav_patient_list"
             android:title="Danh sach benh nhan" />
+        <item
+            android:id="@+id/nav_notifications"
+            android:title="Thong bao" />
     </group>
 
 
