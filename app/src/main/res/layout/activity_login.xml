@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg_app">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_left"
@@ -23,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
-        android:src="@drawable/ic_launcher_foreground"
+        android:src="@drawable/medical_doctor"
         app:layout_constraintStart_toStartOf="@+id/gl_left"
         app:layout_constraintEnd_toStartOf="@+id/gl_right"
         app:layout_constraintTop_toTopOf="parent" />
@@ -39,6 +40,8 @@
         android:inputType="textEmailAddress"
         android:hint="Email address"
         android:padding="16dp"
+        android:drawableRight="@drawable/ic_email"
+        android:background="@drawable/bg_edit_text"
         />
 
     <EditText
@@ -52,6 +55,8 @@
         android:inputType="textPassword"
         android:hint="Password"
         android:padding="16dp"
+        android:drawableRight="@drawable/ic_key"
+        android:background="@drawable/bg_edit_text"
         />
 
     <Button
@@ -63,6 +68,9 @@
         app:layout_constraintEnd_toStartOf="@+id/gl_right"
         app:layout_constraintTop_toBottomOf="@+id/et_password"
         android:text="login"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:background="@drawable/bg_button"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

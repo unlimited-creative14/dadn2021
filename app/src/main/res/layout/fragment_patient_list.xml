@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_app"
     android:orientation="vertical"
     tools:context=".ui.patientlist.PatientListFragment">
 
@@ -13,8 +14,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
@@ -27,7 +27,7 @@
             android:id="@+id/spn_status_filter"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="3dp"/>
+            android:layout_marginLeft="3dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -36,16 +36,17 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
 
         <SearchView
             android:id="@+id/sv_search_by_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:queryHint="Search..."
+            android:background="@drawable/bg_edit_text"
             android:iconifiedByDefault="false"
-            />
+            android:queryBackground="@android:color/transparent"
+            android:queryHint="Search..." />
     </LinearLayout>
 
     <LinearLayout
@@ -54,8 +55,8 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_number"
@@ -90,8 +91,8 @@
         android:id="@+id/lv_patients"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_marginRight="20dp" />
 
 </LinearLayout>

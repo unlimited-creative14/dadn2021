@@ -20,12 +20,15 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.hk203.dadn.MQTTService;
@@ -86,16 +89,19 @@ public class PatientInfoFragment extends Fragment {
         lc_temp.getLegend().setEnabled(false);
         lc_temp.getAxisLeft().setEnabled(false);
         lc_temp.getAxisRight().setEnabled(false);
+        lc_temp.getXAxis().setDrawGridLines(true);
+        lc_temp.getXAxis().setGridColor(ContextCompat.getColor(getContext(),R.color.orange));
         lc_temp.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM_INSIDE);
         lc_temp.getXAxis().setTextSize(13);
         lc_temp.getXAxis().setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                if ((int)value>=xAxisValues.size()){
-                    return "";
+                int index = (int)value;
+                if (index<xAxisValues.size() && index%2==0){
+                    return xAxisValues.get(index);
                 }
                 else{
-                    return xAxisValues.get((int)value);
+                    return "";
                 }
             }
         });

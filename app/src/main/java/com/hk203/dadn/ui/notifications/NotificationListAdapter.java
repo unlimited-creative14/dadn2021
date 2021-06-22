@@ -1,68 +1,31 @@
 package com.hk203.dadn.ui.notifications;
 
-import android.database.DataSetObserver;
+import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListAdapter;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
-public class NotificationListAdapter implements ListAdapter {
-    @Override
-    public boolean areAllItemsEnabled() {
-        return false;
-    }
+import com.hk203.dadn.R;
+import java.util.List;
 
-    @Override
-    public boolean isEnabled(int position) {
-        return false;
-    }
+public class NotificationListAdapter extends ArrayAdapter<Notification> {
+    private Context context;
+    private int resource;
 
-    @Override
-    public void registerDataSetObserver(DataSetObserver observer) {
-
-    }
-
-    @Override
-    public void unregisterDataSetObserver(DataSetObserver observer) {
-
-    }
-
-    @Override
-    public int getCount() {
-        return 0;
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return null;
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
-    public boolean hasStableIds() {
-        return false;
+    public NotificationListAdapter(Context context, int resource, List<Notification> objects) {
+        super(context,resource,objects);
+        this.context = context;
+        this.resource = resource;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return 0;
-    }
-
-    @Override
-    public int getViewTypeCount() {
-        return 0;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
+        LayoutInflater inflater = LayoutInflater.from(context);
+        convertView = inflater.inflate(resource,parent,false);
+        ((TextView)convertView.findViewById(R.id.tv_message)).setText(getItem(position).getMessage());
+        ((TextView)convertView.findViewById(R.id.tv_datetime)).setText(getItem(position).getTime().toString());
+        return convertView;
     }
 }

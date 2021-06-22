@@ -14,7 +14,8 @@
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp">
+        android:paddingBottom="10dp"
+        android:background="@drawable/bg_app">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -113,7 +114,8 @@
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/lc_temp"
                 android:layout_width="match_parent"
-                android:layout_height="400dp" />
+                android:layout_height="400dp"
+                android:background="#E8F2F1"/>
 
             <TextView
                 android:layout_width="match_parent"

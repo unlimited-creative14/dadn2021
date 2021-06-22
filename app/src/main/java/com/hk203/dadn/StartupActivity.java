@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.os.Bundle;
 import android.view.View;
@@ -40,8 +41,16 @@ public class StartupActivity extends AppCompatActivity {
                 EditText et_username = binding.etUsername;
                 EditText et_password = binding.etPassword;
                 android.content.Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                UserRole role = null;
+                if (et_username.getText().toString().equals("admin")){
+                    role=UserRole.Admin;
+
+                }
+                else{
+                    role=UserRole.MedicalStaff;
+                }
                 intent.putExtra("user",new User(
-                        et_username.getText().toString(),et_password.getText().toString(),UserRole.MedicalStaff
+                        et_username.getText().toString(),et_password.getText().toString(),role
                 ));
                 startActivity(intent);
                 finish();

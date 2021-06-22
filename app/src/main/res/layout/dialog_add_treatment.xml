@@ -11,7 +11,7 @@
         android:text="Add new treatment"
         android:textSize="25dp"
         android:textStyle="bold"
-        android:gravity="center"/>
+        android:gravity="center" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
             android:layout_height="match_parent"
             android:text="X-ray"
             android:textSize="17dp"
-            android:paddingLeft="3dp"/>
+            android:paddingLeft="3dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -73,7 +73,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingTop="10dp">
         <Button
             android:id="@+id/btn_cancel"
             android:layout_width="0dp"
@@ -81,7 +82,9 @@
             android:layout_height="match_parent"
             android:text="Cancel"
             android:textSize="15dp"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_button"/>
         <Button
             android:id="@+id/btn_confirm"
             android:layout_width="0dp"
@@ -89,6 +92,8 @@
             android:layout_height="match_parent"
             android:text="Confirm"
             android:textSize="15dp"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_button"/>
     </LinearLayout>
 </LinearLayout>

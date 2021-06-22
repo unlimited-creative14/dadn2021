@@ -2,15 +2,12 @@ package com.hk203.dadn.ui.patientlist;
 
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
 import androidx.core.content.ContextCompat;
-
 import com.hk203.dadn.R;
 
 import java.util.List;
