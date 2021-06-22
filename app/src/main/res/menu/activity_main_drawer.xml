@@ -17,6 +17,10 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="Home" />
         <item
+            android:id="@+id/nav_notifications"
+            android:icon="@drawable/ic_notif"
+            android:title="Thong bao" />
+        <item
             android:id="@+id/nav_updateHealthRule"
             android:icon="@drawable/ic_baseline_update_24"
             android:title="Cap nhat quy tac y te" />
