@@ -68,6 +68,7 @@
         app:layout_constraintEnd_toStartOf="@+id/gl_right"
         app:layout_constraintTop_toBottomOf="@+id/et_password"
         android:text="login"
+        android:textSize="15dp"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:background="@drawable/bg_button"

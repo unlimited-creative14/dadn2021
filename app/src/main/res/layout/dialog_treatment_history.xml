@@ -4,14 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="25dp"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@drawable/bg_dialog">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Treatment history"
         android:textSize="25dp"
-        android:textStyle="bold"
-        android:gravity="center" />
+        android:textStyle="bold|italic"
+        android:gravity="center"/>
     <ListView
         android:id="@+id/lv_treatment_history"
         android:layout_width="match_parent"
@@ -23,6 +24,7 @@
         android:layout_height="wrap_content"
         android:text="Cancel"
         android:textSize="15dp"
+        android:textStyle="bold"
         android:textColor="@color/white"
         android:background="@drawable/bg_button"/>
 </LinearLayout>

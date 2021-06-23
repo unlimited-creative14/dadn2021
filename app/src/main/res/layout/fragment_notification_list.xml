@@ -10,5 +10,6 @@
     <ListView
         android:id="@+id/lv_notifications"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="@color/dark_white"/>
 </FrameLayout>

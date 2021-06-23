@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
@@ -33,6 +34,7 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.hk203.dadn.MQTTService;
 import com.hk203.dadn.R;
+import com.hk203.dadn.api.MedicalStaffAPI;
 import com.hk203.dadn.databinding.FragmentPatientInfoBinding;
 import com.hk203.dadn.databinding.FragmentPatientListBinding;
 import com.hk203.dadn.ui.patientlist.Patient;
@@ -51,6 +53,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PatientInfoFragment extends Fragment {
     private static final DecimalFormat decimalFormat = new DecimalFormat(".00");
@@ -187,11 +193,14 @@ public class PatientInfoFragment extends Fragment {
             public void onClick(View v) {
                 Dialog dialog = new Dialog(getContext());
                 dialog.setContentView(R.layout.dialog_treatment_history);
-                String[] trm = {"trm 1","trm 2", "trm 3"};
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                List<Treatment> treatments = new ArrayList<>();
+                treatments.add(new Treatment(1,"Treatment 1",new Date()));
+                treatments.add(new Treatment(2,"Treatment 2",new Date()));
+                treatments.add(new Treatment(3,"Treatment 3",new Date()));
+                TreatmentHistoryAdapter adapter = new TreatmentHistoryAdapter(
                         getContext(),
-                        android.R.layout.simple_list_item_1,
-                        trm
+                        R.layout.adapter_treatment_history,
+                        treatments
                 );
                 ((ListView)dialog.findViewById(R.id.lv_treatment_history)).setAdapter(adapter);
                 dialog.setCancelable(true);
@@ -233,7 +242,22 @@ public class PatientInfoFragment extends Fragment {
         dialog.findViewById(R.id.btn_confirm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("ADD",((EditText)dialog.findViewById(R.id.et_new_treatment)).getText().toString());
+                /*Treatment newTreatment = new Treatment(
+                        1,
+                        ((EditText)dialog.findViewById(R.id.et_new_treatment)).getText().toString(),
+                        new Date()
+                );
+                MedicalStaffAPI.retrofit.addNewTreatment(newTreatment).enqueue(new Callback<Treatment>() {
+                    @Override
+                    public void onResponse(Call<Treatment> call, Response<Treatment> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Treatment> call, Throwable t) {
+
+                    }
+                });*/
                 dialog.cancel();
             }
         });

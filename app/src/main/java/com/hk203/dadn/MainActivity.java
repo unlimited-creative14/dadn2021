@@ -82,6 +82,9 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        ((TextView)navigationView.getHeaderView(0).findViewById(R.id.tv_user_email)).setText(
+                user.getUsername()
+        );
     }
 
     void addGroupNameDrawer(NavigationView nav) {

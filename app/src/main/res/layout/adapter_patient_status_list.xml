@@ -3,9 +3,9 @@
     android:id="@+id/tv_status_adapter"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:text="Status"
-    android:textSize="20dp"
     android:gravity="center_vertical"
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
-    />
+    android:text="Status"
+    android:textSize="20dp"
+    android:textStyle="bold" />

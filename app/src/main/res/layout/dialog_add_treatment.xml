@@ -1,99 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_dialog"
+    android:orientation="vertical"
     android:padding="25dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="Add new treatment"
         android:textSize="25dp"
-        android:textStyle="bold"
-        android:gravity="center" />
+        android:textStyle="bold|italic" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:gravity="center_vertical"
             android:text="Treatment:"
             android:textSize="17dp"
-            android:textStyle="bold"
-            android:gravity="center" />
+            android:textStyle="bold" />
+
         <EditText
             android:id="@+id/et_new_treatment"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="X-ray"
-            android:textSize="17dp"
-            android:paddingLeft="3dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Date (dd/mm/yyyy):"
-            android:textSize="17dp"
-            android:textStyle="bold"
-            android:gravity="center"/>
-        <EditText
-            android:id="@+id/et_date"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="01/01/2000"
-            android:textSize="17dp"
-            android:paddingLeft="3dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Time (hh:mm:ss):"
-            android:textSize="17dp"
-            android:textStyle="bold"
-            android:gravity="center" />
-        <EditText
-            android:id="@+id/et_time"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="01:01:01"
-            android:textSize="17dp"
-            android:paddingLeft="3dp"/>
+            android:layout_weight="0.7"
+            android:textSize="17dp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="10dp">
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:gravity="center_vertical"
+            android:text="Date (dd/mm/yyyy):"
+            android:textSize="17dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_date"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.7"
+            android:textSize="17dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:gravity="center_vertical"
+            android:text="Time (hh:mm):"
+            android:textSize="17dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_time"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.7"
+            android:paddingLeft="3dp"
+            android:textSize="17dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal">
+
         <Button
             android:id="@+id/btn_cancel"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
+            android:layout_marginRight="60dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button"
             android:text="Cancel"
-            android:textSize="15dp"
-            android:layout_marginRight="10dp"
             android:textColor="@color/white"
-            android:background="@drawable/bg_button"/>
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
         <Button
             android:id="@+id/btn_confirm"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
+            android:layout_marginLeft="60dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button"
             android:text="Confirm"
-            android:textSize="15dp"
-            android:layout_marginLeft="10dp"
             android:textColor="@color/white"
-            android:background="@drawable/bg_button"/>
+            android:textSize="15dp"
+            android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>

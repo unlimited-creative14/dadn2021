@@ -19,6 +19,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.hk203.dadn.R;
+import com.hk203.dadn.api.MedicalStaffAPI;
 import com.hk203.dadn.databinding.FragmentPatientListBinding;
 import com.hk203.dadn.ui.patient_info.PatientInfoFragment;
 
@@ -26,6 +27,10 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class PatientListFragment extends Fragment {
@@ -153,6 +158,17 @@ public class PatientListFragment extends Fragment {
         patients = new ArrayList<>();
         patients.add(new Patient("Nguyen Van A", "Recovery"));
         patients.add(new Patient("Nguyen Van B", "Emergency"));
+        /*MedicalStaffAPI.retrofit.getUserInfo().enqueue(new Callback<List<Patient>>() {
+            @Override
+            public void onResponse(Call<List<Patient>> call, Response<List<Patient>> response) {
+                patients = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<List<Patient>> call, Throwable t) {
+
+            }
+        });*/
     }
 
     private List<Patient> filterPatients(String status, String searchKey){
