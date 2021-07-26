@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bg_app">
 
     <androidx.constraintlayout.widget.Guideline
@@ -10,68 +10,90 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="24dp"/>
+        app:layout_constraintGuide_begin="24dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="24dp"/>
+        app:layout_constraintGuide_end="24dp" />
 
     <ImageView
         android:id="@+id/iv_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
         android:src="@drawable/medical_doctor"
-        app:layout_constraintStart_toStartOf="@+id/gl_left"
+        android:layout_marginTop="200dp"
         app:layout_constraintEnd_toStartOf="@+id/gl_right"
+        app:layout_constraintStart_toStartOf="@+id/gl_left"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/et_username"
+        android:id="@+id/et_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        app:layout_constraintStart_toStartOf="@+id/gl_left"
-        app:layout_constraintEnd_toStartOf="@+id/gl_right"
-        app:layout_constraintTop_toBottomOf="@+id/iv_logo"
-        android:inputType="textEmailAddress"
-        android:hint="Email address"
-        android:padding="16dp"
-        android:drawableRight="@drawable/ic_email"
         android:background="@drawable/bg_edit_text"
-        />
+        android:drawableRight="@drawable/ic_email"
+        android:hint="Email address"
+        android:inputType="textEmailAddress"
+        android:padding="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/gl_right"
+        app:layout_constraintStart_toStartOf="@+id/gl_left"
+        app:layout_constraintTop_toBottomOf="@+id/iv_logo" />
 
     <EditText
         android:id="@+id/et_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="@+id/gl_left"
-        app:layout_constraintEnd_toStartOf="@+id/gl_right"
-        app:layout_constraintTop_toBottomOf="@+id/et_username"
-        android:inputType="textPassword"
-        android:hint="Password"
-        android:padding="16dp"
-        android:drawableRight="@drawable/ic_key"
         android:background="@drawable/bg_edit_text"
-        />
+        android:drawableRight="@drawable/ic_key"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:padding="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/gl_right"
+        app:layout_constraintStart_toStartOf="@+id/gl_left"
+        app:layout_constraintTop_toBottomOf="@+id/et_email" />
+
+    <RadioGroup
+        android:id="@+id/rg_role"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_login"
+        app:layout_constraintEnd_toStartOf="@+id/gl_right"
+        app:layout_constraintStart_toStartOf="@+id/gl_left"
+        app:layout_constraintTop_toBottomOf="@+id/et_password">
+
+        <RadioButton
+            android:id="@+id/rb_admin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Admin" />
+
+        <RadioButton
+            android:id="@+id/rb_ms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Medical staff" />
+    </RadioGroup>
 
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="100dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        app:layout_constraintStart_toStartOf="@+id/gl_left"
-        app:layout_constraintEnd_toStartOf="@+id/gl_right"
-        app:layout_constraintTop_toBottomOf="@+id/et_password"
-        android:text="login"
-        android:textSize="15dp"
-        android:textColor="@color/white"
-        android:textStyle="bold"
+        android:layout_marginTop="10dp"
         android:background="@drawable/bg_button"
-        />
+        android:text="Login"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toStartOf="@+id/gl_right"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="@+id/gl_left"
+        app:layout_constraintTop_toBottomOf="@+id/rg_role" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

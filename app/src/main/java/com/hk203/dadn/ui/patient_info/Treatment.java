@@ -5,12 +5,12 @@ import java.util.Date;
 public class Treatment {
     private int id;
     private String description;
-    private Date datetime;
+    private Long time;
 
-    public Treatment(int id, String description, Date datetime) {
+    public Treatment(int id, String description, Long time) {
         this.id = id;
         this.description = description;
-        this.datetime = datetime;
+        this.time = time;
     }
 
     public int getId() {
@@ -29,11 +29,11 @@ public class Treatment {
         this.description = description;
     }
 
-    public Date getDatetime() {
-        return datetime;
+    public Long getDatetime() {
+        return time;
     }
 
-    public void setDatetime(Date datetime) {
-        this.datetime = datetime;
+    public void setDatetime(Long time) {
+        this.time = time;
     }
 }

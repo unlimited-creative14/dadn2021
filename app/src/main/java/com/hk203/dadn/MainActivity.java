@@ -26,10 +26,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.hk203.dadn.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-
-    User user;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    private String authToken;
 
     @Override
     public void onBackPressed()
@@ -48,13 +47,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        user = (User)getIntent().getSerializableExtra("user");
-        Toast.makeText(this, "Hello " + user.getUsername(), Toast.LENGTH_LONG).show();
+        authToken = getIntent().getStringExtra("authToken");
+        Toast.makeText(this, "auth-token: " + authToken, Toast.LENGTH_LONG).show();
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        preCreate(user.getRole());
+        preCreate(UserRole.MedicalStaff);
         addGroupNameDrawer(binding.navView);
 
     }
@@ -83,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         ((TextView)navigationView.getHeaderView(0).findViewById(R.id.tv_user_email)).setText(
-                user.getUsername()
+                "User name"
         );
     }
 
@@ -117,13 +116,6 @@ public class MainActivity extends AppCompatActivity {
         accountLabel.setActionView(tv1);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
 
     @Override
     public boolean onSupportNavigateUp() {

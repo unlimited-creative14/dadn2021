@@ -1,36 +1,23 @@
 package com.hk203.dadn.ui.patientlist;
 
-import android.app.Activity;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.hk203.dadn.R;
-import com.hk203.dadn.api.MedicalStaffAPI;
 import com.hk203.dadn.databinding.FragmentPatientListBinding;
-import com.hk203.dadn.ui.patient_info.PatientInfoFragment;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class PatientListFragment extends Fragment {
@@ -77,15 +64,27 @@ public class PatientListFragment extends Fragment {
         setSearchByNameHandler();
     }
 
+    private void getPatientsFromServer() {
+        patients = new ArrayList<>();
+        patients.add(new Patient("Nguyen Van A", "Recovery"));
+        patients.add(new Patient("Nguyen Van B", "Emergency"));
+        /*IoTHeathCareService.retrofit.getUserInfo().enqueue(new Callback<List<Patient>>() {
+            @Override
+            public void onResponse(Call<List<Patient>> call, Response<List<Patient>> response) {
+                patients = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<List<Patient>> call, Throwable t) {
+
+            }
+        });*/
+    }
+
     private void setPatientSelectHandler() {
         binding.lvPatients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(
-                        getActivity(),
-                        patients.get(position).getName() + " selected",
-                        Toast.LENGTH_SHORT
-                ).show();
                 NavController controller = Navigation.findNavController(
                         getActivity(),
                         R.id.nav_host_fragment_content_main
@@ -101,11 +100,6 @@ public class PatientListFragment extends Fragment {
         binding.spnStatusFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(
-                        getActivity(),
-                        "Filtered by "+statuses.get(position),
-                        Toast.LENGTH_SHORT
-                ).show();
                 List<Patient> patientsFiltered = filterPatients(
                         statuses.get(position),
                         binding.svSearchByName.getQuery().toString().toLowerCase()
@@ -134,11 +128,6 @@ public class PatientListFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Toast.makeText(
-                        getActivity(),
-                        "Searched by "+newText,
-                        Toast.LENGTH_SHORT
-                ).show();
                 List<Patient> patientsSearched = filterPatients(
                         binding.spnStatusFilter.getSelectedItem().toString(),
                         newText.toLowerCase()
@@ -152,23 +141,6 @@ public class PatientListFragment extends Fragment {
                 return true;
             }
         });
-    }
-
-    private void getPatientsFromServer() {
-        patients = new ArrayList<>();
-        patients.add(new Patient("Nguyen Van A", "Recovery"));
-        patients.add(new Patient("Nguyen Van B", "Emergency"));
-        /*MedicalStaffAPI.retrofit.getUserInfo().enqueue(new Callback<List<Patient>>() {
-            @Override
-            public void onResponse(Call<List<Patient>> call, Response<List<Patient>> response) {
-                patients = response.body();
-            }
-
-            @Override
-            public void onFailure(Call<List<Patient>> call, Throwable t) {
-
-            }
-        });*/
     }
 
     private List<Patient> filterPatients(String status, String searchKey){

@@ -1,62 +1,40 @@
 package com.hk203.dadn.ui.patient_info;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.formatter.IValueFormatter;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.utils.ViewPortHandler;
+import com.google.gson.Gson;
 import com.hk203.dadn.MQTTService;
 import com.hk203.dadn.R;
-import com.hk203.dadn.api.MedicalStaffAPI;
 import com.hk203.dadn.databinding.FragmentPatientInfoBinding;
-import com.hk203.dadn.databinding.FragmentPatientListBinding;
 import com.hk203.dadn.ui.patientlist.Patient;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
-import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class PatientInfoFragment extends Fragment {
     private static final DecimalFormat decimalFormat = new DecimalFormat(".00");
@@ -75,6 +53,16 @@ public class PatientInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentPatientInfoBinding.inflate(getLayoutInflater());
+        binding.tvTrm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController controller = Navigation.findNavController(
+                        getActivity(),
+                        R.id.nav_host_fragment_content_main
+                );
+                controller.navigate(R.id.action_nav_patient_info_to_treatmentHistoryFragment);
+            }
+        });
         return binding.getRoot();
     }
 
@@ -83,8 +71,6 @@ public class PatientInfoFragment extends Fragment {
         super.onStart();
         setUpTemperatureChart();
         setUpMqttService();
-        setUpClickTreatmentHistoryHandler();
-        setUpClickAddTreatmentHandler();
     }
 
     private void setUpTemperatureChart() {
@@ -93,12 +79,15 @@ public class PatientInfoFragment extends Fragment {
         lc_temp.setDescription(null);
         lc_temp.setDrawGridBackground(false);
         lc_temp.getLegend().setEnabled(false);
-        lc_temp.getAxisLeft().setEnabled(false);
+        /*lc_temp.getAxisLeft().setEnabled(false);*/
+        lc_temp.getAxisLeft().setTextSize(13);
+        lc_temp.getAxisLeft().setTextColor(Color.BLACK);
         lc_temp.getAxisRight().setEnabled(false);
         lc_temp.getXAxis().setDrawGridLines(true);
         lc_temp.getXAxis().setGridColor(ContextCompat.getColor(getContext(),R.color.orange));
         lc_temp.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM_INSIDE);
         lc_temp.getXAxis().setTextSize(13);
+        lc_temp.getXAxis().setTextColor(Color.BLACK);
         lc_temp.getXAxis().setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
@@ -118,15 +107,8 @@ public class PatientInfoFragment extends Fragment {
         dataSet.setDrawCircles(true);
         dataSet.setCircleColor(Color.GREEN);
         dataSet.setCircleRadius(4);
-        dataSet.setValueTextSize(13);
-        dataSet.setValueTextColor(Color.BLUE);
+        dataSet.setValueTextSize(0);
         LineData lineData = new LineData(dataSet);
-        lineData.setValueFormatter(new ValueFormatter() {
-            @Override
-            public String getFormattedValue(float value) {
-                return decimalFormat.format(value);
-            }
-        });
         lc_temp.setData(lineData);
     }
 
@@ -175,10 +157,9 @@ public class PatientInfoFragment extends Fragment {
         public void messageArrived(String topic, MqttMessage message) throws Exception {
             Log.w("Mqtt", message.toString());
             xAxisValues.add(dateFormat.format(Calendar.getInstance().getTime()));
-            updateChart(Float.valueOf(message.toString()));
-            /*JSONObject jsonObject = new JSONObject(message.toString());
-            String data = jsonObject.getString("data");
-            float temp = Float.valueOf(data.split("-")[0]);*/
+            Gson gson = new Gson();
+            TempData data = gson.fromJson(message.toString(),TempData.class);
+            updateChart(Float.parseFloat(data.getData().split("-")[0]));
         }
 
         @Override
@@ -186,89 +167,4 @@ public class PatientInfoFragment extends Fragment {
 
         }
     };
-
-    private void setUpClickTreatmentHistoryHandler(){
-        binding.tvTrm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Dialog dialog = new Dialog(getContext());
-                dialog.setContentView(R.layout.dialog_treatment_history);
-                List<Treatment> treatments = new ArrayList<>();
-                treatments.add(new Treatment(1,"Treatment 1",new Date()));
-                treatments.add(new Treatment(2,"Treatment 2",new Date()));
-                treatments.add(new Treatment(3,"Treatment 3",new Date()));
-                TreatmentHistoryAdapter adapter = new TreatmentHistoryAdapter(
-                        getContext(),
-                        R.layout.adapter_treatment_history,
-                        treatments
-                );
-                ((ListView)dialog.findViewById(R.id.lv_treatment_history)).setAdapter(adapter);
-                dialog.setCancelable(true);
-                dialog.getWindow().setLayout(
-                        WindowManager.LayoutParams.MATCH_PARENT,
-                        WindowManager.LayoutParams.WRAP_CONTENT
-                );
-                dialog.show();
-                dialog.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.cancel();
-                    }
-                });
-
-            }
-        });
-    }
-
-    private void setUpClickAddTreatmentHandler(){
-        binding.imAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Dialog dialog = new Dialog(getContext());
-                dialog.setContentView(R.layout.dialog_add_treatment);
-                dialog.setCancelable(true);
-                setUpConfirmAddTreatmentHandler(dialog);
-                setUpCancelAddTreatmentHandler(dialog);
-                dialog.getWindow().setLayout(
-                        WindowManager.LayoutParams.MATCH_PARENT,
-                        WindowManager.LayoutParams.WRAP_CONTENT
-                );
-                dialog.show();
-            }
-        });
-    }
-
-    private void setUpConfirmAddTreatmentHandler(Dialog dialog){
-        dialog.findViewById(R.id.btn_confirm).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*Treatment newTreatment = new Treatment(
-                        1,
-                        ((EditText)dialog.findViewById(R.id.et_new_treatment)).getText().toString(),
-                        new Date()
-                );
-                MedicalStaffAPI.retrofit.addNewTreatment(newTreatment).enqueue(new Callback<Treatment>() {
-                    @Override
-                    public void onResponse(Call<Treatment> call, Response<Treatment> response) {
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<Treatment> call, Throwable t) {
-
-                    }
-                });*/
-                dialog.cancel();
-            }
-        });
-    }
-
-    private void setUpCancelAddTreatmentHandler(Dialog dialog){
-        dialog.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-            }
-        });
-    }
 }
