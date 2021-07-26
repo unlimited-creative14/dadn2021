@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/nav_updateHealthRule"
         android:name="com.hk203.dadn.ui.updatehealthrule.UpdateHealthRuleFragment"
-        android:label="Cap nhat quy tac y te"
+        android:label="Update Health Rules"
         tools:layout="@layout/fragment_update_health_rule" />
     <fragment
         android:id="@+id/nav_notifications"
@@ -25,34 +25,38 @@
     <fragment
         android:id="@+id/nav_patient_list"
         android:name="com.hk203.dadn.ui.patientlist.PatientListFragment"
-        android:label="Danh sach benh nhan"
+        android:label="Patients"
         tools:layout="@layout/fragment_patient_list">
         <action
             android:id="@+id/action_nav_patient_list_to_nav_patient_info"
-            app:destination="@id/nav_patient_info"/>
+            app:destination="@id/nav_patient_info" />
     </fragment>
 
     <fragment
         android:id="@+id/nav_patient_info"
         android:name="com.hk203.dadn.ui.patient_info.PatientInfoFragment"
-        android:label="Thong tin benh nhan"
-        tools:layout="@layout/fragment_patient_info"/>
+        android:label="Patient Info"
+        tools:layout="@layout/fragment_patient_info">
+        <action
+            android:id="@+id/action_nav_patient_info_to_treatmentHistoryFragment"
+            app:destination="@id/treatmentHistoryFragment" />
+    </fragment>
 
 
     <fragment
         android:id="@+id/nav_add_account"
         android:name="com.hk203.dadn.ui.adduser.AddAccountFragment"
-        android:label="Them tai khoan"
+        android:label="Add account"
         tools:layout="@layout/fragment_add_account">
         <action
             android:id="@+id/action_nav_add_account_to_nav_add_account_step2"
-            app:destination="@id/nav_add_account_step2"/>
+            app:destination="@id/nav_add_account_step2" />
     </fragment>
 
     <fragment
         android:id="@+id/nav_add_account_step2"
         android:name="com.hk203.dadn.ui.adduser.AddAccountInfoStep2Fragment"
-        android:label="Them tai khoan">
+        android:label="Add account">
         <argument
             android:name="account"
             app:argType="com.hk203.dadn.ui.adduser.Account" />
@@ -75,4 +79,15 @@
             android:name="bundle"
             app:argType="android.os.Bundle"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/nav_notifications"
+        android:name="com.hk203.dadn.ui.notifications.NotificationListFragment"
+        android:label="Notifications"
+        tools:layout="@layout/fragment_notification_list" />
+    <fragment
+        android:id="@+id/treatmentHistoryFragment"
+        android:name="com.hk203.dadn.ui.patient_info.TreatmentHistoryFragment"
+        android:label="Treatment History"
+        tools:layout="@layout/fragment_treatment_history" />
 </navigation>

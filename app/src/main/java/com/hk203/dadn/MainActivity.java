@@ -26,10 +26,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.hk203.dadn.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-
-    String username;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    private String authToken;
 
     @Override
     public void onBackPressed()
@@ -48,18 +47,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        username = getIntent().getStringExtra("username");
-        Toast.makeText(this, "Hello " + username, Toast.LENGTH_LONG).show();
+        authToken = getIntent().getStringExtra("authToken");
+        Toast.makeText(this, "auth-token: " + authToken, Toast.LENGTH_LONG).show();
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        preCreate();
+        preCreate(UserRole.MedicalStaff);
         addGroupNameDrawer(binding.navView);
 
     }
 
-    void preCreate() {
+    void preCreate(UserRole role) {
         setSupportActionBar(binding.appBarMain.toolbar);
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
@@ -69,11 +68,22 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_add_account,
                 R.id.nav_home,
                 R.id.nav_updateHealthRule,
-                R.id.nav_adafruit_demo
+                R.id.nav_adafruit_demo,
+                R.id.nav_patient_list,
+                R.id.nav_notifications
         ).setDrawerLayout(drawer).build();
+        if (role == UserRole.Admin) {
+            navigationView.getMenu().setGroupVisible(R.id.medical_staffNavGroup, false);
+        }
+        else{
+            navigationView.getMenu().setGroupVisible(R.id.adminNavGroup, false);
+        }
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        ((TextView)navigationView.getHeaderView(0).findViewById(R.id.tv_user_email)).setText(
+                "User name"
+        );
     }
 
     void addGroupNameDrawer(NavigationView nav) {
@@ -88,6 +98,14 @@ public class MainActivity extends AppCompatActivity {
         tv.setTypeface(null, Typeface.BOLD);
         adminLabel.setActionView(tv);
 
+        MenuItem msLabel = drawerMenu.findItem(R.id.lbMedicalStaff);
+        TextView tv2 = new TextView(getApplicationContext());
+        tv2.setText(getString(R.string.menu_lbmediccal_staff));
+        tv2.setTextColor(Color.BLACK);
+        tv2.setTextSize(20);
+        tv2.setTypeface(null, Typeface.BOLD);
+        msLabel.setActionView(tv2);
+
         MenuItem accountLabel = drawerMenu.findItem(R.id.lbAccount);
         TextView tv1 = new TextView(getApplicationContext());
         tv1.setText(getString(R.string.menu_lbaccount));
@@ -98,13 +116,6 @@ public class MainActivity extends AppCompatActivity {
         accountLabel.setActionView(tv1);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
 
     @Override
     public boolean onSupportNavigateUp() {

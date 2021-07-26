@@ -3,19 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
+
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_home"
+        android:title="Home"/>
+
     <group
         android:id="@+id/adminNavGroup"
         android:checkableBehavior="single">
-        <item android:id="@+id/lbAdmin"
+        <item
+            android:id="@+id/lbAdmin"
             tools:ignore="MenuTitle" />
         <item
             android:id="@+id/nav_add_account"
             android:icon="@drawable/ic_baseline_add_24"
-            android:title="Them nguoi dung" />
-        <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Home" />
+            android:title="Add User" />
         <item
             android:id="@+id/nav_notifications"
             android:icon="@drawable/ic_notif"
@@ -23,22 +26,39 @@
         <item
             android:id="@+id/nav_updateHealthRule"
             android:icon="@drawable/ic_baseline_update_24"
-            android:title="Cap nhat quy tac y te" />
-        <item
-            android:id="@+id/nav_patient_list"
-            android:title="Danh sach benh nhan"/>
+            android:title="Update Health Rule" />
+
         <item
             android:id="@+id/nav_adafruit_demo"
-            android:title="AdafruitDemo"/>
+            android:title="AdafruitDemo" />
     </group>
+
+    <group
+        android:id="@+id/medical_staffNavGroup"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/lbMedicalStaff"
+            tools:ignore="MenuTitle" />
+        <item
+            android:id="@+id/nav_patient_list"
+            android:title="Patients"
+            android:icon="@drawable/ic_patient"/>
+        <item
+            android:id="@+id/nav_notifications"
+            android:title="Notification"
+            android:icon="@drawable/ic_notifications"/>
+    </group>
+
 
     <group
         android:id="@+id/accountNavGroup"
         android:checkableBehavior="none">
-        <item android:id="@+id/lbAccount"
+        <item
+            android:id="@+id/lbAccount"
             tools:ignore="MenuTitle" />
-        <item android:title="Thong tin tai khoan" />
-        <item android:title="Cai dat tai khoan" />
-        <item android:title="Dang xuat" />
+        <item android:title="Profile"
+            android:icon="@drawable/ic_account_info"/>
+        <item android:title="Logout"
+            android:icon="@drawable/ic_logout"/>
     </group>
 </menu>
