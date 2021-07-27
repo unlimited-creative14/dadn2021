@@ -1,35 +1,32 @@
 package com.hk203.dadn.ui.patient_info;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.hk203.dadn.MainActivity;
 import com.hk203.dadn.R;
 import com.hk203.dadn.databinding.FragmentTreatmentHistoryBinding;
+import com.hk203.dadn.viewmodels.TreatmentsViewModel;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TreatmentHistoryFragment extends Fragment implements AddTreatmentDialog.OnAddNewTreatmentListener {
     private FragmentTreatmentHistoryBinding binding;
-    private List<Treatment> treatments = new ArrayList();
+    private TreatmentsViewModel viewModel;
+    private int patientId;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        patientId = (int)getArguments().get("patientId");
     }
 
     @Override
@@ -37,22 +34,29 @@ public class TreatmentHistoryFragment extends Fragment implements AddTreatmentDi
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentTreatmentHistoryBinding.inflate(getLayoutInflater());
-        getTreatment();
-        TreatmentHistoryAdapter trmAdapter = new TreatmentHistoryAdapter(
-                getContext(),
-                R.layout.adapter_treatment_history,
-                treatments
+
+        viewModel = new ViewModelProvider(this).get(TreatmentsViewModel.class);
+
+        viewModel.getTreatments().observe(getViewLifecycleOwner(), treatments -> {
+            TreatmentHistoryAdapter trmAdapter = new TreatmentHistoryAdapter(
+                    getContext(),
+                    R.layout.adapter_treatment_history,
+                    treatments
+            );
+            binding.lvTreatmentHistory.setAdapter(trmAdapter);
+            binding.btnAdd.setOnClickListener(view-> showDialogAddTreatment());
+        });
+
+        viewModel.loadTreatments(
+                ((MainActivity)getActivity()).getAuthToken(),
+                patientId
         );
-        binding.lvTreatmentHistory.setAdapter(trmAdapter);
-        binding.btnAdd.setOnClickListener(view-> showDialogAddTreatment());
+
+        viewModel.getErrorResponse().observe(getViewLifecycleOwner(), errorResponse -> {
+            Toast.makeText(getContext(), errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
+        });
+
         return binding.getRoot();
-    }
-
-
-    private void getTreatment(){
-        treatments.add(new Treatment(1,"Treatment 1",System.currentTimeMillis()));
-        treatments.add(new Treatment(1,"Treatment 2",System.currentTimeMillis()));
-        treatments.add(new Treatment(1,"Treatment 3",System.currentTimeMillis()));
     }
 
 

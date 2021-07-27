@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         authToken = getIntent().getStringExtra("authToken");
-        Toast.makeText(this, "auth-token: " + authToken, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "auth-token: " + authToken, Toast.LENGTH_LONG).show();
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -124,4 +124,7 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+    public String getAuthToken(){
+        return authToken;
+    }
 }

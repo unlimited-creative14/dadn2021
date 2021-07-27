@@ -2,17 +2,14 @@ package com.hk203.dadn.ui.patient_info;
 
 import android.graphics.Color;
 import android.os.Bundle;
-
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -23,54 +20,48 @@ import com.google.gson.Gson;
 import com.hk203.dadn.MQTTService;
 import com.hk203.dadn.R;
 import com.hk203.dadn.databinding.FragmentPatientInfoBinding;
-import com.hk203.dadn.ui.patientlist.Patient;
-
+import com.hk203.dadn.models.Patient;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+
 public class PatientInfoFragment extends Fragment {
-    private static final DecimalFormat decimalFormat = new DecimalFormat(".00");
     private static final DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
     private FragmentPatientInfoBinding binding;
     private LineChart lc_temp;
-    private ArrayList<String> xAxisValues = new ArrayList<>();
+    private final ArrayList<String> xAxisValues = new ArrayList<>();
     private MQTTService mqttService;
+    private Patient patient;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("Msg", ((Patient)getArguments().getSerializable("patient")).getName());
+        patient = (Patient)getArguments().getSerializable("patient");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentPatientInfoBinding.inflate(getLayoutInflater());
-        binding.tvTrm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavController controller = Navigation.findNavController(
-                        getActivity(),
-                        R.id.nav_host_fragment_content_main
-                );
-                controller.navigate(R.id.action_nav_patient_info_to_treatmentHistoryFragment);
-            }
+        binding.tvFullName.setText(patient.getName());
+        binding.tvStatus.setText(patient.getStatus());
+        binding.tvTrm.setOnClickListener(v -> {
+            NavController controller = Navigation.findNavController(
+                    getActivity(),
+                    R.id.nav_host_fragment_content_main
+            );
+            Bundle bundle = new Bundle();
+            bundle.putInt("patientId",patient.pat_id);
+            controller.navigate(R.id.action_nav_patient_info_to_treatmentHistoryFragment, bundle);
         });
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
         setUpTemperatureChart();
         setUpMqttService();
+        return binding.getRoot();
     }
 
     private void setUpTemperatureChart() {
@@ -121,17 +112,7 @@ public class PatientInfoFragment extends Fragment {
     }
 
     private void updateChart(float newTemp) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        addEntry(newTemp);
-                    }
-                });
-            }
-        }).start();
+        new Thread(() -> getActivity().runOnUiThread(() -> addEntry(newTemp))).start();
     }
 
     private void setUpMqttService() {

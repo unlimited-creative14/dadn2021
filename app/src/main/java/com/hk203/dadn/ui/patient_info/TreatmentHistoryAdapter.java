@@ -6,11 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
-
 import com.hk203.dadn.R;
+import com.hk203.dadn.models.Treatment;
 
 import java.util.List;
+
 
 public class TreatmentHistoryAdapter extends ArrayAdapter<Treatment> {
     private Context context;
@@ -27,10 +27,10 @@ public class TreatmentHistoryAdapter extends ArrayAdapter<Treatment> {
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(resource,parent,false);
         ((TextView)convertView.findViewById(R.id.tv_treatment)).setText(
-                getItem(position).getDescription()
+                String.valueOf(getItem(position).treatment_id)
         );
         ((TextView)convertView.findViewById(R.id.tv_datetime)).setText(
-                getItem(position).getDatetime().toString()
+                "no data"
         );
         return convertView;
     }

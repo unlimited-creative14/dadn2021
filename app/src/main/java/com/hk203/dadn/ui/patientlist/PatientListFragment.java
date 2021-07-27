@@ -3,6 +3,8 @@ package com.hk203.dadn.ui.patientlist;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -11,9 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
+import com.hk203.dadn.MainActivity;
 import com.hk203.dadn.R;
 import com.hk203.dadn.databinding.FragmentPatientListBinding;
+import com.hk203.dadn.models.Patient;
+import com.hk203.dadn.viewmodels.PatientsViewModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,22 +34,25 @@ public class PatientListFragment extends Fragment {
     );
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentPatientListBinding.inflate(getLayoutInflater());
 
-        // set up patient list view
-        getPatientsFromServer();
-        PatientListAdapter patientListAdapter = new PatientListAdapter(
-                getContext(),
-                R.layout.adapter_patient_list,
-                patients
-        );
-        binding.lvPatients.setAdapter(patientListAdapter);
+        PatientsViewModel viewModel = new ViewModelProvider(this).get(PatientsViewModel.class);
+
+        viewModel.getPatients().observe(getViewLifecycleOwner(), patients -> {
+            this.patients = patients;
+            // set up patient list view
+            PatientListAdapter patientListAdapter = new PatientListAdapter(
+                    getContext(),
+                    R.layout.adapter_patient_list,
+                    patients
+            );
+            binding.lvPatients.setAdapter(patientListAdapter);
+        });
+
+        viewModel.getErrorResponse().observe(getViewLifecycleOwner(), errorResponse -> {
+            Toast.makeText(getContext(), errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
+        });
 
         // set up patient status list view
         PatientStatusListAdapter patientStatusListAdapter = new PatientStatusListAdapter(
@@ -53,33 +62,15 @@ public class PatientListFragment extends Fragment {
         );
         binding.spnStatusFilter.setAdapter(patientStatusListAdapter);
 
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
         setPatientSelectHandler();
         setStatusFilterHandler();
         setSearchByNameHandler();
+
+        viewModel.loadPatients(((MainActivity)getActivity()).getAuthToken());
+
+        return binding.getRoot();
     }
 
-    private void getPatientsFromServer() {
-        patients = new ArrayList<>();
-        patients.add(new Patient("Nguyen Van A", "Recovery"));
-        patients.add(new Patient("Nguyen Van B", "Emergency"));
-        /*IoTHeathCareService.retrofit.getUserInfo().enqueue(new Callback<List<Patient>>() {
-            @Override
-            public void onResponse(Call<List<Patient>> call, Response<List<Patient>> response) {
-                patients = response.body();
-            }
-
-            @Override
-            public void onFailure(Call<List<Patient>> call, Throwable t) {
-
-            }
-        });*/
-    }
 
     private void setPatientSelectHandler() {
         binding.lvPatients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -90,20 +81,21 @@ public class PatientListFragment extends Fragment {
                         R.id.nav_host_fragment_content_main
                 );
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("patient",patients.get(position));
+                bundle.putSerializable("patient", patients.get(position));
                 controller.navigate(R.id.action_nav_patient_list_to_nav_patient_info, bundle);
             }
         });
     }
 
-    private void setStatusFilterHandler(){
+    private void setStatusFilterHandler() {
         binding.spnStatusFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 List<Patient> patientsFiltered = filterPatients(
                         statuses.get(position),
                         binding.svSearchByName.getQuery().toString().toLowerCase()
-                );;
+                );
+                ;
                 PatientListAdapter patientListFilteredAdapter = new PatientListAdapter(
                         getContext(),
                         R.layout.adapter_patient_list,
@@ -119,7 +111,7 @@ public class PatientListFragment extends Fragment {
         });
     }
 
-    private void setSearchByNameHandler(){
+    private void setSearchByNameHandler() {
         binding.svSearchByName.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -143,32 +135,29 @@ public class PatientListFragment extends Fragment {
         });
     }
 
-    private List<Patient> filterPatients(String status, String searchKey){
-        if (status.equals("All")&&searchKey.isEmpty()){// get all
+    private List<Patient> filterPatients(String status, String searchKey) {
+        if (status.equals("All") && searchKey.isEmpty()) {// get all
             return patients;
-        }
-        else if (status.equals("All")){ // filter by search key
+        } else if (status.equals("All")) { // filter by search key
             List<Patient> filteredPatients = new ArrayList<>();
-            for (Patient p: patients){
-                if (p.getName().toLowerCase().contains(searchKey)){
+            for (Patient p : patients) {
+                if (p.getName().toLowerCase().contains(searchKey)) {
                     filteredPatients.add(p);
                 }
             }
             return filteredPatients;
-        }
-        else if (searchKey.isEmpty()){ // filter by status
+        } else if (searchKey.isEmpty()) { // filter by status
             List<Patient> filteredPatients = new ArrayList<>();
-            for (Patient p: patients){
-                if (p.getStatus().equals(status)){
+            for (Patient p : patients) {
+                if (p.getStatus().equals(status)) {
                     filteredPatients.add(p);
                 }
             }
             return filteredPatients;
-        }
-        else{ // filter by status and search key
+        } else { // filter by status and search key
             List<Patient> filteredPatients = new ArrayList<>();
-            for (Patient p: patients){
-                if (p.getName().toLowerCase().contains(searchKey)&&p.getStatus().equals(status)){
+            for (Patient p : patients) {
+                if (p.getName().toLowerCase().contains(searchKey) && p.getStatus().equals(status)) {
                     filteredPatients.add(p);
                 }
             }

@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 import com.hk203.dadn.R;
+import com.hk203.dadn.models.Patient;
 
 import org.w3c.dom.Text;
 

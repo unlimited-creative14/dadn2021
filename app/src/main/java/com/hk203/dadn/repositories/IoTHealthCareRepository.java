@@ -2,7 +2,11 @@ package com.hk203.dadn.repositories;
 
 import com.google.gson.GsonBuilder;
 import com.hk203.dadn.api.IoTHeathCareService;
+import com.hk203.dadn.models.Patient;
+import com.hk203.dadn.models.Treatment;
 import com.hk203.dadn.models.UserLoginResponse;
+
+import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
@@ -31,5 +35,13 @@ public class IoTHealthCareRepository {
 
     public void userLogin(RequestBody body, Callback<UserLoginResponse> callback){
         ioTHeathCareService.userLogin(body).enqueue(callback);
+    }
+
+    public void loadPatients(String authToken, Callback<List<Patient>> callback){
+        ioTHeathCareService.loadPatients(authToken).enqueue(callback);
+    }
+
+    public void loadTreatments(String authToken, int patientId ,Callback<List<Treatment>> callback){
+        ioTHeathCareService.loadTreatments(authToken, patientId).enqueue(callback);
     }
 }
