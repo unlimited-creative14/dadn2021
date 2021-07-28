@@ -19,10 +19,10 @@ import java.lang.reflect.Array;
 public class MQTTService {
     public static final String serverUri = "tcp://io.adafruit.com:1883";
 
-    final String clientId = "myID";
-    public static final String default_subscriptionTopic = "malongnhan/feeds/server";
-    public static final String default_username = "malongnhan";
-    public static final String default_io_key = "aio_oRCT69g6V2ainDyuWPQP6QORyiwG";
+    final String clientId = "demo";
+    public static final String default_subscriptionTopic = "hoangkim/feeds/demo";
+    public static final String default_username = "hoangkim";
+    public static final String default_io_key = "aio_wxbW0127KrpCclPXXdw3811V8hNG";
     public static final MqttCallbackExtended default_callback = new MqttCallbackExtended() {
         @Override
         public void connectComplete(boolean b, String s) {

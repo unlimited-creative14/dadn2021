@@ -36,7 +36,7 @@ public class PatientInfoFragment extends Fragment {
             public void connectComplete(boolean reconnect, String serverURI) {
                 // ToDO:
                 try {
-                    svc.sendData("Test");
+                    svc.sendData("Cuccu");
                 } catch (MqttException e) {
                     e.printStackTrace();
                 }
