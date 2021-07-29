@@ -16,11 +16,6 @@
         android:name="com.hk203.dadn.ui.updatehealthrule.UpdateHealthRuleFragment"
         android:label="Update Health Rules"
         tools:layout="@layout/fragment_update_health_rule" />
-    <fragment
-        android:id="@+id/nav_notifications"
-        android:name="com.hk203.dadn.ui.notifications.notificationsFragment"
-        android:label="Thong bao"
-        tools:layout="@layout/fragment_notifications" />
 
     <fragment
         android:id="@+id/nav_patient_list"
@@ -90,4 +85,9 @@
         android:name="com.hk203.dadn.ui.patient_info.TreatmentHistoryFragment"
         android:label="Treatment History"
         tools:layout="@layout/fragment_treatment_history" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.hk203.dadn.ui.profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

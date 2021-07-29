@@ -37,16 +37,26 @@ public class StartupActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(SignInViewModel.class);
 
         // user login response observer
-        viewModel.getUserLoginResponse().observe(this, userLoginResponse ->
-                Toast.makeText(
-                        StartupActivity.this,
-                        userLoginResponse.getMessage(),
-                        Toast.LENGTH_SHORT
-                ).show()
+        viewModel.getUserLoginResponse().observe(this, userLoginResponse -> {
+                 if (userLoginResponse.getCode() == 200) {
+                     Toast.makeText(
+                             StartupActivity.this,
+                             userLoginResponse.getMessage(),
+                             Toast.LENGTH_SHORT
+                     ).show();
+                     intentToMainActivity(viewModel.getAuthToken());
+                 }
+                 else {
+                     Toast.makeText(
+                             StartupActivity.this,
+                             userLoginResponse.getMessage(),
+                             Toast.LENGTH_SHORT
+                     ).show();
+                 }
+            }
         );
 
-        // auth token observer
-        viewModel.getAuthToken().observe(this, authToken -> intentToMainActivity(authToken));
+
 
         // error response observer
         viewModel.getErrorResponse().observe(this, errorResponse ->

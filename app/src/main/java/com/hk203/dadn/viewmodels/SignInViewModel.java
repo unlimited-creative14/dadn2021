@@ -26,7 +26,7 @@ public class SignInViewModel extends ViewModel {
     private final IoTHealthCareRepository repo = IoTHealthCareRepository.getInstance();
     private final MutableLiveData<UserLoginResponse> userLoginResponse = new MutableLiveData<>();
     private final MutableLiveData<ErrorResponse> errorResponse = new MutableLiveData<>();
-    private final MutableLiveData<String> authToken = new MutableLiveData<>();
+    private String authToken;
 
     public MutableLiveData<UserLoginResponse> getUserLoginResponse(){
         return userLoginResponse;
@@ -36,7 +36,7 @@ public class SignInViewModel extends ViewModel {
         return errorResponse;
     }
 
-    public MutableLiveData<String> getAuthToken(){
+    public String getAuthToken(){
         return authToken;
     }
 
@@ -53,7 +53,7 @@ public class SignInViewModel extends ViewModel {
             public void onResponse(Call<UserLoginResponse> call, Response<UserLoginResponse> response) {
                 if (response.isSuccessful()){
                     userLoginResponse.postValue(response.body());
-                    authToken.postValue(response.headers().get("auth-token"));
+                    authToken = response.headers().get("auth-token");
                 }else{
                     errorResponse.postValue(ErrorUtil.parseErrorBody(response.errorBody()));
                 }

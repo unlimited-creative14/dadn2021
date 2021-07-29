@@ -92,6 +92,10 @@ public class PatientInfoFragment extends Fragment {
             }
         });
         List<Entry> entries = new ArrayList<>();
+        entries.add(new Entry(0,37));
+        entries.add(new Entry(1,37));
+        entries.add(new Entry(2,37));
+        entries.add(new Entry(3,37));
         LineDataSet dataSet = new LineDataSet(entries, null);
         dataSet.setLineWidth(3);
         dataSet.setColor(ContextCompat.getColor(getContext(),R.color.orange));
