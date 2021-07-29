@@ -3,6 +3,7 @@ package com.hk203.dadn.api;
 import com.hk203.dadn.models.Patient;
 import com.hk203.dadn.models.Treatment;
 import com.hk203.dadn.models.UserLoginResponse;
+import com.hk203.dadn.models.UserProfile;
 
 import java.util.List;
 
@@ -28,5 +29,11 @@ public interface IoTHeathCareService {
     Call<List<Treatment>> loadTreatments(
             @Header("auth-token") String authToken,
             @Path("patientId") int patientId
+    );
+
+    // get user profile
+    @GET("/users/profile")
+    Call<UserProfile> loadUserProfile(
+            @Header("auth-token") String authToken
     );
 }

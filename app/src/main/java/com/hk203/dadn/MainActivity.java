@@ -70,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_updateHealthRule,
                 R.id.nav_adafruit_demo,
                 R.id.nav_patient_list,
-                R.id.nav_notifications
+                R.id.nav_notifications,
+                R.id.profileFragment
         ).setDrawerLayout(drawer).build();
         if (role == UserRole.Admin) {
             navigationView.getMenu().setGroupVisible(R.id.medical_staffNavGroup, false);

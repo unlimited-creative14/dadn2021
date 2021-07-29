@@ -5,12 +5,14 @@ import com.hk203.dadn.api.IoTHeathCareService;
 import com.hk203.dadn.models.Patient;
 import com.hk203.dadn.models.Treatment;
 import com.hk203.dadn.models.UserLoginResponse;
+import com.hk203.dadn.models.UserProfile;
 
 import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -43,5 +45,9 @@ public class IoTHealthCareRepository {
 
     public void loadTreatments(String authToken, int patientId ,Callback<List<Treatment>> callback){
         ioTHeathCareService.loadTreatments(authToken, patientId).enqueue(callback);
+    }
+
+    public void loadUserProfile(String authToken, Callback<UserProfile> callback){
+        ioTHeathCareService.loadUserProfile(authToken).enqueue(callback);
     }
 }
