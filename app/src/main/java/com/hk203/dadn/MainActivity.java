@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     private String authToken;
+    private UserRole role;
 
     @Override
     public void onBackPressed()
@@ -48,12 +49,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         authToken = getIntent().getStringExtra("authToken");
-        //Toast.makeText(this, "auth-token: " + authToken, Toast.LENGTH_LONG).show();
+        role =(UserRole)getIntent().getSerializableExtra("role");
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        preCreate(UserRole.MedicalStaff);
+        preCreate(role);
         addGroupNameDrawer(binding.navView);
 
     }

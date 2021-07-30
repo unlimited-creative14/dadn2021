@@ -23,6 +23,7 @@ import com.hk203.dadn.viewmodels.SignInViewModel;
 
 public class StartupActivity extends AppCompatActivity {
     private SignInViewModel viewModel;
+    private String loginFlag;
 
     // Use login activity as startup activity
     ActivityLoginBinding binding;
@@ -44,7 +45,8 @@ public class StartupActivity extends AppCompatActivity {
                              userLoginResponse.getMessage(),
                              Toast.LENGTH_SHORT
                      ).show();
-                     intentToMainActivity(viewModel.getAuthToken());
+                     UserRole role = loginFlag.equals("ms") ? UserRole.MedicalStaff : UserRole.Admin;
+                     intentToMainActivity(viewModel.getAuthToken(),role);
                  }
                  else {
                      Toast.makeText(
@@ -69,18 +71,22 @@ public class StartupActivity extends AppCompatActivity {
 
         // button Login click event handler
         binding.btnLogin.setOnClickListener(view -> {
+            String email = binding.etEmail.getText().toString();
+            String password = binding.etPassword.getText().toString();
             if (binding.rbMs.isChecked()){
-                viewModel.userLogIn(
-                        binding.etEmail.getText().toString(),
-                        binding.etPassword.getText().toString()
-                );
+                loginFlag = "ms";
+                viewModel.userLogIn(email,password);
+            }else if (binding.rbAdmin.isChecked()){
+                loginFlag = "admin";
+                viewModel.adminLogIn(email,password);
             }
         });
     }
 
-    private void intentToMainActivity(String authToken){
+    private void intentToMainActivity(String authToken, UserRole role){
         Intent mIntent = new Intent(this,MainActivity.class);
         mIntent.putExtra("authToken",authToken);
+        mIntent.putExtra("role",role);
         startActivity(mIntent);
     }
 }

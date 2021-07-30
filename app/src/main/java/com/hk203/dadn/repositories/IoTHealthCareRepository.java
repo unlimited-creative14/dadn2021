@@ -39,6 +39,10 @@ public class IoTHealthCareRepository {
         ioTHeathCareService.userLogin(body).enqueue(callback);
     }
 
+    public void adminLogin(RequestBody body, Callback<UserLoginResponse> callback){
+        ioTHeathCareService.adminLogin(body).enqueue(callback);
+    }
+
     public void loadPatients(String authToken, Callback<List<Patient>> callback){
         ioTHeathCareService.loadPatients(authToken).enqueue(callback);
     }
