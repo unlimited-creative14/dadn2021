@@ -65,4 +65,30 @@ public class SignInViewModel extends ViewModel {
             }
         });
     }
+
+    public void adminLogIn(String email, String password){
+        Map<String,Object> jsonParams = new ArrayMap<>();
+        jsonParams.put("email",email);
+        jsonParams.put("password",password);
+        RequestBody body = RequestBody.create(
+                okhttp3.MediaType.parse("application/json; charset=utf-8"),
+                (new JSONObject(jsonParams).toString())
+        );
+        repo.adminLogin(body, new Callback<UserLoginResponse>() {
+            @Override
+            public void onResponse(Call<UserLoginResponse> call, Response<UserLoginResponse> response) {
+                if (response.isSuccessful()){
+                    userLoginResponse.postValue(response.body());
+                    authToken = response.headers().get("auth-token");
+                }else{
+                    errorResponse.postValue(ErrorUtil.parseErrorBody(response.errorBody()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserLoginResponse> call, Throwable t) {
+                Log.d("CC","Log in failed -- ");
+            }
+        });
+    }
 }

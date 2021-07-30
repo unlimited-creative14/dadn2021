@@ -20,6 +20,10 @@ public interface IoTHeathCareService {
     @POST("/user/login")
     Call<UserLoginResponse> userLogin(@Body RequestBody body);
 
+    // admin login
+    @POST("/admin/login")
+    Call<UserLoginResponse> adminLogin(@Body RequestBody body);
+
     // get patients
     @GET("/users/patients")
     Call<List<Patient>> loadPatients(@Header("auth-token") String authToken);
