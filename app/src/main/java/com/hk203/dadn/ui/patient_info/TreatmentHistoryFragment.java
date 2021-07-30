@@ -18,7 +18,7 @@ import com.hk203.dadn.databinding.FragmentTreatmentHistoryBinding;
 import com.hk203.dadn.viewmodels.TreatmentsViewModel;
 
 
-public class TreatmentHistoryFragment extends Fragment implements AddTreatmentDialog.OnAddNewTreatmentListener {
+public class TreatmentHistoryFragment extends Fragment{
     private FragmentTreatmentHistoryBinding binding;
     private TreatmentsViewModel viewModel;
     private int patientId;
@@ -44,11 +44,10 @@ public class TreatmentHistoryFragment extends Fragment implements AddTreatmentDi
                     treatments
             );
             binding.lvTreatmentHistory.setAdapter(trmAdapter);
-            binding.btnAdd.setOnClickListener(view-> showDialogAddTreatment());
         });
 
         viewModel.loadTreatments(
-                ((MainActivity)getActivity()).getAuthToken(),
+                ((MainActivity) getActivity()).getAuthToken(),
                 patientId
         );
 
@@ -57,16 +56,5 @@ public class TreatmentHistoryFragment extends Fragment implements AddTreatmentDi
         });
 
         return binding.getRoot();
-    }
-
-
-    private void showDialogAddTreatment(){
-        AddTreatmentDialog addTrmDialog = new AddTreatmentDialog();
-        addTrmDialog.show(getChildFragmentManager(),"ADD_TREATMENT");
-    }
-
-    @Override
-    public void onAddNewTreatment(String msg) {
-        Log.d("CC",msg);
     }
 }

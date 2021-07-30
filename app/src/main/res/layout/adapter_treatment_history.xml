@@ -11,14 +11,15 @@
         android:layout_height="wrap_content"
         android:text="time"
         android:textSize="20dp"
-        android:textStyle="bold" />
+        android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/tv_treatment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Treatment"
-        android:textSize="17dp" />
+        android:textSize="17dp"
+        android:textColor="@color/black"/>
 
 
 </LinearLayout>
