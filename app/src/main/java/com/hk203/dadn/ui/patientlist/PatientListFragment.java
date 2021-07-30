@@ -81,7 +81,7 @@ public class PatientListFragment extends Fragment {
                         R.id.nav_host_fragment_content_main
                 );
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("patient", patients.get(position));
+                bundle.putInt("patientId", patients.get(position).pat_id);
                 controller.navigate(R.id.action_nav_patient_list_to_nav_patient_info, bundle);
             }
         });

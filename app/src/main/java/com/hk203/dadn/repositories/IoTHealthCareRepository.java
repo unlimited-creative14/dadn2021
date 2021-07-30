@@ -3,6 +3,8 @@ package com.hk203.dadn.repositories;
 import com.google.gson.GsonBuilder;
 import com.hk203.dadn.api.IoTHeathCareService;
 import com.hk203.dadn.models.Patient;
+import com.hk203.dadn.models.PatientDetail;
+import com.hk203.dadn.models.PutPatientInfoResponse;
 import com.hk203.dadn.models.Treatment;
 import com.hk203.dadn.models.UserLoginResponse;
 import com.hk203.dadn.models.UserProfile;
@@ -28,30 +30,44 @@ public class IoTHealthCareRepository {
             .build()
             .create(IoTHeathCareService.class);
 
-    public static IoTHealthCareRepository getInstance(){
-        if (instance==null){
+    public static IoTHealthCareRepository getInstance() {
+        if (instance == null) {
             instance = new IoTHealthCareRepository();
         }
         return instance;
     }
 
-    public void userLogin(RequestBody body, Callback<UserLoginResponse> callback){
+    public void userLogin(RequestBody body, Callback<UserLoginResponse> callback) {
         ioTHeathCareService.userLogin(body).enqueue(callback);
     }
 
-    public void adminLogin(RequestBody body, Callback<UserLoginResponse> callback){
+    public void adminLogin(RequestBody body, Callback<UserLoginResponse> callback) {
         ioTHeathCareService.adminLogin(body).enqueue(callback);
     }
 
-    public void loadPatients(String authToken, Callback<List<Patient>> callback){
+    public void loadPatients(String authToken, Callback<List<Patient>> callback) {
         ioTHeathCareService.loadPatients(authToken).enqueue(callback);
     }
 
-    public void loadTreatments(String authToken, int patientId ,Callback<List<Treatment>> callback){
+    public void loadPatientDetail(String authToken, int patientId, Callback<PatientDetail> callback) {
+        ioTHeathCareService.loadPatientDetail(authToken, patientId).enqueue(callback);
+    }
+
+    public void putPatientInfo(
+            String authToken,
+            int patientId,
+            RequestBody body,
+            Callback<PutPatientInfoResponse> callback
+    ) {
+        ioTHeathCareService.putPatientInformation(authToken, patientId, body).enqueue(callback);
+    }
+
+    public void loadTreatments(String authToken, int patientId, Callback<List<Treatment>> callback) {
         ioTHeathCareService.loadTreatments(authToken, patientId).enqueue(callback);
     }
 
-    public void loadUserProfile(String authToken, Callback<UserProfile> callback){
+    public void loadUserProfile(String authToken, Callback<UserProfile> callback) {
         ioTHeathCareService.loadUserProfile(authToken).enqueue(callback);
     }
+
 }
