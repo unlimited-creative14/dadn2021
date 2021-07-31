@@ -1,6 +1,7 @@
 package com.hk203.dadn.viewmodels;
 
 import android.util.ArrayMap;
+import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -25,6 +26,7 @@ public class PatientDetailViewModel extends ViewModel {
     private final MutableLiveData<ErrorResponse> errorResponse = new MutableLiveData<>();
     private final MutableLiveData<PatientDetail> patientDetail = new MutableLiveData<>();
     private final MutableLiveData<PutPatientInfoResponse> putPatientInfoResponse = new MutableLiveData<>();
+
 
     public MutableLiveData<ErrorResponse> getErrorResponse() {
         return errorResponse;

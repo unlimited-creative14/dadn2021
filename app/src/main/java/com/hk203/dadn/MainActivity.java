@@ -1,5 +1,8 @@
 package com.hk203.dadn;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -14,6 +17,7 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
@@ -25,7 +29,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.hk203.dadn.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity {
+import org.jetbrains.annotations.NotNull;
+
+public class MainActivity extends AppCompatActivity{
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     private String authToken;
@@ -86,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         ((TextView)navigationView.getHeaderView(0).findViewById(R.id.tv_user_email)).setText(
                 "User name"
         );
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     void addGroupNameDrawer(NavigationView nav) {
@@ -128,5 +135,29 @@ public class MainActivity extends AppCompatActivity {
 
     public String getAuthToken(){
         return authToken;
+    }
+
+    public void setToolbarTitle(String title){
+        binding.appBarMain.toolbarTitle.setText(title);
+    }
+
+    public void processToLogout(){
+        removeUser();
+        returnToLogIn();
+    }
+
+    private void removeUser(){
+        Log.d("CCC","remove");
+        SharedPreferences shared = getSharedPreferences("dadn", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = shared.edit();
+        editor.remove("authToken");
+        editor.remove("role");
+        editor.apply();
+    }
+
+    private void returnToLogIn(){
+        Intent intent = new Intent(this, StartupActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

@@ -8,51 +8,18 @@
     android:orientation="vertical"
     tools:context=".ui.patientlist.PatientListFragment">
 
-    <LinearLayout
+
+    <SearchView
+        android:id="@+id/sv_search_by_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
-        android:orientation="horizontal"
         android:background="@drawable/bg_edit_text"
-        android:padding="10dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Status:"
-            android:textSize="20dp"
-            android:textColor="@color/black"
-            android:layout_gravity="center_vertical"/>
-
-        <Spinner
-            android:id="@+id/spn_status_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:padding="4dp"
-            android:layout_gravity="center_vertical"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
-
-        <SearchView
-            android:id="@+id/sv_search_by_name"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_edit_text"
-            android:iconifiedByDefault="false"
-            android:queryBackground="@android:color/transparent"
-            android:queryHint="Search..." />
-    </LinearLayout>
+        android:iconifiedByDefault="false"
+        android:queryBackground="@android:color/transparent"
+        android:queryHint="Search..." />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -60,22 +27,20 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
+        android:background="@color/white"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        android:background="@color/white"
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/tv_number"
             android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:text="No."
+            android:text="Id"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="20dp" />
 
         <TextView
-            android:id="@+id/tv_name"
             android:layout_width="200dp"
             android:layout_height="match_parent"
             android:text="Full name"
@@ -84,10 +49,9 @@
             android:textSize="20dp" />
 
         <TextView
-            android:id="@+id/tv_status"
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:text="Status"
+            android:text="Device Id"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="20dp" />
@@ -101,6 +65,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:background="@color/white"/>
+        android:background="@color/white" />
 
 </LinearLayout>

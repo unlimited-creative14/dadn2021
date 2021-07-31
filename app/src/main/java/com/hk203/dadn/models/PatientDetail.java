@@ -2,9 +2,13 @@ package com.hk203.dadn.models;
 
 import android.graphics.Color;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
+import com.github.mikephil.charting.data.Entry;
 import com.hk203.dadn.R;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -19,9 +23,9 @@ public class PatientDetail {
     private int statusColor;
     private String pendingTreatment;
 
-    static class Temp {
-        float temp_value;
-        String recv_time;
+    public static class Temp {
+        public float temp_value;
+        public String recv_time;
     }
 
     public String getName() {
@@ -56,6 +60,7 @@ public class PatientDetail {
     public String getPendingTreatment() {
         return pendingTreatment;
     }
+
 }
 
 
