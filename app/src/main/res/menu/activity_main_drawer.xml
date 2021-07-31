@@ -7,7 +7,7 @@
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home"
-        android:title="Home"/>
+        android:title="Home" />
 
     <group
         android:id="@+id/adminNavGroup"
@@ -37,12 +37,12 @@
             tools:ignore="MenuTitle" />
         <item
             android:id="@+id/nav_patient_list"
-            android:title="Patients"
-            android:icon="@drawable/ic_patient"/>
+            android:icon="@drawable/ic_patient"
+            android:title="Patients" />
         <item
             android:id="@+id/nav_notifications"
-            android:title="Notification"
-            android:icon="@drawable/ic_notifications"/>
+            android:icon="@drawable/ic_notifications"
+            android:title="Notification" />
     </group>
 
 
@@ -52,10 +52,9 @@
         <item
             android:id="@+id/lbAccount"
             tools:ignore="MenuTitle" />
-        <item android:title="Profile"
+        <item
             android:id="@+id/profileFragment"
-            android:icon="@drawable/ic_account_info"/>
-        <item android:title="Logout"
-            android:icon="@drawable/ic_logout"/>
+            android:icon="@drawable/ic_account_info"
+            android:title="Profile" />
     </group>
 </menu>

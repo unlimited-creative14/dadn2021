@@ -28,6 +28,8 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(getLayoutInflater());
 
+        ((MainActivity)getActivity()).setToolbarTitle("My Profile");
+
         viewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
 
         viewModel.getUserProfile().observe(getViewLifecycleOwner(), userProfile -> binding.setUser(userProfile));
@@ -37,6 +39,8 @@ public class ProfileFragment extends Fragment {
         });
 
         viewModel.loadUserProfile(((MainActivity)getActivity()).getAuthToken());
+
+        binding.logOut.setOnClickListener(v -> ((MainActivity) getActivity()).processToLogout());
 
         return binding.getRoot();
     }

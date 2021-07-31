@@ -132,4 +132,12 @@ public class MQTTService {
             ex.printStackTrace();
         }
     }
+
+    public void unSubscribe(){
+        try{
+            mqttAndroidClient.unsubscribe(subscriptionTopic);
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+    }
 }
