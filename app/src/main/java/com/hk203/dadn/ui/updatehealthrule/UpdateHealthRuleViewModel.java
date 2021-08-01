@@ -4,28 +4,41 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.hk203.dadn.repositories.IoTHealthCareRepository;
+
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class UpdateHealthRuleViewModel extends ViewModel {
-    private MutableLiveData<ArrayList<HealthRule>> rules;
+    private MutableLiveData<List<HealthRule>> rules;
+    private final IoTHealthCareRepository repo = IoTHealthCareRepository.getInstance();
 
-    public LiveData<ArrayList<HealthRule>> getRules()
+    public LiveData<List<HealthRule>> getRules()
     {
         if (rules == null)
         {
             rules = new MutableLiveData<>();
-            loadRules();
         }
         return rules;
     }
 
-    private void loadRules()
+    public void loadRules(String token)
     {
-        ArrayList<HealthRule> r = new ArrayList<>();
-        r.add(new HealthRule(36.5f, 37.0f, 0.15f, 10, HealthRule.GREEN_LED, "Rule 1"));
-        r.add(new HealthRule(37.5f, 38.0f, 0.25f, 20, HealthRule.YELLOW_LED, "Rule 2"));
-        r.add(new HealthRule(38.5f, 39.0f, 0.35f, 30, HealthRule.RED_LED, "Rule 3"));
-        rules.setValue(r);
+        repo.listAllHealthRule(token, new Callback<List<HealthRule>>() {
+            @Override
+            public void onResponse(Call<List<HealthRule>> call, Response<List<HealthRule>> response) {
+                rules.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<HealthRule>> call, Throwable t) {
+
+            }
+        });
     }
 }

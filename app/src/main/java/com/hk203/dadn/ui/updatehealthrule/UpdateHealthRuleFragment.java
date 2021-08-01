@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
+import com.hk203.dadn.MainActivity;
 import com.hk203.dadn.R;
 import com.hk203.dadn.databinding.FragmentUpdateHealthRuleBinding;
 
@@ -56,33 +57,15 @@ public class UpdateHealthRuleFragment extends Fragment {
         binding = FragmentUpdateHealthRuleBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         // Inflate the layout for this fragment
-        updateHealthRuleViewModel.getRules().observe(getViewLifecycleOwner(), new Observer<ArrayList<HealthRule>>() {
-            @Override
-            public void onChanged(ArrayList<HealthRule> rules) {
-                createItem(root, rules);
-            }
+        updateHealthRuleViewModel.getRules().observe(getViewLifecycleOwner(), rules -> {
+            ExpandableListView expandableListView = binding.expandableListRule;
+            ExpandableListAdapter adapter = new RulesExpandableListAdapter(getActivity(), rules);
+
+            expandableListView.setAdapter(adapter);
         });
 
-        setFABAddCallback();
+        updateHealthRuleViewModel.loadRules(((MainActivity)getActivity()).getAuthToken());
+
         return root;
     }
-    void setFABAddCallback()
-    {
-        binding.fabAddRule.setOnClickListener(
-            v -> {
-                Dialog dialog = new Dialog(getContext());
-                dialog.setContentView(R.layout.view_health_rule);
-                dialog.create();
-                dialog.show();
-            }
-        );
-    }
-    void createItem(View view, ArrayList<HealthRule> items)
-    {
-        ExpandableListView expandableListView = (ExpandableListView) view.findViewById(R.id.expandable_list_rule);
-        ExpandableListAdapter adapter = new RulesExpandableListAdapter(getActivity(), items);
-
-        expandableListView.setAdapter(adapter);
-    }
-
 }

@@ -82,12 +82,7 @@ public class AddAccountInfoStep2Fragment extends Fragment {
     {
         Button btnSubmit = binding.btnSubmit;
         btnSubmit.setOnClickListener(v -> {
-            Account.AccountInfo info = account.getInfo();
-            info.setFname(binding.etFname.getText().toString());
-            info.setLname(binding.etLname.getText().toString());
-            info.setCmndNum(binding.etCmndNum.getText().toString());
-            info.setEmail(binding.etEmail.getText().toString());
-            info.setRoom(binding.etRoom.getText().toString());
+
 
             GsonBuilder builder = new GsonBuilder();
             Gson gs = builder.create();

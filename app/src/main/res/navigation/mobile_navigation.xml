@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
+
     app:startDestination="@+id/nav_home">
 
     <fragment
@@ -12,9 +13,15 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
+        android:id="@+id/nav_admin_patient_list"
+        android:name="com.hk203.dadn.ui.admin_listpatient.ListPatientFragment"
+        android:label="@string/szPatientList"
+        tools:layout="@layout/fragment_patient_list"/>
+
+    <fragment
         android:id="@+id/nav_updateHealthRule"
         android:name="com.hk203.dadn.ui.updatehealthrule.UpdateHealthRuleFragment"
-        android:label="Update Health Rules"
+        android:label="@string/szUpdateHealthRule"
         tools:layout="@layout/fragment_update_health_rule" />
 
     <fragment
@@ -37,7 +44,11 @@
             app:destination="@id/treatmentHistoryFragment" />
     </fragment>
 
-
+    <fragment
+        android:id="@+id/nav_device_list"
+        android:name="com.hk203.dadn.ui.admin_devicemanager.DeviceManagerFragment"
+        android:label="@string/szDeviceManager"
+        />
     <fragment
         android:id="@+id/nav_add_account"
         android:name="com.hk203.dadn.ui.adduser.AddAccountFragment"
@@ -57,24 +68,10 @@
             app:argType="com.hk203.dadn.ui.adduser.Account" />
     </fragment>
     <fragment
-        android:id="@+id/nav_adafruit_demo"
-        android:name="com.hk203.dadn.ui.adafruitdemo.AdafruitDemoFragment"
-        tools:layout="@layout/fragment_adafruit_demo"
-        android:label="Adafruit Demo"
-        >
-        <action
-            android:id="@+id/action_nav_adafruit_demo_to_nav_adafruit_list_message"
-            app:destination="@id/nav_adafruit_list_message" />
-    </fragment>
-    <fragment
-        android:id="@+id/nav_adafruit_list_message"
-        android:name="com.hk203.dadn.ui.adafruitdemo.AdafruitListMessageFragment"
-        >
-        <argument
-            android:name="bundle"
-            app:argType="android.os.Bundle"/>
-    </fragment>
-
+        android:id="@+id/nav_user_list"
+        android:name="com.hk203.dadn.ui.admin_listuser.ListUserFragment"
+        android:label="@string/szListUser"
+        tools:layout="@layout/fragment_list_user"/>
     <fragment
         android:id="@+id/nav_notifications"
         android:name="com.hk203.dadn.ui.notifications.NotificationListFragment"

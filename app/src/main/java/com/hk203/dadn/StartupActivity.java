@@ -32,6 +32,7 @@ public class StartupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        binding.rbAdmin.setChecked(true);
         setContentView(binding.getRoot());
 
         // get view model
@@ -81,6 +82,12 @@ public class StartupActivity extends AppCompatActivity {
                 viewModel.adminLogIn(email,password);
             }
         });
+        binding.ivLogo.setOnClickListener(
+                v -> {
+                    binding.etEmail.setText("admin@gmail.com");
+                    binding.etPassword.setText("admin@gmail.com");
+                }
+        );
     }
 
     private void intentToMainActivity(String authToken, UserRole role){

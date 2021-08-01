@@ -35,6 +35,13 @@
     <string name="szTen">Tên</string>
     <string name="szPhong">Phòng</string>
     <string name="szXacNhan">Xác Nhận</string>
+    <string name="szListUser">Danh sách tài khoản</string>
+    <string name="szUserDetailTitle">Thong tin tai khoan</string>
+    <string name="szChangePass">Đổi mật khẩu</string>
+    <string name="szFirstName">Ho</string>
+    <string name="szLastName">Ten</string>
+    <string name="szSave">Luu</string>
+    <string name="szPatientList">Danh sách bệnh nhân</string>
     <string name="szBN1">Bệnh nhân 1</string>
     <string name="szBN2">Bệnh nhân 2</string>
     <string name="szBN3">Bệnh nhân 3</string>
@@ -52,6 +59,26 @@
     <string name="tbbn3">Thông báo về bệnh nhân 3</string>
     <string name="tbbn4">Thông báo về bệnh nhân 4</string>
     <string name="TB">Thông báo về tình hình bệnh nhân</string>
+    <string name="szDetailCreatedDate">Ngày tạo</string>
+    <string name="szDetailListBindedPatients">Danh sách bệnh nhân quản lý</string>
+    <string name="szViewBindedPatientList">Xem danh sách bệnh nhân đang quản lý</string>
+    <string name="szListBindedPatientDoctor">Danh sach cac benh nhan dang quan ly</string>
+    <string name="szMinute">Phút</string>
+    <string name="szWarningLevel">Mức độ</string>
+    <string name="szTemperature">Nhiệt độ</string>
+    <string name="szCDegree">℃</string>
+    <string name="szTo">Đến</string>
+    <string name="szTempFrom">Từ</string>
+    <string name="szUpdateRule">Cập nhật</string>
+    <string name="szPlaceholder">Placeholder</string>
+    <string name="szRegAcc">Đăng ký</string>
+    <string name="szUpdateHealthRule">Cập nhật quy tắc y tế</string>
+    <string name="szPhone">SĐT</string>
+    <string name="szDeviceList">Danh sách thiết bị</string>
+    <string name="szLoading">Đang tải...</string>
+    <string name="szDeviceManager">Quản lý thiết bị</string>
+    <string name="szAddUser">Thêm người dùng</string>
+    <string name="szDuration">Thời lượng:</string>
 
     <string-array name="patient_statuses">
         <item>All</item>

@@ -18,15 +18,23 @@
         <item
             android:id="@+id/nav_add_account"
             android:icon="@drawable/ic_baseline_add_24"
-            android:title="Add User" />
+            android:title="@string/szAddUser" />
+        <item
+            android:id="@+id/nav_device_list"
+            android:icon="@drawable/ic_setting"
+            android:title="@string/szDeviceManager" />
+        <item
+            android:id="@+id/nav_user_list"
+            android:icon="@drawable/medical_doctor"
+            android:title="@string/szListUser" />
+        <item
+            android:id="@+id/nav_admin_patient_list"
+            android:icon="@drawable/ic_patient"
+            android:title="@string/szPatientList" />
         <item
             android:id="@+id/nav_updateHealthRule"
             android:icon="@drawable/ic_baseline_update_24"
-            android:title="Update Health Rule" />
-
-        <item
-            android:id="@+id/nav_adafruit_demo"
-            android:title="AdafruitDemo" />
+            android:title="@string/szUpdateHealthRule" />
     </group>
 
     <group

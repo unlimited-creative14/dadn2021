@@ -6,37 +6,32 @@
     android:layout_height="wrap_content">
 
     <!-- TODO: Update blank fragment layout -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/childRuleAction"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#a6dfdfdf"
             android:gravity="center_horizontal|center_vertical"
             android:orientation="horizontal"
-            android:padding="5sp"
-            android:id="@+id/line_1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
+            android:padding="5sp">
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".3"
                 android:textSize="20sp"
-                android:text="Muc do: " />
+                android:text="@string/szWarningLevel" />
 
-            <Spinner
-                android:id="@+id/ruleActionsSpinner"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/warning_level_tv"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".6"
-                android:background="@android:drawable/btn_dropdown"
-                android:spinnerMode="dropdown"/>
+                android:textStyle="bold"
+                android:layout_weight="0.3"
+                android:textSize="26sp"
+                android:text="@string/szPlaceholder"/>
 
             <ImageView
                 android:id="@+id/led_preview"
@@ -44,8 +39,7 @@
                 android:layout_height="20dp"
                 android:layout_margin="5dp"
                 android:adjustViewBounds="true"
-                android:background="@color/black"
-                android:contentDescription="Den LED" />
+                android:background="@color/black" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,25 +47,19 @@
             android:background="#a6dfdfdf"
             android:gravity="center_horizontal|center_vertical"
             android:orientation="vertical"
-            android:padding="5sp"
-            android:id="@+id/line_2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/line_1">
+            android:padding="5sp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:text="Nhiet do: "
+                android:text="@string/szTemperature"
                 android:layout_marginBottom="10dp"
                 />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:paddingStart="10dp"
-                android:paddingEnd="15dp"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -79,53 +67,54 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_weight="0.3"
-                    android:gravity="center_vertical"
+                    android:gravity="center"
                     android:layout_marginEnd="10dp">
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.4"
                         android:textSize="16sp"
-                        android:text="Tu"/>
+                        android:paddingEnd="20sp"
+                        android:text="@string/szTempFrom"/>
                     <EditText
                         android:id="@+id/et_tempFrom"
-                        android:layout_width="30dp"
-                        android:layout_weight="0.6"
+                        android:layout_width="100dp"
                         android:inputType="numberDecimal"
                         android:layout_height="wrap_content"
                         android:background="@android:drawable/edit_text"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_marginStart="5sp"
+                        android:text="@string/szCDegree"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_weight="0.3"
-                    android:gravity="center_vertical"
+                    android:gravity="center"
                     android:layout_marginEnd="10dp">
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.4"
                         android:textSize="16sp"
-                        android:text="Den"/>
+                        android:paddingEnd="20sp"
+                        android:text="@string/szTo"/>
                     <EditText
                         android:id="@+id/et_tempTo"
-                        android:layout_width="30dp"
-                        android:layout_weight="0.6"
+                        android:layout_width="100dp"
                         android:inputType="numberDecimal"
                         android:layout_height="wrap_content"
                         android:background="@android:drawable/edit_text"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_marginStart="5sp"
+                        android:text="@string/szCDegree"/>
                 </LinearLayout>
-                <Spinner
-                    android:id="@+id/ruleDegUnit"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".4"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown"/>
-
             </LinearLayout>
-
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -133,106 +122,56 @@
             android:background="#a6dfdfdf"
             android:gravity="center_horizontal|center_vertical"
             android:orientation="vertical"
-            android:padding="5sp"
-            android:id="@+id/line_3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/line_2">
-
+            android:padding="5sp">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:text="Thoi luong: "
+                android:text="@string/szDuration"
                 android:layout_marginBottom="10dp"
                 />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:paddingStart="10dp"
                 android:paddingEnd="15dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_weight="0.3"
-                    android:gravity="center_vertical"
+                    android:gravity="center"
                     android:layout_marginEnd="10dp">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.4"
-                        android:textSize="16sp"
-                        android:text="Tu"/>
                     <EditText
-                        android:id="@+id/et_timeFrom"
-                        android:layout_width="30dp"
-                        android:layout_weight="0.6"
+                        android:id="@+id/et_duration"
+                        android:layout_width="300dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="20sp"
                         android:inputType="numberDecimal"
                         android:background="@android:drawable/edit_text"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_weight="0.3"
-                    android:gravity="center_vertical"
-                    android:layout_marginEnd="10dp">
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.4"
-                        android:textSize="16sp"
-                        android:text="Den"/>
-                    <EditText
-                        android:id="@+id/et_timeTo"
-                        android:layout_width="30dp"
-                        android:layout_weight="0.6"
-                        android:layout_height="wrap_content"
-                        android:inputType="numberDecimal"
-                        android:background="@android:drawable/edit_text"/>
+                        android:text="@string/szMinute" />
                 </LinearLayout>
-                <Spinner
-                    android:id="@+id/ruleTimeUnit"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".4"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown"/>
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#a6dfdfdf"
-            android:gravity="center_horizontal|center_vertical"
+            android:gravity="center"
             android:orientation="horizontal"
-            android:padding="5sp"
-            android:id="@+id/line_4"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/line_3">
-            <Button
-                android:id="@+id/btnResetRule"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.3"
-                android:layout_margin="10dp"
-                android:text="Reset/Xoa"/>
+            android:padding="5sp">
             <Button
                 android:id="@+id/btnUpdateRule"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.3"
                 android:layout_margin="10dp"
-                android:text="Cap nhat"/>
+                android:text="@string/szUpdateRule"/>
         </LinearLayout>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+    </LinearLayout>
 </FrameLayout>

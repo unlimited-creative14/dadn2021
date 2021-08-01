@@ -2,12 +2,17 @@ package com.hk203.dadn.repositories;
 
 import com.google.gson.GsonBuilder;
 import com.hk203.dadn.api.IoTHeathCareService;
+import com.hk203.dadn.models.AdminPatient;
+import com.hk203.dadn.models.AdminUserProfile;
+import com.hk203.dadn.models.MqttDevice;
 import com.hk203.dadn.models.Patient;
 import com.hk203.dadn.models.Treatment;
 import com.hk203.dadn.models.UserLoginResponse;
 import com.hk203.dadn.models.UserProfile;
+import com.hk203.dadn.ui.updatehealthrule.HealthRule;
 
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
@@ -53,5 +58,50 @@ public class IoTHealthCareRepository {
 
     public void loadUserProfile(String authToken, Callback<UserProfile> callback){
         ioTHeathCareService.loadUserProfile(authToken).enqueue(callback);
+    }
+
+    public void createUser(String authToken, RequestBody body, Callback<Map<String, String>> cb)
+    {
+        ioTHeathCareService.createUser(authToken, body).enqueue(cb);
+    }
+
+    public void listUser(String authToken, Callback<List<AdminUserProfile>> cb)
+    {
+        ioTHeathCareService.listUser(authToken).enqueue(cb);
+    }
+
+    public void listBindedPatient(String authToken, int doctorId, Callback<List<AdminPatient>> cb)
+    {
+        ioTHeathCareService.listBindedPatientDoctor(authToken, doctorId).enqueue(cb);
+    }
+
+    public void listAllPatient(String token, Callback<List<AdminPatient>> cb)
+    {
+        ioTHeathCareService.listAllPatient(token).enqueue(cb);
+    }
+
+    public void assignPatientToDoctor(String token, int patientId, RequestBody body, Callback<Map<String, String>> cb)
+    {
+        ioTHeathCareService.assignPatientToDoctor(token, patientId, body).enqueue(cb);
+    }
+
+    public void listAllHealthRule(String token, Callback<List<HealthRule>> cb)
+    {
+        ioTHeathCareService.listAllHealthRule(token).enqueue(cb);
+    }
+
+    public void updateHealthRule(String token, RequestBody body, Callback<Map<String, String>> cb)
+    {
+        ioTHeathCareService.updateHealthRule(token, body).enqueue(cb);
+    }
+
+    public void listAllDevice(String token, Callback<List<MqttDevice>> cb)
+    {
+        ioTHeathCareService.listAllDevice(token).enqueue(cb);
+    }
+
+    public void createDevice(String token, RequestBody body, Callback<Map<String, String>> cb)
+    {
+        ioTHeathCareService.addDevice(token, body).enqueue(cb);
     }
 }
