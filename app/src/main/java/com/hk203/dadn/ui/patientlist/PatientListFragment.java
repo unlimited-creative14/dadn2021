@@ -29,13 +29,12 @@ import java.util.List;
 public class PatientListFragment extends Fragment {
     private FragmentPatientListBinding binding;
     private List<Patient> patients;
-    private static final ArrayList<String> statuses = new ArrayList<>(
-            Arrays.asList("All", "Recovery", "Incubation", "Febrile", "Emergency")
-    );
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentPatientListBinding.inflate(getLayoutInflater());
+
+        ((MainActivity)getActivity()).setToolbarTitle("My Patients");
 
         PatientsViewModel viewModel = new ViewModelProvider(this).get(PatientsViewModel.class);
 
@@ -54,16 +53,8 @@ public class PatientListFragment extends Fragment {
             Toast.makeText(getContext(), errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
         });
 
-        // set up patient status list view
-        PatientStatusListAdapter patientStatusListAdapter = new PatientStatusListAdapter(
-                getContext(),
-                R.layout.adapter_patient_status_list,
-                statuses
-        );
-        binding.spnStatusFilter.setAdapter(patientStatusListAdapter);
 
         setPatientSelectHandler();
-        setStatusFilterHandler();
         setSearchByNameHandler();
 
         viewModel.loadPatients(((MainActivity)getActivity()).getAuthToken());
@@ -81,35 +72,13 @@ public class PatientListFragment extends Fragment {
                         R.id.nav_host_fragment_content_main
                 );
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("patient", patients.get(position));
+                bundle.putInt("patientId", patients.get(position).pat_id);
                 controller.navigate(R.id.action_nav_patient_list_to_nav_patient_info, bundle);
             }
         });
     }
 
-    private void setStatusFilterHandler() {
-        binding.spnStatusFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                List<Patient> patientsFiltered = filterPatients(
-                        statuses.get(position),
-                        binding.svSearchByName.getQuery().toString().toLowerCase()
-                );
-                ;
-                PatientListAdapter patientListFilteredAdapter = new PatientListAdapter(
-                        getContext(),
-                        R.layout.adapter_patient_list,
-                        patientsFiltered
-                );
-                binding.lvPatients.setAdapter(patientListFilteredAdapter);
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-    }
 
     private void setSearchByNameHandler() {
         binding.svSearchByName.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -120,10 +89,7 @@ public class PatientListFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                List<Patient> patientsSearched = filterPatients(
-                        binding.spnStatusFilter.getSelectedItem().toString(),
-                        newText.toLowerCase()
-                );
+                List<Patient> patientsSearched = filterPatients(newText.toLowerCase());
                 PatientListAdapter patientListSearchedAdapter = new PatientListAdapter(
                         getContext(),
                         R.layout.adapter_patient_list,
@@ -135,29 +101,13 @@ public class PatientListFragment extends Fragment {
         });
     }
 
-    private List<Patient> filterPatients(String status, String searchKey) {
-        if (status.equals("All") && searchKey.isEmpty()) {// get all
+    private List<Patient> filterPatients(String searchKey) {
+        if (searchKey.isEmpty()) {// get all
             return patients;
-        } else if (status.equals("All")) { // filter by search key
+        } else { // filter by search key
             List<Patient> filteredPatients = new ArrayList<>();
             for (Patient p : patients) {
                 if (p.getName().toLowerCase().contains(searchKey)) {
-                    filteredPatients.add(p);
-                }
-            }
-            return filteredPatients;
-        } else if (searchKey.isEmpty()) { // filter by status
-            List<Patient> filteredPatients = new ArrayList<>();
-            for (Patient p : patients) {
-                if (p.getStatus().equals(status)) {
-                    filteredPatients.add(p);
-                }
-            }
-            return filteredPatients;
-        } else { // filter by status and search key
-            List<Patient> filteredPatients = new ArrayList<>();
-            for (Patient p : patients) {
-                if (p.getName().toLowerCase().contains(searchKey) && p.getStatus().equals(status)) {
                     filteredPatients.add(p);
                 }
             }

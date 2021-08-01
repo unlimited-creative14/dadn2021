@@ -4,6 +4,8 @@ import com.hk203.dadn.models.AdminPatient;
 import com.hk203.dadn.models.AdminUserProfile;
 import com.hk203.dadn.models.MqttDevice;
 import com.hk203.dadn.models.Patient;
+import com.hk203.dadn.models.PatientDetail;
+import com.hk203.dadn.models.PutPatientInfoResponse;
 import com.hk203.dadn.models.Treatment;
 import com.hk203.dadn.models.UserLoginResponse;
 import com.hk203.dadn.models.UserProfile;
@@ -33,6 +35,21 @@ public interface IoTHeathCareService {
     // get patients
     @GET("/users/patients")
     Call<List<Patient>> loadPatients(@Header("auth-token") String authToken);
+
+    // get patient detail
+    @GET("/users/patients/{patientId}")
+    Call<PatientDetail> loadPatientDetail(
+            @Header("auth-token") String authToken,
+            @Path("patientId") int patientId
+    );
+
+    // put patient info
+    @PUT("/users/patients/{patientId}")
+    Call<PutPatientInfoResponse> putPatientInformation(
+            @Header("auth-token") String authToken,
+            @Path("patientId") int patientId,
+            @Body RequestBody body
+    );
 
     // get treatments
     @GET("/users/patients/{patientId}/treatments")

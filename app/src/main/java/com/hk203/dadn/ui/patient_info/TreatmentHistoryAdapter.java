@@ -9,12 +9,21 @@ import android.widget.TextView;
 import com.hk203.dadn.R;
 import com.hk203.dadn.models.Treatment;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 
 public class TreatmentHistoryAdapter extends ArrayAdapter<Treatment> {
     private Context context;
     private int resource;
+    private static final DateFormat timeFormat = new SimpleDateFormat("dd MMM, h:mm a", Locale.US);
+    private static final SimpleDateFormat originFormat = new SimpleDateFormat(
+            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+            Locale.US
+    );
 
     public TreatmentHistoryAdapter(Context context, int resource, List<Treatment> objects) {
         super(context, resource, objects);
@@ -27,11 +36,15 @@ public class TreatmentHistoryAdapter extends ArrayAdapter<Treatment> {
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(resource,parent,false);
         ((TextView)convertView.findViewById(R.id.tv_treatment)).setText(
-                String.valueOf(getItem(position).treatment_id)
+                getItem(position).getTreatmentDes()
         );
-        ((TextView)convertView.findViewById(R.id.tv_datetime)).setText(
-                "no data"
-        );
+        try {
+            ((TextView)convertView.findViewById(R.id.tv_datetime)).setText(
+                    timeFormat.format(originFormat.parse(getItem(position).last_modified))
+            );
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return convertView;
     }
 }

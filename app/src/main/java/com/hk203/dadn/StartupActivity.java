@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.os.Bundle;
@@ -27,9 +28,12 @@ public class StartupActivity extends AppCompatActivity {
 
     // Use login activity as startup activity
     ActivityLoginBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        checkIfUserLoggedIn();
 
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         binding.rbAdmin.setChecked(true);
@@ -40,25 +44,24 @@ public class StartupActivity extends AppCompatActivity {
 
         // user login response observer
         viewModel.getUserLoginResponse().observe(this, userLoginResponse -> {
-                 if (userLoginResponse.getCode() == 200) {
-                     Toast.makeText(
-                             StartupActivity.this,
-                             userLoginResponse.getMessage(),
-                             Toast.LENGTH_SHORT
-                     ).show();
-                     UserRole role = loginFlag.equals("ms") ? UserRole.MedicalStaff : UserRole.Admin;
-                     intentToMainActivity(viewModel.getAuthToken(),role);
-                 }
-                 else {
-                     Toast.makeText(
-                             StartupActivity.this,
-                             userLoginResponse.getMessage(),
-                             Toast.LENGTH_SHORT
-                     ).show();
-                 }
-            }
+                    if (userLoginResponse.getCode() == 200) {
+                        Toast.makeText(
+                                StartupActivity.this,
+                                userLoginResponse.getMessage(),
+                                Toast.LENGTH_SHORT
+                        ).show();
+                        UserRole role = loginFlag.equals("ms") ? UserRole.MedicalStaff : UserRole.Admin;
+                        saveUser(viewModel.getAuthToken(), role);
+                        intentToMainActivity(viewModel.getAuthToken(), role);
+                    } else {
+                        Toast.makeText(
+                                StartupActivity.this,
+                                userLoginResponse.getMessage(),
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    }
+                }
         );
-
 
 
         // error response observer
@@ -74,12 +77,12 @@ public class StartupActivity extends AppCompatActivity {
         binding.btnLogin.setOnClickListener(view -> {
             String email = binding.etEmail.getText().toString();
             String password = binding.etPassword.getText().toString();
-            if (binding.rbMs.isChecked()){
+            if (binding.rbMs.isChecked()) {
                 loginFlag = "ms";
-                viewModel.userLogIn(email,password);
-            }else if (binding.rbAdmin.isChecked()){
+                viewModel.userLogIn(email, password);
+            } else if (binding.rbAdmin.isChecked()) {
                 loginFlag = "admin";
-                viewModel.adminLogIn(email,password);
+                viewModel.adminLogIn(email, password);
             }
         });
         binding.ivLogo.setOnClickListener(
@@ -90,10 +93,28 @@ public class StartupActivity extends AppCompatActivity {
         );
     }
 
-    private void intentToMainActivity(String authToken, UserRole role){
-        Intent mIntent = new Intent(this,MainActivity.class);
-        mIntent.putExtra("authToken",authToken);
-        mIntent.putExtra("role",role);
+    private void intentToMainActivity(String authToken, UserRole role) {
+        Intent mIntent = new Intent(this, MainActivity.class);
+        mIntent.putExtra("authToken", authToken);
+        mIntent.putExtra("role", role);
         startActivity(mIntent);
+        finish();
+    }
+
+    private void checkIfUserLoggedIn() {
+        SharedPreferences shared = getSharedPreferences("dadn", Context.MODE_PRIVATE);
+        String authToken = shared.getString("authToken", null);
+        if (authToken != null) {
+            UserRole userRole = UserRole.valueOf(shared.getString("role", null));
+            intentToMainActivity(authToken, userRole);
+        }
+    }
+
+    private void saveUser(String authToken, UserRole role) {
+        SharedPreferences shared = getSharedPreferences("dadn", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = shared.edit();
+        editor.putString("authToken", authToken);
+        editor.putString("role", role.toString());
+        editor.apply();
     }
 }
