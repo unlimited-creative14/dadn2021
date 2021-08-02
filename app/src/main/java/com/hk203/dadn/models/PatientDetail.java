@@ -20,8 +20,8 @@ public class PatientDetail {
     public int dev_id;
     public List<Temp> tempHistory;
 
-    private int statusColor;
-    private String pendingTreatment;
+    private int statusColor = R.color.black_55;
+    private String pendingTreatment = "No data!";
 
     public static class Temp {
         public float temp_value;
@@ -33,6 +33,9 @@ public class PatientDetail {
     }
 
     public String getStatus() {
+        if (tempHistory.size() == 0){
+            return "No data!";
+        }
         float temp = tempHistory.get(0).temp_value;
         if (temp >= 27 && temp <= 27.5) {
             statusColor = R.color.green;

@@ -29,15 +29,14 @@
                     android:layout_height="match_parent"
                     android:text="Full name:"
                     android:textColor="@color/black"
-                    android:textSize="17dp" />
+                    android:textSize="17sp" />
 
                 <TextView
                     android:id="@+id/tv_full_name"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:paddingLeft="3dp"
-                    android:text="Nguyen Van Cap"
-                    android:textSize="17dp" />
+                    android:paddingLeft="5dp"
+                    android:textSize="17sp" />
 
             </LinearLayout>
 
@@ -58,15 +57,14 @@
                     android:layout_height="match_parent"
                     android:text="Phone:"
                     android:textColor="@color/black"
-                    android:textSize="17dp" />
+                    android:textSize="17sp" />
 
                 <TextView
                     android:id="@+id/tv_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:paddingLeft="3dp"
-                    android:text="111"
-                    android:textSize="17dp" />
+                    android:paddingLeft="5dp"
+                    android:textSize="17sp" />
             </LinearLayout>
 
             <View
@@ -90,16 +88,20 @@
 
                 <EditText
                     android:id="@+id/et_dev_id"
-                    android:layout_width="70dp"
+                    android:layout_width="100dp"
                     android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/bg_edit_text"
+                    android:gravity="center_vertical"
                     android:imeOptions="actionDone"
                     android:inputType="text"
-                    android:padding="1dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
                     android:singleLine="true"
-                    android:text="1"
-                    android:textSize="17dp" />
+                    android:textColor="@color/black_55"
+                    android:textSize="17sp" />
 
                 <ImageView
                     android:id="@+id/refresh_dev_id"
@@ -126,15 +128,14 @@
                 android:layout_height="match_parent"
                 android:text="Status:"
                 android:textColor="@color/black"
-                android:textSize="17dp" />
+                android:textSize="17sp" />
 
             <TextView
                 android:id="@+id/tv_status"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:paddingLeft="5dp"
-                android:text="Recovery"
-                android:textSize="17dp" />
+                android:textSize="17sp" />
         </LinearLayout>
 
         <View
@@ -154,15 +155,14 @@
                 android:layout_height="match_parent"
                 android:text="Pending Treatment:"
                 android:textColor="@color/black"
-                android:textSize="17dp" />
+                android:textSize="17sp" />
 
             <TextView
                 android:id="@+id/tv_pending_treatment"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:paddingLeft="5dp"
-                android:text="trm 1"
-                android:textSize="17dp" />
+                android:textSize="17sp" />
         </LinearLayout>
 
         <View
@@ -179,12 +179,12 @@
             android:padding="10dp"
             android:text="Treatments history"
             android:textColor="@color/black"
-            android:textSize="17dp" />
+            android:textSize="17sp" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/black" />
+            android:layout_height="00.2dp"
+            android:background="@color/black_75" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -197,7 +197,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.9"
-                android:background="#E8F2F1" />
+                android:background="@color/black_95" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -208,7 +208,7 @@
                 android:text="Temperature(oC) chart"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
         </LinearLayout>
 
     </LinearLayout>

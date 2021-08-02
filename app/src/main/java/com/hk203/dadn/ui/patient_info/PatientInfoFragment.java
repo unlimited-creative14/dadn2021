@@ -3,6 +3,7 @@ package com.hk203.dadn.ui.patient_info;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -61,12 +62,13 @@ public class PatientInfoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         patientId = getArguments().getInt("patientId");
-        ((MainActivity)getActivity()).setToolbarTitle("Patient Info");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentPatientInfoBinding.inflate(getLayoutInflater());
+
+        ((MainActivity) getActivity()).setToolbarTitle("Patient Info");
 
         viewModel = new ViewModelProvider(this).get(PatientDetailViewModel.class);
 
@@ -82,19 +84,27 @@ public class PatientInfoFragment extends Fragment {
 
         viewModel.getPatientDetail().observe(getViewLifecycleOwner(), patientDetail -> {
             binding.tvFullName.setText(patientDetail.getName());
-            binding.etDevId.setText(String.valueOf(patientDetail.dev_id));
             devId = patientDetail.dev_id;
             binding.tvPhone.setText(patientDetail.phone);
             binding.tvStatus.setText(patientDetail.getStatus());
-            binding.tvStatus.setTextColor(ContextCompat.getColor(getContext(),patientDetail.getStatusColor()));
+            binding.tvStatus.setTextColor(ContextCompat.getColor(getContext(), patientDetail.getStatusColor()));
             binding.tvPendingTreatment.setText(patientDetail.getPendingTreatment());
-            xAxisValues.clear();
-            setUpTemperatureChart(patientDetail.tempHistory);
+            if (patientDetail.dev_id != 0) {
+                binding.etDevId.setText(String.valueOf(patientDetail.dev_id));
+                xAxisValues.clear();
+                setUpTemperatureChart(patientDetail.tempHistory);
+                setUpMqttService();
+            } else {
+                binding.etDevId.setText("No data");
+            }
+
         });
 
         viewModel.getPutPatientInfoResponse().observe(getViewLifecycleOwner(), putPatientInfoResponse -> {
             devId = newDevId;
             binding.etDevId.setText(String.valueOf(devId));
+            setUpTemperatureChart(null);
+            setUpMqttService();
             Toast.makeText(getContext(), putPatientInfoResponse.message, Toast.LENGTH_SHORT).show();
         });
 
@@ -121,12 +131,10 @@ public class PatientInfoFragment extends Fragment {
 
         binding.refreshDevId.setOnClickListener(v -> binding.etDevId.setText(String.valueOf(devId)));
 
-        setUpMqttService();
-
         return binding.getRoot();
     }
 
-    private void setUpTemperatureChart(List<PatientDetail.Temp> tempHistory) {
+    private void setUpTemperatureChart(@Nullable List<PatientDetail.Temp> tempHistory) {
         binding.lcTemp.setDrawBorders(false);
         binding.lcTemp.setDescription(null);
         binding.lcTemp.getLegend().setEnabled(false);
@@ -154,18 +162,20 @@ public class PatientInfoFragment extends Fragment {
         });
 
         List<Entry> entries = new ArrayList<>();
-        SimpleDateFormat originFormat = new SimpleDateFormat(
-                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
-                Locale.US
-        );
-        for (int i = tempHistory.size() - 1; i >= 0; i--) {
-            PatientDetail.Temp temp = tempHistory.get(i);
-            try {
-                xAxisValues.add(timeFormat.format(originFormat.parse(temp.recv_time)));
-            } catch (ParseException e) {
-                e.printStackTrace();
+        if (tempHistory != null && tempHistory.size() > 0) {
+            SimpleDateFormat originFormat = new SimpleDateFormat(
+                    "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+                    Locale.US
+            );
+            for (int i = tempHistory.size() - 1; i >= 0; i--) {
+                PatientDetail.Temp temp = tempHistory.get(i);
+                try {
+                    xAxisValues.add(timeFormat.format(originFormat.parse(temp.recv_time)));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                entries.add(new Entry(tempHistory.size() - i - 1, temp.temp_value));
             }
-            entries.add(new Entry(tempHistory.size()-i-1, temp.temp_value));
         }
 
 
@@ -195,6 +205,9 @@ public class PatientInfoFragment extends Fragment {
     }
 
     private void setUpMqttService() {
+        if (mqttService != null) {
+            return;
+        }
         mqttService = new MQTTService(getContext(),
                 "kimnguyenlong",
                 "aio_mpYq21jymEgrHUlt5MLMNtZaCLnQ",
@@ -215,11 +228,15 @@ public class PatientInfoFragment extends Fragment {
 
         @Override
         public void messageArrived(String topic, MqttMessage message) {
-            Log.w("Mqtt", message.toString());
-            xAxisValues.add(timeFormat.format(Calendar.getInstance().getTime()));
-            Gson gson = new Gson();
-            TempData data = gson.fromJson(message.toString(), TempData.class);
-            updateChart(Float.parseFloat(data.getData().split("-")[0]));
+            try {
+                Log.w("Mqtt", message.toString());
+                xAxisValues.add(timeFormat.format(Calendar.getInstance().getTime()));
+                Gson gson = new Gson();
+                TempData data = gson.fromJson(message.toString(), TempData.class);
+                updateChart(Float.parseFloat(data.getData().split("-")[0]));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
@@ -227,10 +244,4 @@ public class PatientInfoFragment extends Fragment {
 
         }
     };
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        mqttService.unSubscribe();
-    }
 }

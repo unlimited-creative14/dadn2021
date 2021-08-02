@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity{
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     private String authToken;
-    private UserRole role;
 
     @Override
     public void onBackPressed()
@@ -55,7 +54,7 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
 
         authToken = getIntent().getStringExtra("authToken");
-        role =(UserRole)getIntent().getSerializableExtra("role");
+        UserRole role = (UserRole) getIntent().getSerializableExtra("role");
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -77,7 +76,6 @@ public class MainActivity extends AppCompatActivity{
                 R.id.nav_updateHealthRule,
                 R.id.nav_adafruit_demo,
                 R.id.nav_patient_list,
-                R.id.nav_notifications,
                 R.id.profileFragment
         ).setDrawerLayout(drawer).build();
         if (role == UserRole.Admin) {
@@ -90,7 +88,7 @@ public class MainActivity extends AppCompatActivity{
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         ((TextView)navigationView.getHeaderView(0).findViewById(R.id.tv_user_email)).setText(
-                "User name"
+                getIntent().getStringExtra("email")
         );
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }

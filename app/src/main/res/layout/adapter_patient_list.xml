@@ -3,8 +3,6 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
     android:paddingBottom="10dp"
     android:paddingTop="10dp"
     android:gravity="center_horizontal">
@@ -14,20 +12,20 @@
         android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:textSize="17dp" />
+        android:textSize="17sp" />
 
     <TextView
         android:id="@+id/tv_name"
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:textSize="17dp" />
+        android:textSize="17sp" />
 
     <TextView
         android:id="@+id/tv_dev_id"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:textSize="17dp" />
+        android:textSize="17sp" />
 
 </LinearLayout>
