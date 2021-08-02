@@ -20,6 +20,10 @@
             android:icon="@drawable/ic_baseline_add_24"
             android:title="@string/szAddUser" />
         <item
+            android:id="@+id/nav_add_patient"
+            android:icon="@drawable/ic_baseline_add_24"
+            android:title="@string/szAddPatient" />
+        <item
             android:id="@+id/nav_device_list"
             android:icon="@drawable/ic_setting"
             android:title="@string/szDeviceManager" />

@@ -5,7 +5,6 @@ import java.io.Serializable;
 public class AdminUserProfile implements Serializable {
     public int id;
     public String email;
-    public String password;
     public String created_on;
     public String modified_on;
     public int role;
@@ -24,6 +23,6 @@ public class AdminUserProfile implements Serializable {
     @Override
     public String toString()
     {
-        return getRole() + ": " + first_name + " " + last_name;
+        return id + ": " + first_name + " " + last_name;
     }
 }

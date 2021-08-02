@@ -114,6 +114,9 @@ public class AddAccountFragment extends Fragment {
                     }
                     newAcc.setUsername(binding.etRegEmail.getText().toString());
                     newAcc.setPassword(binding.etPassword.getText().toString());
+                    newAcc.first_name = binding.etFirstname.getText().toString();
+                    newAcc.last_name = binding.etLastname.getText().toString();
+                    newAcc.cmnd = binding.etCmnd.getText().toString();
                     // switch to next frame
                     GsonBuilder builder = new GsonBuilder();
                     Gson gs = builder.create();

@@ -6,6 +6,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,13 +78,14 @@ public class ListUserFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 AdminUserProfile profile = (AdminUserProfile)parent.getItemAtPosition(position);
-                FragmentManager fm = getParentFragmentManager();
-                Fragment f = AdminUserDetailFragment.newInstance(profile);
+                NavController controller = Navigation.findNavController(
+                        getActivity(),
+                        R.id.nav_host_fragment_content_main
+                );
+                Bundle bd = new Bundle();
+                bd.putSerializable("profile", profile);
 
-                fm.beginTransaction()
-                        .replace(R.id.nav_host_fragment_content_main, f, null)
-                        .addToBackStack(null)
-                        .commit();
+                controller.navigate(R.id.nav_admin_user_detail, bd);
             }
         });
 

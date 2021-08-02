@@ -119,4 +119,34 @@ public class IoTHealthCareRepository {
     {
         ioTHeathCareService.addDevice(token, body).enqueue(cb);
     }
+
+    public void listAllUnusedDevice(String token, Callback<List<MqttDevice>> cb)
+    {
+        ioTHeathCareService.listAllUnusedDevice(token).enqueue(cb);
+    }
+
+    public void createPatient(String token, RequestBody body, Callback<Map<String, Object>> cb)
+    {
+        ioTHeathCareService.createPatient(token, body).enqueue(cb);
+    }
+
+    public void updatePatient(String token, int id, RequestBody body, Callback<Map<String, String>> cb)
+    {
+        ioTHeathCareService.updatePatient(token, id, body).enqueue(cb);
+    }
+
+    public void updateUser(String token, int id, RequestBody body, Callback<Map<String, String>> cb)
+    {
+        ioTHeathCareService.updateUser(token, id, body).enqueue(cb);
+    }
+
+    public void deleteUser(String token, int id, Callback<Map<String, String>> cb)
+    {
+        ioTHeathCareService.deleteUser(token, id).enqueue(cb);
+    }
+
+    public void deletePatient(String token, int id, Callback<Map<String, String>> cb)
+    {
+        ioTHeathCareService.deletePatient(token, id).enqueue(cb);
+    }
 }

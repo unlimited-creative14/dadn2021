@@ -26,7 +26,7 @@
             android:layout_marginEnd="32dp">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_email"
-                android:enabled="false"
+                android:inputType="textEmailAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/szEmail" />
@@ -47,7 +47,6 @@
                 app:layout_constraintTop_toTopOf="parent">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_firstname"
-                    android:enabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/szFirstName"/>
@@ -62,7 +61,6 @@
                 app:layout_constraintTop_toTopOf="parent">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_lastname"
-                    android:enabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/szLastName"/>
@@ -75,12 +73,93 @@
             android:layout_marginEnd="32dp">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_phonenumber"
-                android:enabled="false"
+                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/szPhone" />
         </com.google.android.material.textfield.TextInputLayout>
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:padding="10sp"
+            android:text="Thiết bị"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_feed_in"
+                        android:enabled="false"
+                        android:text="@string/szLoading"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Feed In" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_feed_out"
+                        android:enabled="false"
+                        android:text="@string/szLoading"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Feed out" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+            <Button android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:id="@+id/btn_choose_device"
+                android:text="@string/szChooseDevice"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:padding="10sp"
+            android:text="@string/szDoctor"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_doctor_name"
+                    android:enabled="false"
+                    android:text="@string/szLoading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/szDoctor" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <Button
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:id="@+id/btn_choose_doctor"
+                android:text="@string/szChooseDoctor"/>
+        </LinearLayout>
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_save"
+            android:text="@string/szSave"
+            android:layout_gravity="center" />
     </LinearLayout>
 
 

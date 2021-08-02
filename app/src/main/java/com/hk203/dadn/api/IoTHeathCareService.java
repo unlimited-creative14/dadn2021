@@ -17,6 +17,7 @@ import java.util.Map;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -119,5 +120,46 @@ public interface IoTHeathCareService {
     Call<Map<String, String>> addDevice(
             @Header("auth-token") String authToken,
             @Body RequestBody body
+    );
+
+    // list all unused devices
+    @GET("/both/device/false")
+    Call<List<MqttDevice>> listAllUnusedDevice(
+            @Header("auth-token") String authToken
+    );
+
+    // create new patient
+    @POST("/admin/patients")
+    Call<Map<String, Object>> createPatient(
+            @Header("auth-token") String authToken,
+            @Body RequestBody body
+    );
+
+    // update patient ìnfo
+    @PUT("/admin/patients/{patientId}/update")
+    Call<Map<String, String>> updatePatient(
+            @Header("auth-token") String authToken,
+            @Path("patientId") int patientId,
+            @Body RequestBody body
+    );
+
+    // update user info
+    @PUT("/admin/user/{userId}/update")
+    Call<Map<String, String>> updateUser(
+            @Header("auth-token") String authToken,
+            @Path("userId") int patientId,
+            @Body RequestBody body
+    );
+
+    @DELETE("/admin/patients/{id}")
+    Call<Map<String, String>> deletePatient(
+            @Header("auth-token") String authToken,
+            @Path("id") int patientId
+    );
+
+    @DELETE("/admin/user/{id}")
+    Call<Map<String, String>> deleteUser(
+            @Header("auth-token") String authToken,
+            @Path("id") int id
     );
 }

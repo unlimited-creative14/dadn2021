@@ -72,7 +72,7 @@ public class ListBindedPatientDoctorFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mDoctor = (AdminUserProfile) getArguments().getSerializable("profile");
+            mDoctor = (AdminUserProfile) getArguments().get("profile");
         }
 
     }

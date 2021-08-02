@@ -79,6 +79,11 @@
     <string name="szDeviceManager">Quản lý thiết bị</string>
     <string name="szAddUser">Thêm người dùng</string>
     <string name="szDuration">Thời lượng:</string>
+    <string name="szChooseDevice">Chọn thiết bị</string>
+    <string name="szChooseDoctor">Chọn bác sĩ</string>
+    <string name="szDoctor">Bác sĩ</string>
+    <string name="szAddPatient">Thêm bệnh nhân</string>
+    <string name="szDelete">Xoá</string>
 
     <string-array name="patient_statuses">
         <item>All</item>

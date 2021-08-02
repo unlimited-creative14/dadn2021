@@ -1,5 +1,7 @@
 package com.hk203.dadn.ui.adduser;
 
+import com.hk203.dadn.models.AdminUserProfile;
+
 import java.io.Serializable;
 
 public class Account implements Serializable {
@@ -11,10 +13,13 @@ public class Account implements Serializable {
 
     String email;
     String password;
-    int role;
+    public int role;
+    public String first_name;
+    public String last_name;
+    public String cmnd;
 
     public String getUsername() {
-        return email;
+        return this.email;
     }
 
     public void setUsername(String username) {
