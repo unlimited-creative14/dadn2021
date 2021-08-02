@@ -12,6 +12,7 @@ import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.eclipse.paho.client.mqttv3.MqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
@@ -134,6 +135,7 @@ public class MQTTService {
     }
 
     public void unSubscribe(){
+        Log.d("Mqtt","Unsubscribe");
         try{
             mqttAndroidClient.unsubscribe(subscriptionTopic);
         } catch (MqttException e) {

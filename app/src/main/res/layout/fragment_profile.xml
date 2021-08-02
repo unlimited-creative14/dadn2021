@@ -17,8 +17,27 @@
         tools:context=".ui.profile.ProfileFragment">
 
         <TextView
+            android:id="@+id/lb_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="Id: "
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_email"
+            app:layout_constraintEnd_toStartOf="@id/tv_id"
+            app:layout_constraintHorizontal_weight="0.2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
             android:id="@+id/tv_id"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:background="@color/white"
@@ -28,16 +47,33 @@
             android:textSize="17sp"
             app:layout_constraintBottom_toTopOf="@+id/tv_email"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_weight="0.9"
+            app:layout_constraintStart_toEndOf="@id/lb_id"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0"
-            app:layout_constraintVertical_chainStyle="packed" />
+            app:layout_constraintVertical_bias="0" />
+
+        <TextView
+            android:id="@+id/lb_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="Email:"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_role"
+            app:layout_constraintEnd_toStartOf="@id/tv_email"
+            app:layout_constraintHorizontal_weight="0.2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_id" />
 
         <TextView
             android:id="@+id/tv_email"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
+            android:layout_marginTop="2dp"
             android:background="@color/white"
             android:gravity="center_vertical"
             android:padding="10dp"
@@ -45,28 +81,47 @@
             android:textSize="17sp"
             app:layout_constraintBottom_toTopOf="@+id/tv_role"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_weight="0.8"
+            app:layout_constraintStart_toEndOf="@+id/lb_email"
             app:layout_constraintTop_toBottomOf="@+id/tv_id" />
 
         <TextView
-            android:id="@+id/tv_role"
-            android:layout_width="match_parent"
+            android:id="@+id/lb_role"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="Role:"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toTopOf="@id/logOut"
+            app:layout_constraintEnd_toStartOf="@+id/tv_role"
+            app:layout_constraintHorizontal_weight="0.2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_email" />
+
+        <TextView
+            android:id="@+id/tv_role"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
             android:background="@color/white"
             android:gravity="center_vertical"
             android:padding="10dp"
             android:text="@{user.role}"
             android:textSize="17sp"
-            app:layout_constraintBottom_toTopOf="@id/logOut"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_weight="0.8"
+            app:layout_constraintStart_toEndOf="@id/lb_role"
             app:layout_constraintTop_toBottomOf="@+id/tv_email" />
 
         <TextView
             android:id="@+id/logOut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20sp"
             android:background="@color/white"
             android:drawableRight="@drawable/ic_logout"
             android:padding="10dp"
@@ -75,7 +130,7 @@
             android:textSize="17sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_role" />
+            app:layout_constraintTop_toBottomOf="@+id/lb_role" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

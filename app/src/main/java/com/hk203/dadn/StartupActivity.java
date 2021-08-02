@@ -50,8 +50,9 @@ public class StartupActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT
                         ).show();
                         UserRole role = loginFlag.equals("ms") ? UserRole.MedicalStaff : UserRole.Admin;
-                        saveUser(viewModel.getAuthToken(), role);
-                        intentToMainActivity(viewModel.getAuthToken(), role);
+                        String email = binding.etEmail.getText().toString();
+                        saveUser(viewModel.getAuthToken(), role, email);
+                        intentToMainActivity(viewModel.getAuthToken(), role, email);
                     } else {
                         Toast.makeText(
                                 StartupActivity.this,
@@ -86,10 +87,11 @@ public class StartupActivity extends AppCompatActivity {
         });
     }
 
-    private void intentToMainActivity(String authToken, UserRole role) {
+    private void intentToMainActivity(String authToken, UserRole role, String email) {
         Intent mIntent = new Intent(this, MainActivity.class);
         mIntent.putExtra("authToken", authToken);
         mIntent.putExtra("role", role);
+        mIntent.putExtra("email", email);
         startActivity(mIntent);
         finish();
     }
@@ -99,15 +101,17 @@ public class StartupActivity extends AppCompatActivity {
         String authToken = shared.getString("authToken", null);
         if (authToken != null) {
             UserRole userRole = UserRole.valueOf(shared.getString("role", null));
-            intentToMainActivity(authToken, userRole);
+            String email = shared.getString("email", null);
+            intentToMainActivity(authToken, userRole, email);
         }
     }
 
-    private void saveUser(String authToken, UserRole role) {
+    private void saveUser(String authToken, UserRole role, String email) {
         SharedPreferences shared = getSharedPreferences("dadn", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = shared.edit();
         editor.putString("authToken", authToken);
         editor.putString("role", role.toString());
+        editor.putString("email", email);
         editor.apply();
     }
 }

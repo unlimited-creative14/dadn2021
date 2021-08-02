@@ -39,10 +39,6 @@
             android:id="@+id/nav_patient_list"
             android:icon="@drawable/ic_patient"
             android:title="Patients" />
-        <item
-            android:id="@+id/nav_notifications"
-            android:icon="@drawable/ic_notifications"
-            android:title="Notification" />
     </group>
 
 
