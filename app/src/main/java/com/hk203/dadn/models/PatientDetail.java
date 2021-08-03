@@ -21,7 +21,7 @@ public class PatientDetail {
     public List<Temp> tempHistory;
 
     private int statusColor = R.color.black_55;
-    private String pendingTreatment = "No data!";
+    private String pendingTreatment = "no data!";
 
     public static class Temp {
         public float temp_value;

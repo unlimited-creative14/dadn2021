@@ -49,6 +49,9 @@ import java.util.Locale;
 
 
 public class PatientInfoFragment extends Fragment {
+    private static final String USER_NAME = "kimnguyenlong";
+    private static final String IO_KEY = "aio_mpYq21jymEgrHUlt5MLMNtZaCLnQ";
+    private static final String TOPIC = "kimnguyenlong/feeds/temp";
     private static final DateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.US);
     private FragmentPatientInfoBinding binding;
     private final ArrayList<String> xAxisValues = new ArrayList<>();
@@ -57,6 +60,7 @@ public class PatientInfoFragment extends Fragment {
     private int newDevId;
     private PatientDetailViewModel viewModel;
     private MQTTService mqttService;
+    private boolean isUnsubscribeMqtt;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -89,20 +93,17 @@ public class PatientInfoFragment extends Fragment {
             binding.tvStatus.setText(patientDetail.getStatus());
             binding.tvStatus.setTextColor(ContextCompat.getColor(getContext(), patientDetail.getStatusColor()));
             binding.tvPendingTreatment.setText(patientDetail.getPendingTreatment());
+            binding.etDevId.setText(getDevIdText());
             if (patientDetail.dev_id != 0) {
-                binding.etDevId.setText(String.valueOf(patientDetail.dev_id));
                 xAxisValues.clear();
                 setUpTemperatureChart(patientDetail.tempHistory);
                 setUpMqttService();
-            } else {
-                binding.etDevId.setText("No data");
             }
-
         });
 
         viewModel.getPutPatientInfoResponse().observe(getViewLifecycleOwner(), putPatientInfoResponse -> {
             devId = newDevId;
-            binding.etDevId.setText(String.valueOf(devId));
+            binding.etDevId.setText(getDevIdText());
             setUpTemperatureChart(null);
             setUpMqttService();
             Toast.makeText(getContext(), putPatientInfoResponse.message, Toast.LENGTH_SHORT).show();
@@ -119,19 +120,36 @@ public class PatientInfoFragment extends Fragment {
 
         binding.etDevId.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                newDevId = Integer.parseInt(binding.etDevId.getText().toString());
-                viewModel.putPatientInfo(
-                        ((MainActivity) getActivity()).getAuthToken(),
-                        patientId,
-                        newDevId
-                );
+                if (binding.etDevId.getText().length() == 0) {
+                    newDevId = 0;
+                    viewModel.putPatientInfo(
+                            ((MainActivity) getActivity()).getAuthToken(),
+                            patientId,
+                            0
+                    );
+                } else {
+                    newDevId = Integer.parseInt(binding.etDevId.getText().toString());
+                    if (newDevId > 0) {
+                        viewModel.putPatientInfo(
+                                ((MainActivity) getActivity()).getAuthToken(),
+                                patientId,
+                                newDevId
+                        );
+                    } else {
+                        Toast.makeText(getContext(), "Device Id must greater than 0", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
             return true;
         });
 
-        binding.refreshDevId.setOnClickListener(v -> binding.etDevId.setText(String.valueOf(devId)));
+        binding.refreshDevId.setOnClickListener(v -> binding.etDevId.setText(getDevIdText()));
 
         return binding.getRoot();
+    }
+
+    private String getDevIdText() {
+        return devId == 0 ? "no data!" : String.valueOf(devId);
     }
 
     private void setUpTemperatureChart(@Nullable List<PatientDetail.Temp> tempHistory) {
@@ -206,42 +224,54 @@ public class PatientInfoFragment extends Fragment {
 
     private void setUpMqttService() {
         if (mqttService != null) {
+            if (isUnsubscribeMqtt) {
+                mqttService.subscribeToTopic();
+            }
             return;
         }
         mqttService = new MQTTService(getContext(),
-                "kimnguyenlong",
-                "aio_mpYq21jymEgrHUlt5MLMNtZaCLnQ",
-                "kimnguyenlong/feeds/temp", mqttCallback
+                USER_NAME,
+                IO_KEY,
+                TOPIC,
+                new MqttCallbackExtended() {
+                    @Override
+                    public void connectComplete(boolean reconnect, String serverURI) {
+                        Log.w("Mqtt", "connect complete");
+                    }
+
+                    @Override
+                    public void connectionLost(Throwable cause) {
+                        Log.w("Mqtt", "connect lost");
+                    }
+
+                    @Override
+                    public void messageArrived(String topic, MqttMessage message) {
+                        try {
+                            Log.w("Mqtt", message.toString());
+                            xAxisValues.add(timeFormat.format(Calendar.getInstance().getTime()));
+                            Gson gson = new Gson();
+                            TempData data = gson.fromJson(message.toString(), TempData.class);
+                            updateChart(Float.parseFloat(data.getData().split("-")[0]));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void deliveryComplete(IMqttDeliveryToken token) {
+
+                    }
+                }
         );
+        isUnsubscribeMqtt = false;
     }
 
-    private final MqttCallbackExtended mqttCallback = new MqttCallbackExtended() {
-        @Override
-        public void connectComplete(boolean reconnect, String serverURI) {
-            Log.w("Mqtt", "connect complete");
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mqttService != null) {
+            isUnsubscribeMqtt = true;
+            mqttService.unSubscribe();
         }
-
-        @Override
-        public void connectionLost(Throwable cause) {
-            Log.w("Mqtt", "connect lost");
-        }
-
-        @Override
-        public void messageArrived(String topic, MqttMessage message) {
-            try {
-                Log.w("Mqtt", message.toString());
-                xAxisValues.add(timeFormat.format(Calendar.getInstance().getTime()));
-                Gson gson = new Gson();
-                TempData data = gson.fromJson(message.toString(), TempData.class);
-                updateChart(Float.parseFloat(data.getData().split("-")[0]));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        public void deliveryComplete(IMqttDeliveryToken token) {
-
-        }
-    };
+    }
 }

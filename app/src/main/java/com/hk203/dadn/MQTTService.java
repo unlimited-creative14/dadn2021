@@ -20,64 +20,15 @@ import java.lang.reflect.Array;
 
 public class MQTTService {
     public static final String serverUri = "tcp://io.adafruit.com:1883";
-
-    public static final String default_subscriptionTopic = "malongnhan/feeds/server";
-    public static final String default_username = "malongnhan";
-    public static final String default_io_key = "aio_oRCT69g6V2ainDyuWPQP6QORyiwG";
-    public static final MqttCallbackExtended default_callback = new MqttCallbackExtended() {
-        @Override
-        public void connectComplete(boolean b, String s) {
-            Log.w("mqtt", s);
-        }
-
-        @Override
-        public void connectionLost(Throwable throwable) {
-        }
-
-        @Override
-        public void messageArrived(String topic, MqttMessage message) throws Exception {
-            Log.w("Mqtt", message.toString());
-        }
-
-        @Override
-        public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
-
-        }
-    };
-
-    String subscriptionTopic;
-    public MqttAndroidClient mqttAndroidClient;
+    private final String subscriptionTopic;
+    private final MqttAndroidClient mqttAndroidClient;
 
     public MQTTService(Context context, String username, String io_key, String topic, MqttCallbackExtended callback)
     {
         mqttAndroidClient = new MqttAndroidClient(context, serverUri, MqttClient.generateClientId());
-
-
+        subscriptionTopic = topic;
         mqttAndroidClient.setCallback(callback);
         connect(username, io_key);
-
-        subscriptionTopic = topic;
-    }
-
-    public MQTTService(Context context) {
-        this(context, default_username, default_io_key, default_subscriptionTopic ,default_callback);
-    }
-
-    public void setCallback(MqttCallbackExtended callback) {
-        mqttAndroidClient.setCallback(callback);
-    }
-
-    public void sendData(CharSequence data) throws MqttException {
-        MqttMessage msg = new MqttMessage();
-        msg.setPayload(data.toString().getBytes());
-        try {
-            mqttAndroidClient.publish(subscriptionTopic, msg);
-        }
-        catch (Exception e)
-        {
-            throw e;
-        }
-
     }
 
     private void connect(String username, String io_key) {
@@ -113,7 +64,7 @@ public class MQTTService {
         }
     }
 
-    private void subscribeToTopic() {
+    public void subscribeToTopic() {
         try {
             mqttAndroidClient.subscribe(subscriptionTopic, 0, null, new IMqttActionListener()
             {
@@ -135,11 +86,25 @@ public class MQTTService {
     }
 
     public void unSubscribe(){
-        Log.d("Mqtt","Unsubscribe");
         try{
+            Log.d("Mqtt","Unsubscribed");
             mqttAndroidClient.unsubscribe(subscriptionTopic);
         } catch (MqttException e) {
+            Log.d("Mqtt","Unsubscribe failed!");
             e.printStackTrace();
         }
+    }
+
+    public void sendData(CharSequence data) throws MqttException {
+        MqttMessage msg = new MqttMessage();
+        msg.setPayload(data.toString().getBytes());
+        try {
+            mqttAndroidClient.publish(subscriptionTopic, msg);
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+
     }
 }

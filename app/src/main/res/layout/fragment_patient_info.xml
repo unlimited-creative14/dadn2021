@@ -95,7 +95,7 @@
                     android:background="@drawable/bg_edit_text"
                     android:gravity="center_vertical"
                     android:imeOptions="actionDone"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:paddingLeft="10dp"
                     android:paddingTop="2dp"
                     android:paddingBottom="2dp"

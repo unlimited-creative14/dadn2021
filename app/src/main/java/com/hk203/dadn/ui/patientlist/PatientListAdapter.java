@@ -39,7 +39,7 @@ public class PatientListAdapter extends ArrayAdapter<Patient> {
 
         viewHolder.tv_id.setText(String.valueOf(getItem(position).pat_id));
         viewHolder.tv_name.setText(getItem(position).getName());
-        String devId = getItem(position).dev_id == 0 ? "No data!" : String.valueOf(getItem(position).dev_id);
+        String devId = getItem(position).dev_id == 0 ? "no data!" : String.valueOf(getItem(position).dev_id);
         viewHolder.tv_dev_id.setText(devId);
 
         return convertView;
