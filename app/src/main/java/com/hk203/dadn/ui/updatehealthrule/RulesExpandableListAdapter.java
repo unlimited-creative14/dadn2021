@@ -12,16 +12,31 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.hk203.dadn.MainActivity;
 import com.hk203.dadn.R;
+import com.hk203.dadn.databinding.ViewHealthRuleBinding;
+import com.hk203.dadn.repositories.IoTHealthCareRepository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RulesExpandableListAdapter extends BaseExpandableListAdapter {
     Activity context;
-    ArrayList<HealthRule> rules;
+    List<HealthRule> rules;
+    private final IoTHealthCareRepository repo = IoTHealthCareRepository.getInstance();
 
-    public RulesExpandableListAdapter(Activity context, ArrayList<HealthRule> rules) {
+    public RulesExpandableListAdapter(Activity context, List<HealthRule> rules) {
         this.context = context;
         this.rules = rules;
     }
@@ -48,7 +63,7 @@ public class RulesExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public long getGroupId(int groupPosition) {
-        return ((HealthRule)getGroup(groupPosition)).getId();
+        return ((HealthRule)getGroup(groupPosition)).warning_level;
     }
 
     @Override
@@ -69,7 +84,7 @@ public class RulesExpandableListAdapter extends BaseExpandableListAdapter {
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.view_expandable_item, null);
         }
-        TextView listTitleTextView = (TextView) convertView
+        TextView listTitleTextView = convertView
                 .findViewById(R.id.listTitle);
         listTitleTextView.setTypeface(null, Typeface.BOLD);
         listTitleTextView.setText(listTitle);
@@ -79,14 +94,13 @@ public class RulesExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         HealthRule item = (HealthRule) getGroup(groupPosition);
+
         if (convertView == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) this.context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.view_health_rule, null);
+
+            convertView = ViewHealthRuleBinding.inflate(context.getLayoutInflater()).getRoot();
         }
 
         setLedColor(item, convertView);
-        setAllSpinner(item, convertView);
         setDataText(item, convertView);
 
         return convertView;
@@ -94,49 +108,38 @@ public class RulesExpandableListAdapter extends BaseExpandableListAdapter {
 
     void setDataText(HealthRule item, View view)
     {
-        EditText et_tempFrom, et_tempTo;
-        EditText et_timeFrom, et_timeTo;
+        ViewHealthRuleBinding binding = ViewHealthRuleBinding.bind(view);
 
-        et_tempFrom = view.findViewById(R.id.et_tempFrom);
-        et_tempTo = view.findViewById(R.id.et_tempTo);
-        et_timeFrom = view.findViewById(R.id.et_timeFrom);
-        et_timeTo = view.findViewById(R.id.et_timeTo);
+        binding.warningLevelTv.setText(item.toString());
+        binding.etTempFrom.setText(Float.toString(item.temp_from));
+        binding.etTempTo.setText(Float.toString(item.temp_to));
+        binding.etDuration.setText(Float.toString(item.duration));
 
+        binding.btnUpdateRule.setOnClickListener( v -> {
+            item.temp_from = Float.parseFloat(binding.etTempFrom.getText().toString());
+            item.temp_to = Float.parseFloat(binding.etTempTo.getText().toString());
+            item.duration = Float.parseFloat(binding.etDuration.getText().toString());
 
-        et_tempFrom.setText(String.valueOf(item.getTempFrom()));
-        et_tempTo.setText(String.valueOf(item.getTempTo()));
-        et_timeFrom.setText(String.valueOf(item.getTimeFrom()));
-        et_timeTo.setText(String.valueOf(item.getTimeTo()));
+            Gson gson = new Gson();
+            RequestBody body = RequestBody.create(gson.toJson(item), MediaType.parse("application/json"));
+            repo.updateHealthRule(((MainActivity) context).getAuthToken(), body, new Callback<Map<String, String>>() {
+                @Override
+                public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                    Toast.makeText(context, response.body().getOrDefault("message", "Unknown error"), Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(Call<Map<String, String>> call, Throwable t) {
+
+                }
+            });
+        });
     }
-    void setAllSpinner(HealthRule item, View view)
-    {
-        Spinner spinnerAction = (Spinner)view.findViewById(R.id.ruleActionsSpinner);
-        ArrayAdapter<String> warningLevelAdapter = new ArrayAdapter<>(context, R.layout.view_spinner_item, HealthRule.getAllWarningLevel());
-        warningLevelAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        spinnerAction.setAdapter(warningLevelAdapter);
 
-        spinnerAction.setSelection(item.getWarningLevel());
-
-        Spinner spinnerDegUnit = (Spinner)view.findViewById(R.id.ruleDegUnit);
-        ArrayList<String> degUnitValues = new ArrayList<String>();
-        degUnitValues.add("°C");
-        degUnitValues.add("°F");
-        ArrayAdapter<String> degUnitAdapter = new ArrayAdapter<>(context, R.layout.view_spinner_item, degUnitValues);
-        degUnitAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        spinnerDegUnit.setAdapter(degUnitAdapter);
-
-        Spinner spinnerTimeUnit = (Spinner)view.findViewById(R.id.ruleTimeUnit);
-        ArrayList<String> timeUnitValues = new ArrayList<String>();
-        timeUnitValues.add("phut");
-        timeUnitValues.add("gio");
-        ArrayAdapter<String> timeUnitAdapter = new ArrayAdapter<>(context, R.layout.view_spinner_item, timeUnitValues);
-        timeUnitAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        spinnerTimeUnit.setAdapter(timeUnitAdapter);
-    }
     void setLedColor(HealthRule item, View view)
     {
         int color;
-        switch (item.getWarningLevel()){
+        switch (item.warning_level){
             case HealthRule.RED_LED:
                 color = Color.RED;
                 break;
@@ -157,4 +160,5 @@ public class RulesExpandableListAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return false;
     }
+
 }

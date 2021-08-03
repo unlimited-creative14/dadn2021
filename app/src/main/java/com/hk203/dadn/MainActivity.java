@@ -39,14 +39,14 @@ public class MainActivity extends AppCompatActivity{
     @Override
     public void onBackPressed()
     {
-        FragmentManager fm = getSupportFragmentManager();
-        if (fm.getBackStackEntryCount() > 0) {
-            Log.i("MainActivity", "popping backstack");
-            fm.popBackStack();
-        } else {
-            Log.i("MainActivity", "nothing on backstack, calling super");
-            super.onBackPressed();
-        }
+//        FragmentManager fm = getSupportFragmentManager();
+//        if (fm.getBackStackEntryCount() > 0) {
+//            Log.i("MainActivity", "popping backstack");
+//            fm.popBackStack();
+//        } else {
+//            Log.i("MainActivity", "nothing on backstack, calling super");
+//            super.onBackPressed();
+//        }
     }
 
     @Override
@@ -73,8 +73,8 @@ public class MainActivity extends AppCompatActivity{
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_add_account,
                 R.id.nav_home,
+                R.id.nav_user_list,
                 R.id.nav_updateHealthRule,
-                R.id.nav_adafruit_demo,
                 R.id.nav_patient_list,
                 R.id.profileFragment
         ).setDrawerLayout(drawer).build();

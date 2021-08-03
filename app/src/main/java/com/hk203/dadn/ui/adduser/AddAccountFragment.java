@@ -1,5 +1,7 @@
 package com.hk203.dadn.ui.adduser;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -20,9 +22,21 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.hk203.dadn.MainActivity;
 import com.hk203.dadn.R;
 import com.hk203.dadn.databinding.FragmentAddAccountBinding;
 import com.hk203.dadn.databinding.FragmentAddAccountInfoStep2Binding;
+import com.hk203.dadn.repositories.IoTHealthCareRepository;
+
+import java.util.Map;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,7 +44,7 @@ import com.hk203.dadn.databinding.FragmentAddAccountInfoStep2Binding;
  * create an instance of this fragment.
  */
 public class AddAccountFragment extends Fragment {
-
+    private IoTHealthCareRepository repo = IoTHealthCareRepository.getInstance();
     public AddAccountFragment() {
         // Required empty public constructor
 
@@ -65,8 +79,7 @@ public class AddAccountFragment extends Fragment {
         View view = binding.getRoot();
         // Set list account type
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item,  new String[] {"Admin", "User"});
-        AutoCompleteTextView textView = (AutoCompleteTextView)
-                view.findViewById(R.id.et_userType);
+        AutoCompleteTextView textView = view.findViewById(R.id.et_userType);
         textView.setAdapter(adapter);
 
         registerAddBtnCallback();
@@ -85,12 +98,12 @@ public class AddAccountFragment extends Fragment {
                 {
                     if (binding.etUserType.getText().toString().compareTo("Admin") == 0)
                     {
-                        newAcc.setUserType(Account.UserType.Admin);
+                        newAcc.setUserType(Account.ADMIN);
                     }
                     else {
                         if (binding.etUserType.getText().toString().compareTo("User") == 0)
                         {
-                            newAcc.setUserType(Account.UserType.User);
+                            newAcc.setUserType(Account.USER);
                         }
                         else
                         {
@@ -99,14 +112,33 @@ public class AddAccountFragment extends Fragment {
                             return;
                         }
                     }
-                    newAcc.setUsername(binding.etUserName.getText().toString());
+                    newAcc.setUsername(binding.etRegEmail.getText().toString());
                     newAcc.setPassword(binding.etPassword.getText().toString());
+                    newAcc.first_name = binding.etFirstname.getText().toString();
+                    newAcc.last_name = binding.etLastname.getText().toString();
+                    newAcc.cmnd = binding.etCmnd.getText().toString();
                     // switch to next frame
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("account", newAcc);
+                    GsonBuilder builder = new GsonBuilder();
+                    Gson gs = builder.create();
+                    String str = gs.toJson(newAcc);
 
-                    NavController controller = Navigation.findNavController(getActivity(), R.id.nav_host_fragment_content_main);
-                    controller.navigate(R.id.action_nav_add_account_to_nav_add_account_step2, bundle);
+                    RequestBody body = RequestBody.create(str, MediaType.parse("application/json"));
+                    repo.createUser(
+                            ((MainActivity) getActivity()).getAuthToken(),
+                            body,
+                            new Callback<Map<String, String>>() {
+                                @Override
+                                public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                                    if(response.body() != null)
+                                        Toast.makeText(getContext(), response.body().getOrDefault("message", "Unknown error"), Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onFailure(Call<Map<String, String>> call, Throwable t) {
+
+                                }
+                            }
+                    );
                 }
             });
     }
