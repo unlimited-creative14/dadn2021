@@ -49,23 +49,22 @@ import java.util.Locale;
 
 
 public class PatientInfoFragment extends Fragment {
-    private static final String USER_NAME = "kimnguyenlong";
-    private static final String IO_KEY = "aio_mpYq21jymEgrHUlt5MLMNtZaCLnQ";
-    private static final String TOPIC = "kimnguyenlong/feeds/temp";
     private static final DateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.US);
     private FragmentPatientInfoBinding binding;
     private final ArrayList<String> xAxisValues = new ArrayList<>();
     private int patientId;
+    private String authToken;
     private int devId;
     private int newDevId;
     private PatientDetailViewModel viewModel;
     private MQTTService mqttService;
-    private boolean isUnsubscribeMqtt;
+    private boolean isUnsubscribed;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         patientId = getArguments().getInt("patientId");
+        authToken = ((MainActivity) getActivity()).getAuthToken();
     }
 
     @Override
@@ -88,16 +87,18 @@ public class PatientInfoFragment extends Fragment {
 
         viewModel.getPatientDetail().observe(getViewLifecycleOwner(), patientDetail -> {
             binding.tvFullName.setText(patientDetail.getName());
-            devId = patientDetail.dev_id;
             binding.tvPhone.setText(patientDetail.phone);
             binding.tvStatus.setText(patientDetail.getStatus());
             binding.tvStatus.setTextColor(ContextCompat.getColor(getContext(), patientDetail.getStatusColor()));
             binding.tvPendingTreatment.setText(patientDetail.getPendingTreatment());
+            devId = patientDetail.dev_id;
             binding.etDevId.setText(getDevIdText());
             if (patientDetail.dev_id != 0) {
-                xAxisValues.clear();
                 setUpTemperatureChart(patientDetail.tempHistory);
-                setUpMqttService();
+                viewModel.loadDeviceFeedInfo(
+                        authToken,
+                        devId
+                );
             }
         });
 
@@ -105,7 +106,10 @@ public class PatientInfoFragment extends Fragment {
             devId = newDevId;
             binding.etDevId.setText(getDevIdText());
             setUpTemperatureChart(null);
-            setUpMqttService();
+            viewModel.loadDeviceFeedInfo(
+                    authToken,
+                    devId
+            );
             Toast.makeText(getContext(), putPatientInfoResponse.message, Toast.LENGTH_SHORT).show();
         });
 
@@ -114,9 +118,15 @@ public class PatientInfoFragment extends Fragment {
         });
 
         viewModel.loadPatientDetail(
-                ((MainActivity) getActivity()).getAuthToken(),
+                authToken,
                 patientId
         );
+
+        viewModel.getFeedInfo().observe(getViewLifecycleOwner(), feedInfo -> setUpMqttService(
+                feedInfo.username,
+                feedInfo.iokey,
+                feedInfo.feed_in
+        ));
 
         binding.etDevId.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -153,6 +163,8 @@ public class PatientInfoFragment extends Fragment {
     }
 
     private void setUpTemperatureChart(@Nullable List<PatientDetail.Temp> tempHistory) {
+        xAxisValues.clear();
+
         binding.lcTemp.setDrawBorders(false);
         binding.lcTemp.setDescription(null);
         binding.lcTemp.getLegend().setEnabled(false);
@@ -171,7 +183,7 @@ public class PatientInfoFragment extends Fragment {
             @Override
             public String getFormattedValue(float value) {
                 int index = (int) value;
-                if (index < xAxisValues.size()) {
+                if (index < xAxisValues.size() && index >= 0) {
                     return xAxisValues.get(index);
                 } else {
                     return "";
@@ -190,12 +202,11 @@ public class PatientInfoFragment extends Fragment {
                 try {
                     xAxisValues.add(timeFormat.format(originFormat.parse(temp.recv_time)));
                 } catch (ParseException e) {
-                    e.printStackTrace();
+                    Log.d("Exc", e.toString());
                 }
                 entries.add(new Entry(tempHistory.size() - i - 1, temp.temp_value));
             }
         }
-
 
         LineDataSet dataSet = new LineDataSet(entries, null);
         dataSet.setLineWidth(3);
@@ -207,6 +218,8 @@ public class PatientInfoFragment extends Fragment {
 
         LineData lineData = new LineData(dataSet);
         binding.lcTemp.setData(lineData);
+        binding.lcTemp.setVisibleXRange(0, 10);
+        binding.lcTemp.moveViewToX(0);
         binding.lcTemp.invalidate();
     }
 
@@ -222,17 +235,25 @@ public class PatientInfoFragment extends Fragment {
         new Thread(() -> getActivity().runOnUiThread(() -> addEntry(newTemp))).start();
     }
 
-    private void setUpMqttService() {
-        if (mqttService != null) {
-            if (isUnsubscribeMqtt) {
-                mqttService.subscribeToTopic();
+    private void setUpMqttService(String userName, String ioKey, String topic) {
+        if (mqttService != null){
+            if (userName.equals(mqttService.getUsername())
+                    && ioKey.equals(mqttService.getIoKey())
+                    && topic.equals(mqttService.getSubscriptionTopic())){
+                if (isUnsubscribed){
+                    mqttService.subscribeToTopic();
+                    return;
+                }
+            }else{
+                mqttService.unSubscribe();
+                mqttService = null;
+                isUnsubscribed = true;
             }
-            return;
         }
         mqttService = new MQTTService(getContext(),
-                USER_NAME,
-                IO_KEY,
-                TOPIC,
+                userName,
+                ioKey,
+                topic,
                 new MqttCallbackExtended() {
                     @Override
                     public void connectComplete(boolean reconnect, String serverURI) {
@@ -253,7 +274,7 @@ public class PatientInfoFragment extends Fragment {
                             TempData data = gson.fromJson(message.toString(), TempData.class);
                             updateChart(Float.parseFloat(data.getData().split("-")[0]));
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            Log.d("Exc", e.toString());
                         }
                     }
 
@@ -263,15 +284,15 @@ public class PatientInfoFragment extends Fragment {
                     }
                 }
         );
-        isUnsubscribeMqtt = false;
+        isUnsubscribed = false;
     }
 
     @Override
     public void onStop() {
         super.onStop();
         if (mqttService != null) {
-            isUnsubscribeMqtt = true;
             mqttService.unSubscribe();
+            isUnsubscribed = true;
         }
     }
 }

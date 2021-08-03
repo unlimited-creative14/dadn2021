@@ -21,12 +21,16 @@ import java.lang.reflect.Array;
 public class MQTTService {
     public static final String serverUri = "tcp://io.adafruit.com:1883";
     private final String subscriptionTopic;
+    private final String userName;
+    private final String ioKey;
     private final MqttAndroidClient mqttAndroidClient;
 
     public MQTTService(Context context, String username, String io_key, String topic, MqttCallbackExtended callback)
     {
         mqttAndroidClient = new MqttAndroidClient(context, serverUri, MqttClient.generateClientId());
         subscriptionTopic = topic;
+        userName = username;
+        ioKey = io_key;
         mqttAndroidClient.setCallback(callback);
         connect(username, io_key);
     }
@@ -106,5 +110,17 @@ public class MQTTService {
             throw e;
         }
 
+    }
+
+    public String getUsername(){
+        return userName;
+    }
+
+    public String getSubscriptionTopic() {
+        return subscriptionTopic;
+    }
+
+    public String getIoKey() {
+        return ioKey;
     }
 }

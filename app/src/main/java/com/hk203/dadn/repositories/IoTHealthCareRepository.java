@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder;
 import com.hk203.dadn.api.IoTHeathCareService;
 import com.hk203.dadn.models.AdminPatient;
 import com.hk203.dadn.models.AdminUserProfile;
+import com.hk203.dadn.models.FeedInfo;
 import com.hk203.dadn.models.MqttDevice;
 import com.hk203.dadn.models.Patient;
 import com.hk203.dadn.models.PatientDetail;
@@ -75,78 +76,67 @@ public class IoTHealthCareRepository {
         ioTHeathCareService.loadUserProfile(authToken).enqueue(callback);
     }
 
-    public void createUser(String authToken, RequestBody body, Callback<Map<String, String>> cb)
-    {
+    public void createUser(String authToken, RequestBody body, Callback<Map<String, String>> cb) {
         ioTHeathCareService.createUser(authToken, body).enqueue(cb);
     }
 
-    public void listUser(String authToken, Callback<List<AdminUserProfile>> cb)
-    {
+    public void listUser(String authToken, Callback<List<AdminUserProfile>> cb) {
         ioTHeathCareService.listUser(authToken).enqueue(cb);
     }
 
-    public void listBindedPatient(String authToken, int doctorId, Callback<List<AdminPatient>> cb)
-    {
+    public void listBindedPatient(String authToken, int doctorId, Callback<List<AdminPatient>> cb) {
         ioTHeathCareService.listBindedPatientDoctor(authToken, doctorId).enqueue(cb);
     }
 
-    public void listAllPatient(String token, Callback<List<AdminPatient>> cb)
-    {
+    public void listAllPatient(String token, Callback<List<AdminPatient>> cb) {
         ioTHeathCareService.listAllPatient(token).enqueue(cb);
     }
 
-    public void assignPatientToDoctor(String token, int patientId, RequestBody body, Callback<Map<String, String>> cb)
-    {
+    public void assignPatientToDoctor(String token, int patientId, RequestBody body, Callback<Map<String, String>> cb) {
         ioTHeathCareService.assignPatientToDoctor(token, patientId, body).enqueue(cb);
     }
 
-    public void listAllHealthRule(String token, Callback<List<HealthRule>> cb)
-    {
+    public void listAllHealthRule(String token, Callback<List<HealthRule>> cb) {
         ioTHeathCareService.listAllHealthRule(token).enqueue(cb);
     }
 
-    public void updateHealthRule(String token, RequestBody body, Callback<Map<String, String>> cb)
-    {
+    public void updateHealthRule(String token, RequestBody body, Callback<Map<String, String>> cb) {
         ioTHeathCareService.updateHealthRule(token, body).enqueue(cb);
     }
 
-    public void listAllDevice(String token, Callback<List<MqttDevice>> cb)
-    {
+    public void listAllDevice(String token, Callback<List<MqttDevice>> cb) {
         ioTHeathCareService.listAllDevice(token).enqueue(cb);
     }
 
-    public void createDevice(String token, RequestBody body, Callback<Map<String, String>> cb)
-    {
+    public void createDevice(String token, RequestBody body, Callback<Map<String, String>> cb) {
         ioTHeathCareService.addDevice(token, body).enqueue(cb);
     }
 
-    public void listAllUnusedDevice(String token, Callback<List<MqttDevice>> cb)
-    {
+    public void listAllUnusedDevice(String token, Callback<List<MqttDevice>> cb) {
         ioTHeathCareService.listAllUnusedDevice(token).enqueue(cb);
     }
 
-    public void createPatient(String token, RequestBody body, Callback<Map<String, Object>> cb)
-    {
+    public void createPatient(String token, RequestBody body, Callback<Map<String, Object>> cb) {
         ioTHeathCareService.createPatient(token, body).enqueue(cb);
     }
 
-    public void updatePatient(String token, int id, RequestBody body, Callback<Map<String, String>> cb)
-    {
+    public void updatePatient(String token, int id, RequestBody body, Callback<Map<String, String>> cb) {
         ioTHeathCareService.updatePatient(token, id, body).enqueue(cb);
     }
 
-    public void updateUser(String token, int id, RequestBody body, Callback<Map<String, String>> cb)
-    {
+    public void updateUser(String token, int id, RequestBody body, Callback<Map<String, String>> cb) {
         ioTHeathCareService.updateUser(token, id, body).enqueue(cb);
     }
 
-    public void deleteUser(String token, int id, Callback<Map<String, String>> cb)
-    {
+    public void deleteUser(String token, int id, Callback<Map<String, String>> cb) {
         ioTHeathCareService.deleteUser(token, id).enqueue(cb);
     }
 
-    public void deletePatient(String token, int id, Callback<Map<String, String>> cb)
-    {
+    public void deletePatient(String token, int id, Callback<Map<String, String>> cb) {
         ioTHeathCareService.deletePatient(token, id).enqueue(cb);
+    }
+
+    public void loadDeviceFeedInfo(String authToken, int devId, Callback<FeedInfo> callback) {
+        ioTHeathCareService.loadDeviceFeedInfo(authToken, devId).enqueue(callback);
     }
 }

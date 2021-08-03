@@ -39,14 +39,12 @@ public class MainActivity extends AppCompatActivity{
     @Override
     public void onBackPressed()
     {
-//        FragmentManager fm = getSupportFragmentManager();
-//        if (fm.getBackStackEntryCount() > 0) {
-//            Log.i("MainActivity", "popping backstack");
-//            fm.popBackStack();
-//        } else {
-//            Log.i("MainActivity", "nothing on backstack, calling super");
-//            super.onBackPressed();
-//        }
+        FragmentManager fm = getSupportFragmentManager();
+        if (fm.getBackStackEntryCount() > 0) {
+            fm.popBackStack();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.hk203.dadn.api;
 
 import com.hk203.dadn.models.AdminPatient;
 import com.hk203.dadn.models.AdminUserProfile;
+import com.hk203.dadn.models.FeedInfo;
 import com.hk203.dadn.models.MqttDevice;
 import com.hk203.dadn.models.Patient;
 import com.hk203.dadn.models.PatientDetail;
@@ -161,5 +162,11 @@ public interface IoTHeathCareService {
     Call<Map<String, String>> deleteUser(
             @Header("auth-token") String authToken,
             @Path("id") int id
+    );
+
+    @GET("/both/devices/{deviceId}")
+    Call<FeedInfo> loadDeviceFeedInfo(
+            @Header("auth-token") String authToken,
+            @Path("deviceId") int devId
     );
 }

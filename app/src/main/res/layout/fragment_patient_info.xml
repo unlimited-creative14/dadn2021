@@ -135,7 +135,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:paddingLeft="5dp"
-                android:textSize="17sp" />
+                android:textSize="17sp"
+                android:textStyle="bold"/>
         </LinearLayout>
 
         <View

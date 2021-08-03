@@ -1,6 +1,7 @@
 package com.hk203.dadn.ui.patient_info;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class TreatmentHistoryAdapter extends ArrayAdapter<Treatment> {
                     timeFormat.format(originFormat.parse(getItem(position).last_modified))
             );
         } catch (ParseException e) {
-            e.printStackTrace();
+            Log.d("Exc",e.toString());
         }
         return convertView;
     }

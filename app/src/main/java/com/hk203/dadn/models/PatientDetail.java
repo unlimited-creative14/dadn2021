@@ -33,19 +33,19 @@ public class PatientDetail {
     }
 
     public String getStatus() {
-        if (tempHistory.size() == 0){
-            return "No data!";
+        if (tempHistory == null || tempHistory.size() == 0) {
+            return "no data!";
         }
         float temp = tempHistory.get(0).temp_value;
-        if (temp >= 27 && temp <= 27.5) {
+        if (temp <= 27) {
             statusColor = R.color.green;
             pendingTreatment = "Close monitoring";
             return "Recovery";
-        } else if (temp >= 27.5 && temp <= 28.5) {
+        } else if (temp >= 27 && temp <= 27.5) {
             statusColor = R.color.yellow;
             pendingTreatment = "Chest X-ray";
             return "Incubation";
-        } else if (temp >= 28.5 && temp <= 29.5) {
+        } else if (temp >= 27.5 && temp <= 28) {
             statusColor = R.color.orange;
             pendingTreatment = "Monitoring for warning signs";
             return "Febrile";
