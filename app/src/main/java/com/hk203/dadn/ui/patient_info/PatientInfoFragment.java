@@ -75,16 +75,6 @@ public class PatientInfoFragment extends Fragment {
 
         viewModel = new ViewModelProvider(this).get(PatientDetailViewModel.class);
 
-        binding.tvTrm.setOnClickListener(v -> {
-            NavController controller = Navigation.findNavController(
-                    getActivity(),
-                    R.id.nav_host_fragment_content_main
-            );
-            Bundle bundle = new Bundle();
-            bundle.putInt("patientId", patientId);
-            controller.navigate(R.id.action_nav_patient_info_to_treatmentHistoryFragment, bundle);
-        });
-
         viewModel.getPatientDetail().observe(getViewLifecycleOwner(), patientDetail -> {
             binding.tvFullName.setText(patientDetail.getName());
             binding.tvPhone.setText(patientDetail.phone);
@@ -102,31 +92,27 @@ public class PatientInfoFragment extends Fragment {
             }
         });
 
-        viewModel.getPutPatientInfoResponse().observe(getViewLifecycleOwner(), putPatientInfoResponse -> {
+        viewModel.getPutPatientInfoResponse().observe(getViewLifecycleOwner(), response -> {
             devId = newDevId;
             binding.etDevId.setText(getDevIdText());
-            setUpTemperatureChart(null);
-            viewModel.loadDeviceFeedInfo(
-                    authToken,
-                    devId
-            );
-            Toast.makeText(getContext(), putPatientInfoResponse.message, Toast.LENGTH_SHORT).show();
+            if (devId>0) {
+                viewModel.loadDeviceFeedInfo(
+                        authToken,
+                        devId
+                );
+            }
+            Toast.makeText(getContext(), response.message, Toast.LENGTH_SHORT).show();
         });
-
-        viewModel.getErrorResponse().observe(getViewLifecycleOwner(), errorResponse -> {
-            Toast.makeText(getContext(), errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
-        });
-
-        viewModel.loadPatientDetail(
-                authToken,
-                patientId
-        );
 
         viewModel.getFeedInfo().observe(getViewLifecycleOwner(), feedInfo -> setUpMqttService(
                 feedInfo.username,
                 feedInfo.iokey,
                 feedInfo.feed_in
         ));
+
+        viewModel.getErrorResponse().observe(getViewLifecycleOwner(), errorResponse -> {
+            Toast.makeText(getContext(), errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
+        });
 
         binding.etDevId.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -154,6 +140,18 @@ public class PatientInfoFragment extends Fragment {
         });
 
         binding.refreshDevId.setOnClickListener(v -> binding.etDevId.setText(getDevIdText()));
+
+        binding.tvTrm.setOnClickListener(v -> {
+            NavController controller = Navigation.findNavController(
+                    getActivity(),
+                    R.id.nav_host_fragment_content_main
+            );
+            Bundle bundle = new Bundle();
+            bundle.putInt("patientId", patientId);
+            controller.navigate(R.id.action_nav_patient_info_to_treatmentHistoryFragment, bundle);
+        });
+
+        viewModel.loadPatientDetail(authToken, patientId);
 
         return binding.getRoot();
     }

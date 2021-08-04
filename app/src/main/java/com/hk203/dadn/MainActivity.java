@@ -19,8 +19,10 @@ import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.MenuItemCompat;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -34,15 +36,16 @@ import org.jetbrains.annotations.NotNull;
 public class MainActivity extends AppCompatActivity{
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    NavController navController;
     private String authToken;
+    private int rootFm;
 
     @Override
     public void onBackPressed()
     {
-        FragmentManager fm = getSupportFragmentManager();
-        if (fm.getBackStackEntryCount() > 0) {
-            fm.popBackStack();
-        } else {
+        if (navController.getCurrentDestination().getId() == rootFm){
+            finish();
+        }else{
             super.onBackPressed();
         }
     }
@@ -60,6 +63,15 @@ public class MainActivity extends AppCompatActivity{
         preCreate(role);
         addGroupNameDrawer(binding.navView);
 
+        if (role == UserRole.MedicalStaff){
+            navController.getGraph().setStartDestination(R.id.nav_patient_list);
+            navController.navigate(R.id.nav_patient_list);
+            rootFm = R.id.nav_patient_list;
+        }else{
+            navController.getGraph().setStartDestination(R.id.nav_add_account);
+            navController.navigate(R.id.nav_add_account);
+            rootFm = R.id.nav_add_account;
+        }
     }
 
     void preCreate(UserRole role) {
@@ -70,7 +82,6 @@ public class MainActivity extends AppCompatActivity{
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_add_account,
-                R.id.nav_home,
                 R.id.nav_user_list,
                 R.id.nav_updateHealthRule,
                 R.id.nav_patient_list,
@@ -82,7 +93,7 @@ public class MainActivity extends AppCompatActivity{
         else{
             navigationView.getMenu().setGroupVisible(R.id.adminNavGroup, false);
         }
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         ((TextView)navigationView.getHeaderView(0).findViewById(R.id.tv_user_email)).setText(
