@@ -7,7 +7,7 @@ public class UserProfile {
 
     public String getRole(){
         if (role==0){
-            return "Doctor/Nurse";
+            return "Nhân viên y tế";
         }else{
             return "Admin";
         }

@@ -6,13 +6,13 @@ public class Treatment {
 
     public String getTreatmentDes(){
         if (treatment_id == 4) {
-            return "Close monitoring";
+            return "Quan sát dấu hiệu phù phổi, suy tim";
         } else if (treatment_id == 1) {
-            return "Chest X-ray";
+            return "Chụp X quang ngực";
         } else if (treatment_id == 2) {
-            return "Monitoring for warning signs";
+            return "Quan sát dấu hiệu bất thường";
         } else {
-            return "Measure Hematocrit";
+            return "Đo hematocrit";
         }
     }
 }

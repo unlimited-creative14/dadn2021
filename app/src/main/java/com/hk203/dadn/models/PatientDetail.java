@@ -21,7 +21,7 @@ public class PatientDetail {
     public List<Temp> tempHistory;
 
     private int statusColor = R.color.black_55;
-    private String pendingTreatment = "no data!";
+    private String pendingTreatment = "không có dữ liệu!";
 
     public static class Temp {
         public float temp_value;
@@ -39,20 +39,20 @@ public class PatientDetail {
         float temp = tempHistory.get(0).temp_value;
         if (temp <= 27) {
             statusColor = R.color.green;
-            pendingTreatment = "Close monitoring";
-            return "Recovery";
+            pendingTreatment = "Quan sát dấu hiệu phù phổi, suy tim";
+            return "Hồi phục";
         } else if (temp >= 27 && temp <= 27.5) {
             statusColor = R.color.yellow;
-            pendingTreatment = "Chest X-ray";
-            return "Incubation";
+            pendingTreatment = "Chụp X quang ngực";
+            return "Ủ bệnh";
         } else if (temp >= 27.5 && temp <= 28) {
             statusColor = R.color.orange;
-            pendingTreatment = "Monitoring for warning signs";
-            return "Febrile";
+            pendingTreatment = "Quan sát dấu hiệu bất thường";
+            return "Sốt";
         } else {
-            pendingTreatment = "Measure Hematocrit";
+            pendingTreatment = "Đo Hematocrit";
             statusColor = R.color.red;
-            return "Emergency";
+            return "Nguy cấp";
         }
     }
 

@@ -29,7 +29,7 @@ public class TreatmentHistoryFragment extends Fragment{
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         patientId = (int)getArguments().get("patientId");
-        ((MainActivity)getActivity()).setToolbarTitle("Treatment History");
+        ((MainActivity)getActivity()).setToolbarTitle("Lịch sử điều trị");
     }
 
     @Override

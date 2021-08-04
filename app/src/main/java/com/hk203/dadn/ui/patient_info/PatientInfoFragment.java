@@ -54,8 +54,6 @@ public class PatientInfoFragment extends Fragment {
     private final ArrayList<String> xAxisValues = new ArrayList<>();
     private int patientId;
     private String authToken;
-    private int devId;
-    private int newDevId;
     private PatientDetailViewModel viewModel;
     private MQTTService mqttService;
     private boolean isUnsubscribed;
@@ -71,7 +69,7 @@ public class PatientInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentPatientInfoBinding.inflate(getLayoutInflater());
 
-        ((MainActivity) getActivity()).setToolbarTitle("Patient Info");
+        ((MainActivity) getActivity()).setToolbarTitle("Thông tin bệnh nhân");
 
         viewModel = new ViewModelProvider(this).get(PatientDetailViewModel.class);
 
@@ -81,27 +79,14 @@ public class PatientInfoFragment extends Fragment {
             binding.tvStatus.setText(patientDetail.getStatus());
             binding.tvStatus.setTextColor(ContextCompat.getColor(getContext(), patientDetail.getStatusColor()));
             binding.tvPendingTreatment.setText(patientDetail.getPendingTreatment());
-            devId = patientDetail.dev_id;
-            binding.etDevId.setText(getDevIdText());
+            binding.tvDevId.setText(getDevIdText(patientDetail.dev_id));
             if (patientDetail.dev_id != 0) {
                 setUpTemperatureChart(patientDetail.tempHistory);
                 viewModel.loadDeviceFeedInfo(
                         authToken,
-                        devId
+                        patientDetail.dev_id
                 );
             }
-        });
-
-        viewModel.getPutPatientInfoResponse().observe(getViewLifecycleOwner(), response -> {
-            devId = newDevId;
-            binding.etDevId.setText(getDevIdText());
-            if (devId>0) {
-                viewModel.loadDeviceFeedInfo(
-                        authToken,
-                        devId
-                );
-            }
-            Toast.makeText(getContext(), response.message, Toast.LENGTH_SHORT).show();
         });
 
         viewModel.getFeedInfo().observe(getViewLifecycleOwner(), feedInfo -> setUpMqttService(
@@ -113,33 +98,6 @@ public class PatientInfoFragment extends Fragment {
         viewModel.getErrorResponse().observe(getViewLifecycleOwner(), errorResponse -> {
             Toast.makeText(getContext(), errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
         });
-
-        binding.etDevId.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                if (binding.etDevId.getText().length() == 0) {
-                    newDevId = 0;
-                    viewModel.putPatientInfo(
-                            ((MainActivity) getActivity()).getAuthToken(),
-                            patientId,
-                            0
-                    );
-                } else {
-                    newDevId = Integer.parseInt(binding.etDevId.getText().toString());
-                    if (newDevId > 0) {
-                        viewModel.putPatientInfo(
-                                ((MainActivity) getActivity()).getAuthToken(),
-                                patientId,
-                                newDevId
-                        );
-                    } else {
-                        Toast.makeText(getContext(), "Device Id must greater than 0", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-            return true;
-        });
-
-        binding.refreshDevId.setOnClickListener(v -> binding.etDevId.setText(getDevIdText()));
 
         binding.tvTrm.setOnClickListener(v -> {
             NavController controller = Navigation.findNavController(
@@ -156,8 +114,8 @@ public class PatientInfoFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private String getDevIdText() {
-        return devId == 0 ? "no data!" : String.valueOf(devId);
+    private String getDevIdText(int devId) {
+        return devId == 0 ? "không có dữ liệu!" : String.valueOf(devId);
     }
 
     private void setUpTemperatureChart(@Nullable List<PatientDetail.Temp> tempHistory) {
@@ -293,21 +251,21 @@ public class PatientInfoFragment extends Fragment {
 
     private void updateInfo(float newTemp){
         if (newTemp <= 27) {
-            binding.tvStatus.setText("Recovery");
+            binding.tvStatus.setText("Hồi phục");
             binding.tvStatus.setTextColor(ContextCompat.getColor(getContext(),R.color.green));
-            binding.tvPendingTreatment.setText("Close monitoring");
+            binding.tvPendingTreatment.setText("Quan sát dấu hiệu phù phổi, suy tim");
         } else if (newTemp >= 27 && newTemp <= 27.5) {
-            binding.tvStatus.setText("Incubation");
+            binding.tvStatus.setText("Ủ bệnh");
             binding.tvStatus.setTextColor(ContextCompat.getColor(getContext(),R.color.yellow));
-            binding.tvPendingTreatment.setText("Chest X-ray");
+            binding.tvPendingTreatment.setText("Chụp X quang ngực");
         } else if (newTemp >= 27.5 && newTemp <= 28) {
-            binding.tvStatus.setText("Febrile");
+            binding.tvStatus.setText("Sốt");
             binding.tvStatus.setTextColor(ContextCompat.getColor(getContext(),R.color.orange));
-            binding.tvPendingTreatment.setText("Monitoring for warning signs");
+            binding.tvPendingTreatment.setText("Quan sát dấu hiệu bất thường");
         } else {
-            binding.tvStatus.setText("Emergency");
+            binding.tvStatus.setText("Nguy cấp");
             binding.tvStatus.setTextColor(ContextCompat.getColor(getContext(),R.color.red));
-            binding.tvPendingTreatment.setText("Measure Hematocrit");
+            binding.tvPendingTreatment.setText("Đo hematocrit");
         }
     }
 

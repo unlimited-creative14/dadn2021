@@ -27,7 +27,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Full name:"
+                    android:text="Họ và tên:"
                     android:textColor="@color/black"
                     android:textSize="17sp" />
 
@@ -55,7 +55,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Phone:"
+                    android:text="Số điện thoại:"
                     android:textColor="@color/black"
                     android:textSize="17sp" />
 
@@ -82,32 +82,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Device Id:"
+                    android:text="Id thiết bị:"
                     android:textColor="@color/black"
                     android:textSize="17dp" />
 
-                <EditText
-                    android:id="@+id/et_dev_id"
-                    android:layout_width="100dp"
+                <TextView
+                    android:id="@+id/tv_dev_id"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
-                    android:background="@drawable/bg_edit_text"
-                    android:gravity="center_vertical"
-                    android:imeOptions="actionDone"
-                    android:inputType="number"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="2dp"
-                    android:paddingBottom="2dp"
-                    android:singleLine="true"
-                    android:textColor="@color/black_55"
                     android:textSize="17sp" />
-
-                <ImageView
-                    android:id="@+id/refresh_dev_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_refresh" />
             </LinearLayout>
         </LinearLayout>
 
@@ -126,7 +111,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Status:"
+                android:text="Tình trạng:"
                 android:textColor="@color/black"
                 android:textSize="17sp" />
 
@@ -136,7 +121,7 @@
                 android:layout_height="match_parent"
                 android:paddingLeft="5dp"
                 android:textSize="17sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
         <View
@@ -154,7 +139,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Pending Treatment:"
+                android:text="Biện pháp điều trị:"
                 android:textColor="@color/black"
                 android:textSize="17sp" />
 
@@ -178,7 +163,7 @@
             android:background="@color/white"
             android:drawableRight="@drawable/ic_arrow_forward"
             android:padding="10dp"
-            android:text="Treatments history"
+            android:text="Lịch sử điều trị"
             android:textColor="@color/black"
             android:textSize="17sp" />
 
@@ -206,7 +191,7 @@
                 android:layout_weight="0.1"
                 android:gravity="center"
                 android:padding="4dp"
-                android:text="Temperature(oC) chart"
+                android:text="Biểu đồ nhiệt dộ (oC)"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="16sp" />

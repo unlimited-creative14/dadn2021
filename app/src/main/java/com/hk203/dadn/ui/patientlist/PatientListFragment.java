@@ -34,7 +34,7 @@ public class PatientListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentPatientListBinding.inflate(getLayoutInflater());
 
-        ((MainActivity)getActivity()).setToolbarTitle("My Patients");
+        ((MainActivity)getActivity()).setToolbarTitle("Danh sách bệnh nhân");
 
         PatientsViewModel viewModel = new ViewModelProvider(this).get(PatientsViewModel.class);
 

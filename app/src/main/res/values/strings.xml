@@ -11,9 +11,9 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
 
-    <string name="menu_lbadmin">Admin Panel</string>
-    <string name="menu_lbmediccal_staff">Medical Staff</string>
-    <string name="menu_lbaccount">My account</string>
+    <string name="menu_lbadmin">Admin</string>
+    <string name="menu_lbmediccal_staff">Nhân viên y tế</string>
+    <string name="menu_lbaccount">Tài khoản</string>
     <string name="LeaderName">Le Huu Vo Long</string>
     <string-array name="account_type">
         <item>Quản lý</item>

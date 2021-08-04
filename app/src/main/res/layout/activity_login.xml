@@ -50,7 +50,7 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/bg_edit_text"
         android:drawableRight="@drawable/ic_key"
-        android:hint="Password"
+        android:hint="Mật khẩu"
         android:inputType="textPassword"
         android:padding="16dp"
         app:layout_constraintEnd_toStartOf="@+id/gl_right"
@@ -79,7 +79,7 @@
             android:id="@+id/rb_ms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Medical staff"
+            android:text="Nhân viên y tế"
             android:textColor="@color/black"/>
     </RadioGroup>
 
@@ -89,7 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@drawable/bg_button"
-        android:text="Login"
+        android:text="Đăng nhập"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:textSize="15dp"

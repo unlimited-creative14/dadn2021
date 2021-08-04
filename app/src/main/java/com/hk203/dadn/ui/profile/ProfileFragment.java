@@ -28,7 +28,7 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(getLayoutInflater());
 
-        ((MainActivity)getActivity()).setToolbarTitle("My Profile");
+        ((MainActivity)getActivity()).setToolbarTitle("Thông tin cá nhân");
 
         viewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
 
