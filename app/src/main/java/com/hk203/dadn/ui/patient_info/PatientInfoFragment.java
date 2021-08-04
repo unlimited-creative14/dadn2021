@@ -230,7 +230,11 @@ public class PatientInfoFragment extends Fragment {
     }
 
     private void updateChart(float newTemp) {
-        new Thread(() -> getActivity().runOnUiThread(() -> addEntry(newTemp))).start();
+        try {
+            new Thread(() -> getActivity().runOnUiThread(() -> addEntry(newTemp))).start();
+        }catch (Exception e){
+            Log.d("Exc",e.toString());
+        }
     }
 
     private void setUpMqttService(String userName, String ioKey, String topic) {
@@ -270,7 +274,9 @@ public class PatientInfoFragment extends Fragment {
                             xAxisValues.add(timeFormat.format(Calendar.getInstance().getTime()));
                             Gson gson = new Gson();
                             TempData data = gson.fromJson(message.toString(), TempData.class);
-                            updateChart(Float.parseFloat(data.getData().split("-")[0]));
+                            float newTemp = Float.parseFloat(data.getData().split("-")[0]);
+                            updateChart(newTemp);
+                            updateInfo(newTemp);
                         } catch (Exception e) {
                             Log.d("Exc", e.toString());
                         }
@@ -283,6 +289,26 @@ public class PatientInfoFragment extends Fragment {
                 }
         );
         isUnsubscribed = false;
+    }
+
+    private void updateInfo(float newTemp){
+        if (newTemp <= 27) {
+            binding.tvStatus.setText("Recovery");
+            binding.tvStatus.setTextColor(ContextCompat.getColor(getContext(),R.color.green));
+            binding.tvPendingTreatment.setText("Close monitoring");
+        } else if (newTemp >= 27 && newTemp <= 27.5) {
+            binding.tvStatus.setText("Incubation");
+            binding.tvStatus.setTextColor(ContextCompat.getColor(getContext(),R.color.yellow));
+            binding.tvPendingTreatment.setText("Chest X-ray");
+        } else if (newTemp >= 27.5 && newTemp <= 28) {
+            binding.tvStatus.setText("Febrile");
+            binding.tvStatus.setTextColor(ContextCompat.getColor(getContext(),R.color.orange));
+            binding.tvPendingTreatment.setText("Monitoring for warning signs");
+        } else {
+            binding.tvStatus.setText("Emergency");
+            binding.tvStatus.setTextColor(ContextCompat.getColor(getContext(),R.color.red));
+            binding.tvPendingTreatment.setText("Measure Hematocrit");
+        }
     }
 
     @Override

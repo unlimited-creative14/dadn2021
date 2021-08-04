@@ -17,6 +17,8 @@ import com.hk203.dadn.R;
 import com.hk203.dadn.databinding.FragmentTreatmentHistoryBinding;
 import com.hk203.dadn.viewmodels.TreatmentsViewModel;
 
+import java.util.Collections;
+
 
 public class TreatmentHistoryFragment extends Fragment{
     private FragmentTreatmentHistoryBinding binding;
@@ -39,6 +41,7 @@ public class TreatmentHistoryFragment extends Fragment{
         viewModel = new ViewModelProvider(this).get(TreatmentsViewModel.class);
 
         viewModel.getTreatments().observe(getViewLifecycleOwner(), treatments -> {
+            Collections.reverse(treatments);
             TreatmentHistoryAdapter trmAdapter = new TreatmentHistoryAdapter(
                     getContext(),
                     R.layout.adapter_treatment_history,
